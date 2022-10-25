@@ -1,0 +1,24 @@
+﻿:root {
+    --primary-color: #BDC1BF;
+    --secondary-color: #B28510;
+    --hover-text-color: #ffc107;
+    --primary-color-rgba: rgba(10, 10, 10, 0.5);
+    --white-menu-color: white;
+    --black-menu-color: black;
+    --gray-menu-color: #aa9d14;
+    --offcanvas-background-color: gray;
+    --links-color: #232323;
+    --tabs-options-color: #575757;
+    --tabs-options-hover-color: gray;
+    --animation-background-color: #A5957E;
+    --animation-hover-color: #332700;
+    --facebook-twitter-background-color: gray;
+}
+/*body {
+    background: var(--tabs-options-color) !important;
+}*/
+.enviar-bttn {
+    width: 50%;
+    background: var(--tabs-options-color) !important;
+    color: white !important;
+}

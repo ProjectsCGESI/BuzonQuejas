@@ -1,0 +1,86 @@
+﻿@model BuzonQuejas3.Models.Queja
+
+@{
+    ViewData["Title"] = "Nueva Queja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/LevantarQueja.css" />
+
+<div class="row justify-content-center">
+    <div class="col-12 mb-2">
+        <h1 class="text-center">Nueva Queja</h1>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Estatus" value="Pendiente"/>
+            <input type="hidden" asp-for="AtendidoPor" value="na"/>
+            <input type="hidden" asp-for="Resolucion" value="na"/>
+            <input type="hidden" asp-for="FechaAtencion" value="@DateTime.Now"/>
+            <div class="form-group">
+                <input asp-for="NombreCreador" class="form-control" placeholder="Nombre*" />
+                <span asp-validation-for="NombreCreador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Direccion" class="form-control" placeholder="Dirección*" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Correo" class="form-control" placeholder="Correo eléctronico*" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="MotivoQueja" class="form-control" placeholder="Motivo de la queja*" />
+                <span asp-validation-for="MotivoQueja" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <textarea asp-for="RelatoHechos" class="form-control" placeholder="Relato de hechos*">
+                </textarea>
+                <span asp-validation-for="RelatoHechos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="ServidorInvolucrado" class="form-control" placeholder="Servidor público involucrado*" />
+                <span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Asignar a*</label>
+                <select asp-for="DepartamentoAsignado" class="form-control">
+                    <option>Of. FGE</option>
+                    <option>Servicios a la comunidad</option>
+                    <option>Comunicación social</option>
+                    <option>Visitaduria</option>
+                    <option>OIC</option>
+                    <option>FEAI</option>
+                    <option>FDH</option>
+                    <option>Correo FGE</option>
+                    <option>Conmutador</option>
+                    <option>Correo FGE</option>
+                </select>
+                <span asp-validation-for="DepartamentoAsignado" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Fecha de creación*</label>
+                <input asp-for="FechaCreacion" class="form-control" />
+                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Levantar queja" class="form-control enviar-bttn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+        <a asp-action="Index">Regresar</a>
+    </div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

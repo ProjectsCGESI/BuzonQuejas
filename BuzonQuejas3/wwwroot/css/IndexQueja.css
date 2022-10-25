@@ -1,0 +1,52 @@
+﻿:root {
+    --primary-color: #BDC1BF;
+    --secondary-color: #B28510;
+    --hover-text-color: #ffc107;
+    --primary-color-rgba: rgba(10, 10, 10, 0.5);
+    --white-menu-color: white;
+    --black-menu-color: black;
+    --gray-menu-color: #aa9d14;
+    --offcanvas-background-color: gray;
+    --links-color: #232323;
+    --tabs-options-color: #575757;
+    --tabs-options-hover-color: gray;
+    --animation-background-color: #A5957E;
+    --animation-hover-color: #332700;
+    --facebook-twitter-background-color: gray;
+}
+
+.contenedor-tabla {
+    border-color: var(--primary-color) !important;
+}
+
+.table-warning{
+    background-color: red !important;
+}
+
+
+/*estilos nav*/
+.opcion-color {
+    color: var(--secondary-color) !important;
+    border-bottom: 1px solid #B28510;
+}
+
+.opcion-color:hover {
+        color: #ffc107;
+        /*background-color: #ffc107 !important;*/
+    }
+
+.border-color-nav {
+    border-bottom: 5px solid #B28510 !important;
+}
+
+/*.row-table:hover {
+    color: rgb(112,24,78);
+    background-color: #ffc107 !important;
+}*/
+
+.enviar-bttn {
+    color: white !important;
+    width: 100%;
+    background: var(--tabs-options-color) !important;
+}
+

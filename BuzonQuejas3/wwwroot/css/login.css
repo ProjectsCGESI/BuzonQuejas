@@ -1,0 +1,95 @@
+﻿:root {
+    --primary-color: #BDC1BF;
+    --secondary-color: #B28510;
+    --primary-color-rgba: rgba(10, 10, 10, 0.5);
+    --white-menu-color: white;
+    --black-menu-color: black;
+    --gray-menu-color: #aa9d14;
+    --offcanvas-background-color: gray;
+    --links-color: #232323;
+    --tabs-options-color: #575757;
+    --tabs-options-hover-color: gray;
+    --animation-background-color: #A5957E;
+    --animation-hover-color: #332700;
+    --facebook-twitter-background-color: gray;
+}
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--primary-color) !important;
+}
+
+
+.user_card {
+    height: 400px;
+    width: 350px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: var(--secondary-color) !important;
+    /*background: #f39c12;*/
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.brand_logo_container {
+    position: absolute;
+    height: 170px;
+    width: 170px;
+    top: -75px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    padding: 10px;
+    text-align: center;
+}
+
+.brand_logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 60%;
+    /*border: 2px solid white;*/
+}
+
+.form_container {
+    margin-top: 80px;
+}
+
+.login_btn {
+    width: 100%;
+    background: var(--tabs-options-color) !important;
+    color: white !important;
+}
+
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+    background: var(--offcanvas-background-color) !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #c0392b !important;
+}

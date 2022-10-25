@@ -1,0 +1,136 @@
+﻿@model IEnumerable<BuzonQuejas3.Models.Queja>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var username = Context.User.FindFirst("Correo");
+}
+@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+<link rel="stylesheet" href="~/css/IndexQueja.css" />
+@*<div class="container-fluid">*@
+<div class="row align-items-center">
+    <div class="col-12">
+        <div class="row align-items-center mb-5">
+            <div class="col-6 align-self-center">
+                <h1 class="text-center">Buzón de quejas</h1>
+            </div>
+            <div class="col-auto  ml-auto ">
+                <form asp-controller="Queja" asp-action="Index">
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <input type="text" name="buscar" class="form-control">
+                            @*<input type="submit" value="Buscar" class="btn form-control btn-sm btn-dark" />*@
+                        </div>
+                        <div class="col align-self-center">
+                            <input type="submit" value="Buscar" class="btn  btn-sm  btn-dark" />
+                        </div>
+                        <div class="col align-self-center">
+                            <a class="btn btn-sm  btn-dark" asp-action="Index">Restaurar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 ">
+        <div class="table-responsive border contenedor-tabla">
+            <table class="table table-hover ">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayName("Nombre")
+                            @*@username*@
+                            @*@Html.DisplayNameFor(model => model.NombreCreador)*@
+                        </th>
+                        <!--<th>
+                            @Html.DisplayName("Dirección")-->
+                        @*@Html.DisplayNameFor(model => model.Direccion)*@
+                        <!--</th>
+                        <th>
+                            @Html.DisplayName("Teléfono")-->
+                        @*@Html.DisplayNameFor(model => model.Telefono)*@
+                        <!--</th>
+                        <th>
+                            @Html.DisplayName("Correo")-->
+                        @*@Html.DisplayNameFor(model => model.Correo)*@
+                        <!--</th>-->
+                        <th>
+                            @Html.DisplayName("Motivo")
+                            @*@Html.DisplayNameFor(model => model.MotivoQueja)*@
+                        </th>
+                        <th>
+                            @Html.DisplayName("Hechos")
+                            @*@Html.DisplayNameFor(model => model.RelatoHechos)*@
+                        </th>
+                        <th>
+                            @Html.DisplayName("Servidor Involucrado")
+                            @*@Html.DisplayNameFor(model => model.ServidorInvolucrado)*@
+                        </th>
+                        <th>
+                            @Html.DisplayName("Fecha")
+                            @*@Html.DisplayNameFor(model => model.FechaCreacion)*@
+                        </th>
+                        <th>
+                            <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroEstatus"]">
+                                @Html.DisplayName("Estatus")
+                            </a>
+                            @*@Html.DisplayNameFor(model => model.FechaCreacion)*@
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreCreador)
+                        </td>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Correo)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MotivoQueja)
+                        </td>
+                        <td class="col-2 overflow-hidden">
+                            @Html.DisplayFor(modelItem => item.RelatoHechos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServidorInvolucrado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaCreacion)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Estatus)*@
+                            @{
+                                if (@item.Estatus == "Pendiente")
+                                {
+                                    <p class="text-danger">Pendiente</p>
+                                }
+                                else
+                                {
+                                    <p class="text-success">Atendido</p>
+                                }
+                            }
+                        </td>
+
+                        <td>
+                            <a asp-action="Seguimiento" asp-route-id="@item.IdQueja">Seguimiento</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+@*</div>*@

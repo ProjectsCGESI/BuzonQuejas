@@ -1,0 +1,154 @@
+﻿
+@model BuzonQuejas3.Models.Queja
+
+@{
+    ViewData["Title"] = "Seguimiento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/Seguimiento.css" />
+
+<div class="row justify-content-center">
+    <div class="col-10">
+        <h3>Detalles queja</h3>
+    </div>
+    <div class="col-md-10">
+        <form asp-action="Seguimiento">
+            <div class="row">
+                @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                <input type="hidden" asp-for="IdQueja" />
+                <input type="hidden" asp-for="NombreCreador" />
+                <input type="hidden" asp-for="Direccion" />
+                <input type="hidden" asp-for="Telefono" />
+                <input type="hidden" asp-for="Correo" />
+                <input type="hidden" asp-for="MotivoQueja" />
+                <input type="hidden" asp-for="RelatoHechos" />
+                <input type="hidden" asp-for="ServidorInvolucrado" />
+                <input type="hidden" asp-for="DepartamentoAsignado" />
+                <input type="hidden" asp-for="FechaCreacion" />
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Creada por</label>
+                        <input disabled asp-for="NombreCreador" class="form-control" />
+                        @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Dirección</label>
+                        <input disabled asp-for="Direccion" class="form-control" />
+                        @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Teléfono</label>
+                        <input disabled asp-for="Telefono" class="form-control" />
+                        @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Correo</label>
+                        <input disabled asp-for="Correo" class="form-control" />
+                        @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Motivo de la queja</label>
+                        <input disabled asp-for="MotivoQueja" class="form-control" />
+                        @*<span asp-validation-for="MotivoQueja" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label">Relato de los hechos</label>
+                        <textarea disabled asp-for="RelatoHechos" class="form-control">
+                </textarea>
+                        @*<span asp-validation-for="RelatoHechos" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Servidor público involucrado</label>
+                        <input disabled asp-for="ServidorInvolucrado" class="form-control" />
+                        @*<span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Departamento asignado</label>
+                        <input disabled asp-for="DepartamentoAsignado" class="form-control" />
+                        @*<span asp-validation-for="DepartamentoAsignado" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Fecha de creación </label>
+                        <input disabled asp-for="FechaCreacion" class="form-control" />
+                        @*<span asp-validation-for="FechaCreacion" class="text-danger"></span>*@
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <h3>Seguimiento</h3>
+                </div>
+                <div class="col-8">
+                    <div class="form-group">
+                        <label class="control-label">Atendió*</label>
+                        <input asp-for="AtendidoPor" class="form-control" required title="Este campo es requerido"/>
+                        <span asp-validation-for="AtendidoPor" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Fecha de atención*</label>
+                        <input asp-for="FechaAtencion" class="form-control" required title="Este campo es requerido"/>
+                        <span asp-validation-for="FechaAtencion" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Resolución*</label>
+                        <input asp-for="Resolucion" class="form-control" required title="Este campo es requerido"/>
+                        <span asp-validation-for="Resolucion" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Estatus*</label>
+                        <select asp-for="Estatus" class="form-control" required title="Este campo es requerido">
+                            <option>Pendiente</option>
+                            <option>Atendido</option>
+                        </select>
+                        <span asp-validation-for="Estatus" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <div class="row align-content-start ">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <input type="submit" value="Guardar" class="btn enviar-bttn" />
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <a class="btn enviar-bttn" asp-action="Index">Regresar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a class="btn btn-primary" asp-action="Index">Regresar</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
