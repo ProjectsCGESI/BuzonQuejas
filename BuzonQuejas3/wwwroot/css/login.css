@@ -68,6 +68,12 @@ html {
     color: white !important;
 }
 
+.login_btn:hover {
+    width: 100%;
+    background: gray!important;
+    color: white !important;
+}
+
     .login_btn:focus {
         box-shadow: none !important;
         outline: 0px !important;

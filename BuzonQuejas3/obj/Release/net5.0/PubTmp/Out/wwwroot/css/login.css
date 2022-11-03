@@ -18,7 +18,7 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background: var(--white-menu-color) !important;
+    background: var(--primary-color) !important;
 }
 
 
@@ -27,7 +27,7 @@ html {
     width: 350px;
     margin-top: auto;
     margin-bottom: auto;
-    background: var(--primary-color);
+    background: var(--secondary-color) !important;
     /*background: #f39c12;*/
     position: relative;
     display: flex;
@@ -46,7 +46,7 @@ html {
     width: 170px;
     top: -75px;
     border-radius: 50%;
-    background: var(--white-menu-color);
+    background: var(--primary-color);
     padding: 10px;
     text-align: center;
 }
@@ -54,17 +54,17 @@ html {
 .brand_logo {
     height: 150px;
     width: 150px;
-    border-radius: 50%;
-    border: 2px solid white;
+    border-radius: 60%;
+    /*border: 2px solid white;*/
 }
 
 .form_container {
-    margin-top: 50px;
+    margin-top: 80px;
 }
 
 .login_btn {
     width: 100%;
-    background: var(--secondary-color) !important;
+    background: var(--tabs-options-color) !important;
     color: white !important;
 }
 

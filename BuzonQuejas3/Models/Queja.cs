@@ -9,52 +9,93 @@ namespace BuzonQuejas3.Models
 {
     public partial class Queja
     {
-        public Guid IdQueja { get; set; }
+        public Guid QuejaID { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        public string NombreCreador { get; set; }
+        [StringLength(100)]
+        public string NombreQuejante { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(100)]
         public string Direccion { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(20)]
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(30)]
+        //[DataType(DataType.EmailAddress,]
+        [EmailAddress(ErrorMessage = "Ingresa un correo electrónico con el formato correcto")]
+
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(100)]
         public string MotivoQueja { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(300)]
         public string RelatoHechos { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
         public string ServidorInvolucrado { get; set; }
 
-        [Required(ErrorMessage = "Debe llenar este campo")]
-        [Display(Name = "Asignado a")]
-        public string DepartamentoAsignado { get; set; }
+        //[Required(ErrorMessage = "Debe llenar este campo")]
+        //[Display(Name = "Asignado a")]
+        //public string DepartamentoAsignado { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         [Display(Name = "Fecha de creación")]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaCreacion { get; set; }
-        public DateTime FechaActualizacion { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(20)]
         public string Estatus { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         public DateTime FechaAtencion { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
         public string AtendidoPor { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(100)]
         public string Resolucion { get; set; }
 
-        //public String DepartamentoID { get; set; }
+        //Llave foranea Departamento
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid DepartamentoID { get; set; }
+
+        [ForeignKey("DepartamentoID")]
+        public Departamento Departamento { get; set; }
+
+        //Llave foranea Municipio
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid MunicipioID { get; set; }
+
+        [ForeignKey("MunicipioID")]
+        public Municipio Municipio{ get; set; }
+
+        //Llave foranea UnidadAdministrativa
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid UnidadAdministrativaID { get; set; }
+
+        [ForeignKey("UnidadAdministrativaID")]
+        public UnidadAdministrativa UnidadAdministrativa { get; set; }
+
+        //Llave foranea CentroTrabajo
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid CentroTrabajoID { get; set; }
+
+        //[ForeignKey("CentroTrabajoID")]
+        //public CentroTrabajo CentroTrabajo { get; set; }
+
+
+
 
 
     }

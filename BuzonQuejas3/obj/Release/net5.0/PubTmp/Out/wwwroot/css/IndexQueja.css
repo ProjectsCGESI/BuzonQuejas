@@ -19,6 +19,10 @@
     border-color: var(--primary-color) !important;
 }
 
+.table-warning{
+    background-color: red !important;
+}
+
 
 /*estilos nav*/
 .opcion-color {
@@ -26,7 +30,7 @@
     border-bottom: 1px solid #B28510;
 }
 
-    .opcion-color:hover {
+.opcion-color:hover {
         color: #ffc107;
         /*background-color: #ffc107 !important;*/
     }
@@ -34,3 +38,15 @@
 .border-color-nav {
     border-bottom: 5px solid #B28510 !important;
 }
+
+/*.row-table:hover {
+    color: rgb(112,24,78);
+    background-color: #ffc107 !important;
+}*/
+
+.enviar-bttn {
+    color: white !important;
+    width: 100%;
+    background: var(--tabs-options-color) !important;
+}
+

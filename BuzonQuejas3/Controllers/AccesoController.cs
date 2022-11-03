@@ -40,6 +40,8 @@ namespace BuzonQuejas3.Controllers
 
                 if (usuario != null)
                 {
+                var rol = await _context.Roles.FirstOrDefaultAsync(m => m.RolID == usuario.RolID);
+                var departamento = await _context.Departamentos.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
 
                     //2.- CONFIGURACION DE LA AUTENTICACION
                     #region AUTENTICACTION
@@ -47,10 +49,13 @@ namespace BuzonQuejas3.Controllers
                 {
                     new Claim(ClaimTypes.Name, usuario.Nombre),
                     new Claim("Correo", usuario.Correo),
+                    //new Claim("Departamento", departamento.Nombre),
+                    new Claim("DepartamentoID", departamento.DepartamentoID.ToString()),
+                    new Claim(ClaimTypes.Role, rol.Nombre),
                 };
                     //foreach (string rol in usuario.R)
                     //{
-                    claims.Add(new Claim(ClaimTypes.Role, usuario.Rol));
+                    //claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
                     //}
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

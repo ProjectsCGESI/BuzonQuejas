@@ -1,6 +1,8 @@
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\BuzonQuejas3.exe
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\IndexQueja.css
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\LevantarQueja.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\login.css
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\Seguimiento.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\site.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\favicon.ico
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\imagenes\escudoPuebla.png

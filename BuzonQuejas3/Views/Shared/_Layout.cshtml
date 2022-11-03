@@ -1,12 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BuzonQuejas3</title>
+    <title>@ViewData["Title"] - Buzón de Quejas</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/IndexQueja.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="~/imagenes/faviconV2.png">
 </head>
 <body>
     <header>
@@ -15,24 +18,33 @@
                 <div class="container-fluid">
                     <div class="row align-items-center ">
                         <div class="col-2">
-                            <img src="/imagenes/escudoPuebla.png" class="mx-auto d-block" style="width:4vw;" alt="Escudo de Puebla">
+                            <img src="~/imagenes/escudoPuebla.png" class="mx-auto d-block" style="width:4vw;" alt="Escudo de Puebla">
                         </div>
-                        <div class="col-8 ">
+                        <div class="col-8">
                             <div class="row justify-content-center">
-                                <div class="col-auto mr-auto">
-                                    <a class="nav-link text-dark opcion-color" asp-area="" asp-controller="Queja" asp-action="Index">Mis Quejas</a>
+                                <div class="col-auto mr-auto ">
+                                    <a class="nav-link opcion-color" asp-area="" asp-controller="Queja" asp-action="Index">Mis Quejas</a>
                                 </div>
-                                <div class="col-auto mr-auto">
-                                    <a class="nav-link text-dark opcion-color" asp-area="" asp-controller="Queja" asp-action="Create">Levantar Queja</a>
-                                </div>
-                                <div class="col-auto mr-auto">
-                                    <a class="nav-link text-dark opcion-color" asp-area="" asp-controller="Acceso" asp-action="Salir">Salir</a>
-                                </div>
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+                                {
+                                    <div class="col-auto mr-auto">
+                                        <a class="nav-link opcion-color" asp-area="" asp-controller="Queja" asp-action="Create">Levantar Queja</a>
+                                    </div>
+                                }
 
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+                                {
+                                <div class="col-auto mr-auto">
+                                    <a class="nav-link opcion-color" asp-area="" asp-controller="Queja" asp-action="Tablero">Tablero</a>
+                                </div>
+                                }
+                                <div class="col-auto mr-auto ">
+                                    <a class="nav-link opcion-color" asp-area="" asp-controller="Acceso" asp-action="Salir">Salir</a>
+                                </div>
                             </div>
                         </div>
                         <div class="col">
-                            <img src="/imagenes/Logotipo_institucional.png" class="mx-auto d-block" style="width:11vw;" alt="Fiscalia General del Estado de Puebla">
+                            <img src="~/imagenes/Logotipo_institucional.png" class="mx-auto d-block" style="width:11vw;" alt="Fiscalia General del Estado de Puebla">
                         </div>
                     </div>
                 </div>
@@ -47,14 +59,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - BuzonQuejas3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/CrearQueja.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

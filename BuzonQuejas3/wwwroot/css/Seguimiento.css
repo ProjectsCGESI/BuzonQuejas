@@ -1,6 +1,7 @@
 ﻿:root {
     --primary-color: #BDC1BF;
     --secondary-color: #B28510;
+    --hover-text-color: #DBAB00;
     --primary-color-rgba: rgba(10, 10, 10, 0.5);
     --white-menu-color: white;
     --black-menu-color: black;
@@ -14,8 +15,20 @@
     --facebook-twitter-background-color: gray;
 }
 
-.enviar-bttn {
+.enviar-bttn-seguimiento {
     width: 100%;
-    background: var(--tabs-options-color) !important;
+    background: var(--secondary-color) !important;
     color: white !important;
 }
+
+.enviar-bttn-seguimiento:hover {
+    width: 100%;
+    background: var(--hover-text-color) !important;
+    color: white !important;
+}
+
+.titulo-seguimiento {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
+}
+

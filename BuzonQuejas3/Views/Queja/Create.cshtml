@@ -3,25 +3,56 @@
 @{
     ViewData["Title"] = "Nueva Queja";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //ViewData["EsMiDepartamento"] = "";
+
+    var DepartamentoUsuario = Context.User.FindFirst("DepartamentoID").Value;
+
 }
 
 <link rel="stylesheet" href="~/css/LevantarQueja.css" />
 
 <div class="row justify-content-center">
-    <div class="col-12 mb-2">
-        <h1 class="text-center">Nueva Queja</h1>
+    <div class="col-12 ">
+        <h1 class="text-center titulo-nueva">Nueva Queja</h1>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Estatus" value="Pendiente"/>
-            <input type="hidden" asp-for="AtendidoPor" value="na"/>
-            <input type="hidden" asp-for="Resolucion" value="na"/>
-            <input type="hidden" asp-for="FechaAtencion" value="@DateTime.Now"/>
-            <div class="form-group">
-                <input asp-for="NombreCreador" class="form-control" placeholder="Nombre*" />
-                <span asp-validation-for="NombreCreador" class="text-danger"></span>
+            <input type="hidden" asp-for="Estatus" value="Pendiente" />
+            <input type="hidden" asp-for="AtendidoPor" value="na" />
+            <input type="hidden" asp-for="Resolucion" value="na" />
+            <input type="hidden" asp-for="FechaAtencion" value="@DateTime.Now" />
+            @*<input type="hidden" asp-for="CentroTrabajoID" value="6468FDD5-7BF3-43AB-99BA-DBA097CA34DC" />*@
+            @*<input type="hidden" asp-for="DepartamentoID" value="E0ADDF82-3939-4B4D-9622-DE2D5FA583EB" />*@
+            @*<input type="hidden" asp-for="UnidadAdministrativaID" value="9ED83DB0-92B7-4E6E-94D9-BE81DF6AB791" />
+        <input type="hidden" asp-for="CentroTrabajoID" value="756ADCD7-C999-426C-BC10-F8CA5BE2FB2F" />*@
+            <div class="form-group mt-3">
+                <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" />
+                <span asp-validation-for="NombreQuejante" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                @*<input asp-for="Direccion" class="form-control" placeholder="Dirección*" />
+            <span asp-validation-for="Direccion" class="text-danger"></span>*@
+                @*@Html.DropDownList("MunicipioID", new SelectList(ViewBag.ListaMunicipios, "MunicipioID", "Nombre"))*@
+                @*@Html.DropDownList("municipios", ViewBag.municipios as SelectList, new { @id = "MunicipioID" })*@
+                <select asp-for="MunicipioID" asp-items="ViewBag.municipios" class="form-control">
+                    <option value="">Seleccione un municipio</option>
+                </select>
+                <span asp-validation-for="MunicipioID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="UnidadAdministrativaID" asp-items="ViewBag.unidadAdministrativas" class="form-control">
+                    <option value="">Seleccione una unidad administrativa</option>
+                </select>
+                <span asp-validation-for="UnidadAdministrativaID" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <select asp-for="CentroTrabajoID" asp-items="ViewBag.centrosTrabajo" class="form-control">
+                <option value="">Seleccione un centro de trabajo</option>
+            </select>
+            <span asp-validation-for="CentroTrabajoID" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input asp-for="Direccion" class="form-control" placeholder="Dirección*" />
                 <span asp-validation-for="Direccion" class="text-danger"></span>
@@ -31,7 +62,7 @@
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="Correo" class="form-control" placeholder="Correo eléctronico*" />
+                <input asp-for="Correo" type="email" class="form-control" placeholder="Correo eléctronico*" />
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,21 +78,49 @@
                 <input asp-for="ServidorInvolucrado" class="form-control" placeholder="Servidor público involucrado*" />
                 <span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+            <label class="control-label">Asignar a*</label>
+            <select asp-for="DepartamentoID" class="form-control">
+                <option>Of. FGE</option>
+                <option>Servicios a la comunidad</option>
+                <option>Comunicación social</option>
+                <option>Visitaduria</option>
+                <option>OIC</option>
+                <option>FEAI</option>
+                <option>FDH</option>
+                <option>Correo FGE</option>
+                <option>Conmutador</option>
+                <option>Correo FGE</option>
+            </select>
+            <span asp-validation-for="DepartamentoID" class="text-danger"></span>
+        </div>*@
+
             <div class="form-group">
-                <label class="control-label">Asignar a*</label>
-                <select asp-for="DepartamentoAsignado" class="form-control">
-                    <option>Of. FGE</option>
-                    <option>Servicios a la comunidad</option>
-                    <option>Comunicación social</option>
-                    <option>Visitaduria</option>
-                    <option>OIC</option>
-                    <option>FEAI</option>
-                    <option>FDH</option>
-                    <option>Correo FGE</option>
-                    <option>Conmutador</option>
-                    <option>Correo FGE</option>
+                <label class="control-label">¿Es tu departamento?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="esMiDepartamento" id="radioYes" value="true">
+                    <label class="form-check-label" for="radioYes">
+                        Sí
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="esMiDepartamento" id="radioNo" value="false" >
+                    <label class="form-check-label" for="radioNo">
+                        No
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" id="departamentoFalse">
+                <select asp-for="DepartamentoID" asp-items="ViewBag.departamentos" class="form-control" id="selectDepartamento">
+                    <option value="">Seleccione un departamento</option>
                 </select>
-                <span asp-validation-for="DepartamentoAsignado" class="text-danger"></span>
+                <span asp-validation-for="DepartamentoID" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group" id="departamentoTrue">
+                <input type="hidden" asp-for="DepartamentoID" value=@DepartamentoUsuario />
             </div>
 
             <div class="form-group">
@@ -71,12 +130,14 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Levantar queja" class="form-control enviar-bttn" />
+                <input type="submit" value="Enviar" class="btn enviar-bttn-queja" />
             </div>
         </form>
     </div>
 </div>
 
+
+<script src="~/js/CrearQueja.js" asp-append-version="true"></script>
 @*<div>
         <a asp-action="Index">Regresar</a>
     </div>*@

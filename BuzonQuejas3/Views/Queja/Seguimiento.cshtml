@@ -4,42 +4,68 @@
 @{
     ViewData["Title"] = "Seguimiento";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var UnidadAdministrativa = (List<UnidadAdministrativa>)ViewData["unidades"];
+    var Departamento = (List<Departamento>)ViewData["departamentos"];
+    //var CentroTrabajo = (List<CentroTrabajo>)ViewData["centrosTrabajo"];
+    var Municipio = (List<Municipio>)ViewData["municipios"];
 }
 <link rel="stylesheet" href="~/css/Seguimiento.css" />
 
 <div class="row justify-content-center">
-    <div class="col-10">
-        <h3>Detalles queja</h3>
+    <div class="col-12 mb-3">
+        <h1 class="text-center titulo-seguimiento">Detalles de la queja</h1>
     </div>
     <div class="col-md-10">
         <form asp-action="Seguimiento">
             <div class="row">
                 @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-                <input type="hidden" asp-for="IdQueja" />
-                <input type="hidden" asp-for="NombreCreador" />
+                <input type="hidden" asp-for="QuejaID" />
+                <input type="hidden" asp-for="NombreQuejante" />
                 <input type="hidden" asp-for="Direccion" />
+                <input type="hidden" asp-for="UnidadAdministrativaID" />
+                <input type="hidden" asp-for="MunicipioID" />
+                <input type="hidden" asp-for="CentroTrabajoID" />
+                <input type="hidden" asp-for="DepartamentoID" />
                 <input type="hidden" asp-for="Telefono" />
                 <input type="hidden" asp-for="Correo" />
                 <input type="hidden" asp-for="MotivoQueja" />
                 <input type="hidden" asp-for="RelatoHechos" />
                 <input type="hidden" asp-for="ServidorInvolucrado" />
-                <input type="hidden" asp-for="DepartamentoAsignado" />
                 <input type="hidden" asp-for="FechaCreacion" />
-                <div class="col-6">
+                @*<input type="hidden" asp-for="CentroTrabajoID" />*@
+                <div class="col-4">
                     <div class="form-group">
-                        <label class="control-label">Creada por</label>
-                        <input disabled asp-for="NombreCreador" class="form-control" />
-                        @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label class="control-label">Dirección</label>
-                        <input disabled asp-for="Direccion" class="form-control" />
+                        <label class="control-label">Nombre del quejante</label>
+                        <textarea disabled asp-for="NombreQuejante" class="form-control"></textarea>
                         @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
                     </div>
                 </div>
                 <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Dirección</label>
+                        <textarea disabled asp-for="Direccion" class="form-control"></textarea>
+                        @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4 ">
+                    @foreach (var unidad in UnidadAdministrativa)
+                    {
+                        if (!@Model.UnidadAdministrativaID.ToString().Equals(""))
+                        {
+                            if (unidad.UnidadAdministrativaID.Equals(@Model.UnidadAdministrativaID))
+                            {
+
+                                <div class="form-group">
+                                    <label class="control-label">Unidad Administrativa</label>
+                                    <textarea disabled class="form-control">@unidad.Nombre</textarea>
+                                    @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                                </div>
+                                break;
+                            }
+                        }
+                    }
+                </div>
+                <div class="col-2">
                     <div class="form-group">
                         <label class="control-label">Teléfono</label>
                         <input disabled asp-for="Telefono" class="form-control" />
@@ -53,6 +79,78 @@
                         @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
                     </div>
                 </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label">Fecha de creación </label>
+                        <input disabled asp-for="FechaCreacion" class="form-control" />
+                        @*<span asp-validation-for="FechaCreacion" class="text-danger"></span>*@
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    @foreach (var municipio in Municipio)
+                    {
+                        if (!@Model.MunicipioID.ToString().Equals(""))
+                        {
+                            if (municipio.MunicipioID.Equals(@Model.MunicipioID))
+                            {
+
+                                <div class="form-group">
+                                    <label class="control-label">Municipio</label>
+                                    <input disabled value="@municipio.Nombre" class="form-control" />
+                                    @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                                </div>
+                                break;
+                            }
+                        }
+                    }
+                </div>
+
+                <div class="col-4">
+                    @foreach (var departamento in Departamento)
+                    {
+                        if (!@Model.DepartamentoID.ToString().Equals(""))
+                        {
+                            if (departamento.DepartamentoID.Equals(@Model.DepartamentoID))
+                            {
+
+                                <div class="form-group">
+                                    <label class="control-label">Departamento asignado</label>
+                                    <input disabled value="@departamento.Nombre" class="form-control" />
+                                    @*<span asp-validation-for="NombreCreador" class="text-danger"></span>*@
+                                </div>
+                                break;
+                            }
+                        }
+                    }
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Servidor público involucrado</label>
+                        <input disabled asp-for="ServidorInvolucrado" class="form-control" />
+                        @*<span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>*@
+                    </div>
+                </div>
+                @*
+        <div class="col-4">
+            @foreach (var centro in CentroTrabajo)
+            {
+                if (!@Model.CentroTrabajoID.ToString().Equals(""))
+                {
+                    if (centro.CentroTrabajoID.Equals(@Model.CentroTrabajoID))
+                    {
+
+                        <div class="form-group">
+                            <label class="control-label">Centro de trabajo</label>
+                            <input disabled value="@centro.Nombre" class="form-control" />
+                            <span asp-validation-for="NombreCreador" class="text-danger"></span>
+                        </div>
+                        break;
+                    }
+                }
+            }
+        </div>
+                *@
                 <div class="col-4">
                     <div class="form-group">
                         <label class="control-label">Motivo de la queja</label>
@@ -68,53 +166,34 @@
                         @*<span asp-validation-for="RelatoHechos" class="text-danger"></span>*@
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label class="control-label">Servidor público involucrado</label>
-                        <input disabled asp-for="ServidorInvolucrado" class="form-control" />
-                        @*<span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label class="control-label">Departamento asignado</label>
-                        <input disabled asp-for="DepartamentoAsignado" class="form-control" />
-                        @*<span asp-validation-for="DepartamentoAsignado" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label class="control-label">Fecha de creación </label>
-                        <input disabled asp-for="FechaCreacion" class="form-control" />
-                        @*<span asp-validation-for="FechaCreacion" class="text-danger"></span>*@
-                    </div>
-                </div>
 
-                <div class="col-12">
-                    <h3>Seguimiento</h3>
+
+
+                <div class="col-12 mt-3 mb-3">
+                    <h1 class="text-center titulo-seguimiento">Seguimiento</h1>
                 </div>
                 <div class="col-8">
                     <div class="form-group">
                         <label class="control-label">Atendió*</label>
-                        <input asp-for="AtendidoPor" class="form-control" required title="Este campo es requerido"/>
+                        <input asp-for="AtendidoPor" class="form-control" required title="Este campo es requerido" />
                         <span asp-validation-for="AtendidoPor" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label class="control-label">Fecha de atención*</label>
-                        <input asp-for="FechaAtencion" class="form-control" required title="Este campo es requerido"/>
+                        <input asp-for="FechaAtencion" class="form-control" required title="Este campo es requerido" />
                         <span asp-validation-for="FechaAtencion" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <div class="form-group">
                         <label class="control-label">Resolución*</label>
-                        <input asp-for="Resolucion" class="form-control" required title="Este campo es requerido"/>
+                        <input asp-for="Resolucion" class="form-control" required title="Este campo es requerido" />
                         <span asp-validation-for="Resolucion" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label class="control-label">Estatus*</label>
                         <select asp-for="Estatus" class="form-control" required title="Este campo es requerido">
@@ -125,18 +204,14 @@
                     </div>
                 </div>
                 <div class="col-12 ">
-                    <div class="row align-content-start ">
-                        <div class="col-2">
-                            <div class="form-group">
-                                <input type="submit" value="Guardar" class="btn enviar-bttn" />
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="form-group">
-                                <a class="btn enviar-bttn" asp-action="Index">Regresar</a>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn enviar-bttn-seguimiento" />
                     </div>
+                    @*<div class="col-2">
+                <div class="form-group">
+                    <a class="btn enviar-bttn" asp-action="Index">Regresar</a>
+                </div>
+            </div>*@
                 </div>
             </div>
         </form>
@@ -144,8 +219,8 @@
 </div>
 
 @*<div>
-    <a class="btn btn-primary" asp-action="Index">Regresar</a>
-</div>*@
+        <a class="btn btn-primary" asp-action="Index">Regresar</a>
+    </div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

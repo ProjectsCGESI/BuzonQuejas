@@ -12,10 +12,10 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreCreador)
+            @Html.DisplayNameFor(model => model.NombreQuejante)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombreCreador)
+            @Html.DisplayFor(model => model.NombreQuejante)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Direccion)
@@ -54,22 +54,16 @@
             @Html.DisplayFor(model => model.ServidorInvolucrado)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartamentoAsignado)
+            @Html.DisplayNameFor(model => model.DepartamentoID)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartamentoAsignado)
+            @Html.DisplayFor(model => model.DepartamentoID)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FechaCreacion)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FechaCreacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaActualizacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaActualizacion)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Estatus)
@@ -98,6 +92,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.IdQueja">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.QuejaID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

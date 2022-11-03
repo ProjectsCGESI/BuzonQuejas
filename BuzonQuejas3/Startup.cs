@@ -28,9 +28,12 @@ namespace BuzonQuejas3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<Dev_BuzonQuejasContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Conexion")));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+
 
             //Autenticación
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

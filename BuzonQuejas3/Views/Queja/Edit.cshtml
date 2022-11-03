@@ -13,11 +13,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdQueja" />
+            <input type="hidden" asp-for="QuejaID" />
             <div class="form-group">
-                <label asp-for="NombreCreador" class="control-label"></label>
-                <input asp-for="NombreCreador" class="form-control" />
-                <span asp-validation-for="NombreCreador" class="text-danger"></span>
+                <label asp-for="NombreQuejante" class="control-label"></label>
+                <input asp-for="NombreQuejante" class="form-control" />
+                <span asp-validation-for="NombreQuejante" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Direccion" class="control-label"></label>
@@ -50,20 +50,15 @@
                 <span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DepartamentoAsignado" class="control-label"></label>
-                <input asp-for="DepartamentoAsignado" class="form-control" />
-                <span asp-validation-for="DepartamentoAsignado" class="text-danger"></span>
+                <label asp-for="DepartamentoID" class="control-label"></label>
+                <input asp-for="DepartamentoID" class="form-control" />
+                <span asp-validation-for="DepartamentoID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaCreacion" class="control-label"></label>
                 <input asp-for="FechaCreacion" class="form-control" />
                 <span asp-validation-for="FechaCreacion" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="FechaActualizacion" class="control-label"></label>
-                <input asp-for="FechaActualizacion" class="form-control" />
-                <span asp-validation-for="FechaActualizacion" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="Estatus" class="control-label"></label>
                 <input asp-for="Estatus" class="form-control" />
