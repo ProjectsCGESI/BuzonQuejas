@@ -14,7 +14,31 @@
     <div class="col-12 mb-3">
         <h1 class="text-center titulo-seguimiento">Detalles de la queja</h1>
     </div>
-    <div class="col-md-10">
+    <div class="col-10">
+        @{
+            if (ViewBag.SuccessMessageSeguimiento != null)
+            {
+                <div class="col-6">
+                    <div class="modal fade modal-seguimiento-ok" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tarea exitosa</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <strong>@ViewBag.SuccessMessageSeguimiento</strong>
+                                </div>
+                                <div class="modal-footer">
+                                    <a asp-action="Index" class="btn aceptar-bttn">Aceptar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="col-10">
         <form asp-action="Seguimiento">
             <div class="row">
                 @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
@@ -43,22 +67,28 @@
                     </div>
                 </div>
                 <div class="col-4 ">
-                    @foreach (var unidad in UnidadAdministrativa)
-                    {
-                        if (!@Model.UnidadAdministrativaID.ToString().Equals(""))
-                        {
-                            if (unidad.UnidadAdministrativaID.Equals(@Model.UnidadAdministrativaID))
-                            {
-
-                                <div class="form-group">
-                                    <label class="control-label">Unidad Administrativa</label>
-                                    <textarea disabled class="form-control">@unidad.Nombre</textarea>
-                                </div>
-                                break;
-                            }
-                        }
-                    }
+                    <div class="form-group">
+                        <label class="control-label">Unidad Administrativa</label>
+                        <textarea disabled asp-for="UnidadAdministrativaID" class="form-control" id="unidadSeguimiento"></textarea>
+                    </div>
                 </div>
+                @*<div class="col-4 ">
+            @foreach (var unidad in UnidadAdministrativa)
+            {
+                if (!@Model.UnidadAdministrativaID.ToString().Equals(""))
+                {
+                    if (unidad.UnidadAdministrativaID.Equals(@Model.UnidadAdministrativaID))
+                    {
+
+                        <div class="form-group">
+                            <label class="control-label">Unidad Administrativa</label>
+                            <textarea disabled class="form-control">@unidad.Nombre</textarea>
+                        </div>
+                        break;
+                    }
+                }
+            }
+        </div>*@
                 <div class="col-2">
                     <div class="form-group">
                         <label class="control-label">Teléfono</label>
@@ -78,30 +108,37 @@
                     </div>
                 </div>
 
-                <div class="col-3">
-                    @foreach (var municipio in Municipio)
-                    {
-                        if (!@Model.MunicipioID.ToString().Equals(""))
-                        {
-                            if (municipio.MunicipioID.Equals(@Model.MunicipioID))
-                            {
-
-                                <div class="form-group">
-                                    <label class="control-label">Municipio</label>
-                                    <input disabled value="@municipio.Nombre" class="form-control" />
-                                </div>
-                                break;
-                            }
-                        }
-                    }
+                <div class="col-3 ">
+                    <div class="form-group">
+                        <label class="control-label">Municipio</label>
+                        <textarea disabled asp-for="MunicipioID" class="form-control" id="municipioSeguimiento"></textarea>
+                    </div>
                 </div>
+
+                @*<div class="col-3">
+            @foreach (var municipio in Municipio)
+            {
+                if (!@Model.MunicipioID.ToString().Equals(""))
+                {
+                    if (municipio.MunicipioID.Equals(@Model.MunicipioID))
+                    {
+
+                        <div class="form-group">
+                            <label class="control-label">Municipio</label>
+                            <input disabled value="@municipio.Nombre" class="form-control" />
+                        </div>
+                        break;
+                    }
+                }
+            }
+        </div>*@
                 <div class="col-6">
                     <div class="form-group">
                         <label class="control-label">Servidor público involucrado</label>
                         <input disabled asp-for="ServidorInvolucrado" class="form-control" />
                     </div>
                 </div>
-                
+
                 <div class="col-6">
                     <div class="form-group">
                         <label class="control-label">Motivo de la queja</label>
@@ -160,6 +197,8 @@
         </form>
     </div>
 </div>
+
+<script src="~/js/Seguimiento.js" asp-append-version="true"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

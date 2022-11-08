@@ -31,20 +31,16 @@ namespace BuzonQuejas3.Models
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(100)]
+        [StringLength(200)]
         public string MotivoQueja { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(300)]
+        [StringLength(400)]
         public string RelatoHechos { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(50)]
+        [StringLength(100)]
         public string ServidorInvolucrado { get; set; }
-
-        //[Required(ErrorMessage = "Debe llenar este campo")]
-        //[Display(Name = "Asignado a")]
-        //public string DepartamentoAsignado { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         [Display(Name = "Fecha de creación")]
@@ -59,11 +55,11 @@ namespace BuzonQuejas3.Models
         public DateTime FechaAtencion { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(50)]
+        [StringLength(100)]
         public string AtendidoPor { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(100)]
+        [StringLength(300)]
         public string Resolucion { get; set; }
 
         //Llave foranea Departamento
@@ -86,17 +82,6 @@ namespace BuzonQuejas3.Models
 
         [ForeignKey("UnidadAdministrativaID")]
         public UnidadAdministrativa UnidadAdministrativa { get; set; }
-
-        //Llave foranea CentroTrabajo
-        [Required(ErrorMessage = "Debe llenar este campo")]
-        public Guid CentroTrabajoID { get; set; }
-
-        //[ForeignKey("CentroTrabajoID")]
-        //public CentroTrabajo CentroTrabajo { get; set; }
-
-
-
-
 
     }
 }

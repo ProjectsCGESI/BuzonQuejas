@@ -2,8 +2,6 @@
 
     $('body').on('click', '.reasignar', function () {
         var idQueja = $(this).attr("id") + "";
-        //$("#modalbodi").append(idEmpleado);
-        //$("#showID").val(idQueja);
         $("#QuejaId").val(idQueja);
 
         $.ajax({
@@ -30,14 +28,9 @@
             url: "Queja/GetUnidades",
             success: function (response) {
                 $.each(response, function (i, unidad) {
-                    var str = unidad.nombre;
-                    str = str.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-                        return letter.toUpperCase();
-                    });
-
                     $("#unidad").append($('<option>', {
                         value: unidad.unidadAdministrativaID,
-                        text: str
+                        text: unidad.nombre
                     }));
                 });
                 // console.log(response);

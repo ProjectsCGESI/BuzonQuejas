@@ -130,9 +130,10 @@ td {
 }
 
 select option {
+    font-size: 15px;
     width: 200px;
     height: auto;
     word-wrap: break-word;
     white-space: normal;
-    color: var(--secondary-color) !important;
+    /*color: var(--secondary-color) !important;*/
 }

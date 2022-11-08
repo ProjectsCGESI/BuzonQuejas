@@ -58,7 +58,6 @@ namespace BuzonQuejas3.Controllers
                                     //MunicipioID = queja.MunicipioID,
                                     UnidadAdministrativaID = unidad.UnidadAdministrativaID,
                                     UnidadAdministrativa = unidad.Nombre,
-                                    //CentroTrabajoID = queja.CentroTrabajoID
                                     //llamar a todas las propiedades necesarias
                                 };
 
@@ -89,7 +88,6 @@ namespace BuzonQuejas3.Controllers
                                     //MunicipioID = queja.MunicipioID,
                                     UnidadAdministrativaID = unidad.UnidadAdministrativaID,
                                     UnidadAdministrativa = unidad.Nombre,
-                                    //CentroTrabajoID = queja.CentroTrabajoID
                                     //llamar a todas las propiedades necesarias
                                 };
             }
@@ -165,14 +163,8 @@ namespace BuzonQuejas3.Controllers
 
         [Authorize(Roles = "Administrador,Root,Departamental")]
         // GET: Queja/Create
-        public IActionResult Create(String esMidepartamento)
+        public IActionResult Create()
         {
-            if (!String.IsNullOrEmpty(esMidepartamento))
-            {
-                ViewData["EsMiDepartamento"] = esMidepartamento;
-            }
-
-
             var lMunicipios = _context.Municipios.ToList();
             var listaMunicipios = new SelectList(lMunicipios.OrderBy(o => o.Nombre), "MunicipioID", "Nombre");
             ViewBag.municipios = listaMunicipios;
@@ -184,12 +176,6 @@ namespace BuzonQuejas3.Controllers
             var lUnidadAdministrativa = _context.UnidadAdministrativas.Where(q => q.Nombre != "General").ToList();
             var listaUnidadAdministrativas = new SelectList(lUnidadAdministrativa.OrderBy(o => o.Nombre), "UnidadAdministrativaID", "Nombre");
             ViewBag.unidadAdministrativas = listaUnidadAdministrativas;
-
-            //ViewData["EsMiDepartamento"] = "true";
-
-            //var lCentroTrabajo = _context.CentroTrabajos.ToList();
-            //var listaCentroTrabajo = new SelectList(lCentroTrabajo.OrderBy(o => o.Nombre), "CentroTrabajoID", "Nombre");
-            //ViewBag.centrosTrabajo = listaCentroTrabajo;
 
             return View();
         }
@@ -320,8 +306,6 @@ namespace BuzonQuejas3.Controllers
             ViewData["municipios"] = municipios;
             var departamentos = await _context.Departamentos.ToListAsync();
             ViewData["departamentos"] = departamentos;
-            //var centrosTrabajo = await _context.CentroTrabajos.ToListAsync();
-            //ViewData["centrosTrabajo"] = centrosTrabajo;
 
             if (id == null)
             {
@@ -355,6 +339,8 @@ namespace BuzonQuejas3.Controllers
                 {
                     _context.Update(queja);
                     await _context.SaveChangesAsync();
+                    ViewBag.SuccessMessageSeguimiento = "Se han guardado correctamente los cambios";
+                    return View();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -367,9 +353,10 @@ namespace BuzonQuejas3.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
             }
-            return View(queja);
+            return View();
+            //return View(queja);
         }
 
 
@@ -436,6 +423,24 @@ namespace BuzonQuejas3.Controllers
             var queja = await _context.Quejas.FindAsync(Guid.Parse(quejaId));
             var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID.Equals(queja.UnidadAdministrativaID));
             return unidad;
+        }
+        
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
+        public async Task<UnidadAdministrativa> GetUnidadName(string idUnidad)
+        {
+            var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID.Equals(Guid.Parse(idUnidad)));
+            return unidad;
+        }
+        
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
+        public async Task<Municipio> GetMunicipioName(string idMunicipio)
+        {
+            var municipio = await _context.Municipios.FirstOrDefaultAsync(m => m.MunicipioID.Equals(Guid.Parse(idMunicipio)));
+            return municipio;
         }
 
         [ActionName("Reasignar")]
