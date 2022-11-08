@@ -25,31 +25,82 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
         public async Task<IActionResult> Index(string buscar, String filtro)
         {
-            var departamentoUsuario = HttpContext.User.FindFirst("DepartamentoID").Value;
-            IQueryable<Queja> quejas;
+            var unidadUsuario = HttpContext.User.FindFirst("UnidadAdministrativaID").Value;
+
+            IQueryable<QuejaMostrar> quejasMostrar;
+            //IQueryable<Queja> quejas;
 
             if (User.IsInRole("Administrador") || User.IsInRole("Root"))
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                //quejas = from Queja in _context.Quejas select Queja;
+                quejasMostrar = from queja in _context.Quejas
+                                join unidad in _context.UnidadAdministrativas on queja.UnidadAdministrativaID equals unidad.UnidadAdministrativaID
+                                //Where vehi.PatenteVehiculo == patente
+                                select new QuejaMostrar
+                                {
+                                    QuejaID = queja.QuejaID,
+                                    NombreQuejante = queja.NombreQuejante,
+                                    //Direccion = queja.Direccion,
+                                    //Telefono= queja.Telefono,
+                                    //Correo= queja.Correo,
+                                    MotivoQueja = queja.MotivoQueja,
+                                    RelatoHechos = queja.RelatoHechos,
+                                    ServidorInvolucrado = queja.ServidorInvolucrado,
+                                    FechaCreacion = queja.FechaCreacion,
+                                    Estatus = queja.Estatus,
+                                    //FechaAtencion =  queja.FechaAtencion,
+                                    //AtendidoPor = queja.AtendidoPor,
+                                    //Resolucion = queja.Resolucion,
+                                    DepartamentoID = queja.DepartamentoID,
+                                    //MunicipioID = queja.MunicipioID,
+                                    UnidadAdministrativaID = unidad.UnidadAdministrativaID,
+                                    UnidadAdministrativa = unidad.Nombre,
+                                    //CentroTrabajoID = queja.CentroTrabajoID
+                                    //llamar a todas las propiedades necesarias
+                                };
+
+
             }
             else
             {
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                //quejas = from Queja in _context.Quejas where Queja.UnidadAdministrativaID == Guid.Parse(unidadUsuario) select Queja;
+                quejasMostrar = from queja in _context.Quejas
+                                join unidad in _context.UnidadAdministrativas on queja.UnidadAdministrativaID equals unidad.UnidadAdministrativaID
+                                where queja.UnidadAdministrativaID == Guid.Parse(unidadUsuario)
+                                select new QuejaMostrar
+                                {
+                                    QuejaID = queja.QuejaID,
+                                    NombreQuejante = queja.NombreQuejante,
+                                    //Direccion = queja.Direccion,
+                                    //Telefono= queja.Telefono,
+                                    //Correo= queja.Correo,
+                                    MotivoQueja = queja.MotivoQueja,
+                                    RelatoHechos = queja.RelatoHechos,
+                                    ServidorInvolucrado = queja.ServidorInvolucrado,
+                                    FechaCreacion = queja.FechaCreacion,
+                                    Estatus = queja.Estatus,
+                                    //FechaAtencion =  queja.FechaAtencion,
+                                    //AtendidoPor = queja.AtendidoPor,
+                                    //Resolucion = queja.Resolucion,
+                                    DepartamentoID = queja.DepartamentoID,
+                                    //MunicipioID = queja.MunicipioID,
+                                    UnidadAdministrativaID = unidad.UnidadAdministrativaID,
+                                    UnidadAdministrativa = unidad.Nombre,
+                                    //CentroTrabajoID = queja.CentroTrabajoID
+                                    //llamar a todas las propiedades necesarias
+                                };
             }
 
-
-
-
-            var unidades = await _context.UnidadAdministrativas.ToListAsync();
+            var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "General").ToListAsync();
             ViewData["unidades"] = unidades;
             //var quejas = from Queja in _context.Quejas where Queja.Correo ==username select Queja;
 
             if (!String.IsNullOrEmpty(buscar))
             {
-                quejas = quejas.Where(s => s.NombreQuejante!.Contains(buscar));
+                quejasMostrar = quejasMostrar.Where(s => s.NombreQuejante!.Contains(buscar));
                 ViewBag.nombreBuscar = buscar;
             }
             else
@@ -58,24 +109,43 @@ namespace BuzonQuejas3.Controllers
             }
 
             ViewData["FiltroEstatus"] = String.IsNullOrEmpty(filtro) ? "EstatusDescendiente" : "";
+            ViewData["FiltroUnidad"] = filtro == "UnidadAscendente" ? "UnidadDescendiente" : "UnidadAscendente";
+            ViewData["FiltroFecha"] = filtro == "FechaAscendente" ? "FechaDescendiente" : "FechaAscendente";
 
 
             switch (filtro)
             {
                 case "EstatusDescendiente":
-                    quejas = quejas.OrderByDescending(queja => queja.Estatus);
+                    quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.Estatus);
+                    break;
+
+                case "UnidadDescendiente":
+                    quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.UnidadAdministrativa);
+                    break;
+                
+                case "FechaDescendiente":
+                    quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.FechaCreacion);
+                    break;
+
+                case "UnidadAscendente":
+                    quejasMostrar = quejasMostrar.OrderBy(queja => queja.UnidadAdministrativa);
+                    break;
+                
+                case "FechaAscendente":
+                    quejasMostrar = quejasMostrar.OrderBy(queja => queja.FechaCreacion);
                     break;
 
                 default:
-                    quejas = quejas.OrderBy(queja => queja.Estatus);
+                    quejasMostrar = quejasMostrar.OrderBy(queja => queja.Estatus);
                     break;
 
             }
 
-            return View(await quejas.ToListAsync());
+            return View(await quejasMostrar.ToListAsync());
         }
 
-        // GET: Queja/Details/5
+
+        // GET: Queja/Details/5 No se ocupa
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -93,7 +163,7 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        [Authorize(Roles = "Administrador,Root")]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
         // GET: Queja/Create
         public IActionResult Create(String esMidepartamento)
         {
@@ -107,11 +177,11 @@ namespace BuzonQuejas3.Controllers
             var listaMunicipios = new SelectList(lMunicipios.OrderBy(o => o.Nombre), "MunicipioID", "Nombre");
             ViewBag.municipios = listaMunicipios;
 
-            var lDepartamentos = _context.Departamentos.Where(a => a.DepartamentoID != Guid.Parse("8A8E1E09-F9CE-41CB-B0B2-4EF91F7B4D61")).ToList();
+            var lDepartamentos = _context.Departamentos.Where(a => a.DepartamentoID != Guid.Parse("8A8E1E09-F9CE-41CB-B0B2-4EF91F7B4D61") && a.Nombre != "General").ToList();
             var listaDepartamentos = new SelectList(lDepartamentos.OrderBy(o => o.Nombre), "DepartamentoID", "Nombre");
             ViewBag.departamentos = listaDepartamentos;
 
-            var lUnidadAdministrativa = _context.UnidadAdministrativas.ToList();
+            var lUnidadAdministrativa = _context.UnidadAdministrativas.Where(q => q.Nombre != "General").ToList();
             var listaUnidadAdministrativas = new SelectList(lUnidadAdministrativa.OrderBy(o => o.Nombre), "UnidadAdministrativaID", "Nombre");
             ViewBag.unidadAdministrativas = listaUnidadAdministrativas;
 
@@ -130,7 +200,7 @@ namespace BuzonQuejas3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root")]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
         public async Task<IActionResult> Create([Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,DepartamentoID,MunicipioID,UnidadAdministrativaID")] Queja queja)
         {
             queja.AtendidoPor = "";
@@ -142,9 +212,17 @@ namespace BuzonQuejas3.Controllers
                 queja.QuejaID = Guid.NewGuid();
                 _context.Add(queja);
                 await _context.SaveChangesAsync();
+                ViewBag.SuccessMessage = " La queja ha sido levantada correctamente";
+                return View();
+            }
+            if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+            {
                 return RedirectToAction(nameof(Index));
             }
-            return View(queja);
+            else
+            {
+                return RedirectToAction(nameof(Create));
+            }
         }
 
         // GET: Queja/Edit/5
@@ -233,7 +311,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja/Edit/5
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
         public async Task<IActionResult> Seguimiento(Guid? id)
         {
             var unidades = await _context.UnidadAdministrativas.ToListAsync();
@@ -263,7 +341,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
         public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoID,MunicipioID,UnidadAdministrativaID,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion")] Queja queja)
         {
             if (id != queja.QuejaID)
@@ -338,41 +416,60 @@ namespace BuzonQuejas3.Controllers
             ViewBag.TotalAtendidas = totalAtendidas;
             ViewBag.TotalPendientes = totalPendientes;
 
-
-
-
             return View();
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
+        public async Task<ActionResult<IEnumerable<UnidadAdministrativa>>> GetUnidades()
+        {
+            var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "General").OrderBy(x => x.Nombre).ToListAsync();
+            return unidades;
+        }
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
+        public async Task<UnidadAdministrativa> GetUnidad(string quejaId)
+        {
+            //var queja = await _context.Quejas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID == Guid.Parse(quejaId));
+            var queja = await _context.Quejas.FindAsync(Guid.Parse(quejaId));
+            var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID.Equals(queja.UnidadAdministrativaID));
+            return unidad;
+        }
+
+        [ActionName("Reasignar")]
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root,Administrativo")]
+        public async Task<IActionResult> Reasignar(string QuejaId, string unidadId)
+        {
+            var queja = await _context.Quejas.FindAsync(Guid.Parse(QuejaId));
+
+            queja.UnidadAdministrativaID = Guid.Parse(unidadId);
+
+            try
+            {
+                _context.Update(queja);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!QuejaExists(queja.QuejaID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
 
-
-
-
-            //var quejas = from Queja in _context.Quejas where Queja.Correo ==username select Queja;
-
-            //if (!String.IsNullOrEmpty(buscar))
-            //{
-            //    quejas = quejas.Where(s => s.NombreQuejante!.Contains(buscar));
-            //}
-
-            //ViewData["FiltroEstatus"] = String.IsNullOrEmpty(filtro) ? "EstatusDescendiente" : "";
-
-            //contar quejas por unidad administrativa
-
-
-            //contar total de quejas atendidas y pendientes
-
-            //int totalAtentida = quejas.Count(q => q.Estatus == "Atendido");
-            //ViewData["TotalPorUnidad"] = totalAtentida.ToString();
+            //return View();
 
 
         }
-
-        //public async Task<String> getNombreUnidadAdministrativa(Guid unidadAdministrativaID)
-        //{
-        //    //var unidad = from UnidadAdministrativa in _context.UnidadAdministrativas where UnidadAdministrativa.UnidadAdministrativaID == unidadAdministrativaID select UnidadAdministrativa;
-        //    var unidad = await _context.UnidadAdministrativas.Where(x => x.UnidadAdministrativaID.Equals(unidadAdministrativaID)).FirstAsync();
-
-        //    return unidad.Nombre;
-        //}
     }
 }

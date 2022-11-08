@@ -38,5 +38,12 @@ namespace BuzonQuejas3.Models
 
         [ForeignKey("RolID")]
         public Rol Rol { get; set; }
+        
+        //Llave foranea Unidad Administrativa
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid UnidadAdministrativaID { get; set; }
+
+        [ForeignKey("UnidadAdministrativaID")]
+        public UnidadAdministrativa UnidadAdministrativa { get; set; }
     }
 }

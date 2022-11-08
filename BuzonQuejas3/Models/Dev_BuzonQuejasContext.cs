@@ -79,6 +79,7 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("77a225a3-1266-4b1f-b11c-504969afa856"), Nombre = "Root" });
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("9a39bcce-b092-4f90-9de7-9e0fb2137034"), Nombre = "Administrador" });
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), Nombre = "Departamental" });
+            modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("942f1900-7987-4820-a40b-7f4b78099d85"), Nombre = "Administrativo" });
             //modelBuilder.Entity<Roles>().HasData(new Roles { Id = new Guid("592d923a-9d0b-424c-8bc3-0c42ff72495e"), Nombre = "UnidadAdministrativa", Activo=true });
 
             ////Departamentos
@@ -93,11 +94,52 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"), Nombre = "Conmutador" });
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8562af28-e0c7-4ba1-a889-9a3294cd70e0"), Nombre = "CG Análisis de la información" });
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), Nombre = "Administración" });
+            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"), Nombre = "General" });
 
+            //// Unidades Administrativas
+
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4b0240b3-98e7-4f86-881b-10f760c32f71"), Nombre = "AGENCIA ESTATAL DE INVESTIGACION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("dbfcacdf-82c3-49cd-b035-f992aa39a4e0"), Nombre = "COORDINACION GENERAL DE ANALISIS DE INFORMACION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("9bfcf217-97d8-469f-9652-d6741fce84a1"), Nombre = "COORDINACION GENERAL DE ASUNTOS JURIDICOS" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("30ebd546-ab4e-4cb6-8d0e-9623d50a7869"), Nombre = "COORDINACION GENERAL DE COLABORACION INTERINSTITUCIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("f9e1ead4-61d4-473e-a73a-a8389fc13e33"), Nombre = "COORDINACION GENERAL DE DESARROLLO INSTITUCIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4"), Nombre = "COORDINACION GENERAL DE ESTADISTICA Y SISTEMAS DE INFORMACION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("6a8e78c6-a792-46b3-8a09-ef0d5eeccbae"), Nombre = "COORDINACION GENERAL DE GESTION DOCUMENTAL INSTITUCIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("0d9102d0-d3c8-4e18-a13d-21fdedb7d9d6"), Nombre = "COORDINACION GENERAL DE INVESTIGACION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("6f3bc61c-6e7e-42b0-b89e-00b919d5a096"), Nombre = "COORDINACION GENERAL DE LITIGACION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("c76d8cbc-34a8-47ad-a75a-7342eb11974f"), Nombre = "COORDINACION GENERAL DE MECANISMOS ALTERNATIVOS DE SOLUCION DE CONTROVERSIAS EN MATERIA PENAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("766edba0-def6-4c84-98ed-ee5329c8a055"), Nombre = "COORDINACION GENERAL DE SERVICIOS A LA COMUNIDAD" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("039c76d3-4ca7-4c63-aa74-cbc7e001553d"), Nombre = "DIRECCION GENERAL DE COMUNICACION ESTRATEGICA Y VINCULACION SOCIAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4619dc4c-d498-4726-81a7-78d4d624d790"), Nombre = "DIRECCION GENERAL DE PLANEACION INSTITUCIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("58da64f2-2cb3-4912-b378-4b6b53e29a37"), Nombre = "DIRECCION GENERAL DE SEGURIDAD INSTITUCIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("32c97d34-0fd4-46a0-9366-67843e3864ee"), Nombre = "FISCALIA DE INVESTIGACION METROPOLITANA" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("32d4cca4-63fb-460d-8c7a-62a652346378"), Nombre = "FISCALIA DE INVESTIGACION REGIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("61e8ffa1-6e7a-4855-a5ba-437c8ea6a815"), Nombre = "FISCALIA ESPECIALIZADA DE ASUNTOS INTERNOS" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("da78b3f2-8cb2-4c60-ae7a-c390a99febfe"), Nombre = "FISCALIA ESPECIALIZADA DE COMBATE A LA CORRUPCION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("d052658e-e743-478d-aa94-21f279ddde3d"), Nombre = "FISCALIA ESPECIALIZADA EN DERECHOS HUMANOS" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("dfafd2a3-a200-4f1e-aebd-f791bd14d879"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE DELITOS DE ALTA INCIDENCIA" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("31a77f82-63e0-44c5-afea-337d6d8af47d"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE DELITOS DE VIOLENCIA DE GENERO CONTRA LAS MUJERES" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("96559f1b-3880-4339-9c73-fed0ec116105"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE DELITOS ELECTORALES" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("00fe8231-6879-4189-b706-e3abdf62d4b7"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE LOS DELITOS DE DESAPARICION FORZADA DE PERSONAS Y DESAPARICION COMETIDA POR PARTICULARES" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("2c9b14d2-8868-49ac-a503-584f44b7a6a1"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE LOS DELITOS DE OPERACIONES CON RECURSOS DE PROCEDENCIA ILICITA FISCALES Y RELACIONADOS" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("e1a28eb5-19d7-4aa6-a340-d6366c46118c"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE SECUESTRO Y EXTORSION" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("3a719e2b-7777-4694-aceb-157be081f8b3"), Nombre = "FISCALIA GENERAL DEL ESTADO" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("b467dc5a-5fb0-4399-9740-5877f10ce814"), Nombre = "INSTITUTO DE CIENCIAS FORENSES" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("bbe7a98c-7420-43da-8a4a-e80d331f4517"), Nombre = "INSTITUTO DE FORMACION PROFESIONAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("1c52fb81-0802-49f1-ad79-f53a05fc65fa"), Nombre = "OFICIALIA MAYOR" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("98b8fe5f-ba52-45cc-a416-cd509356cef1"), Nombre = "OFICINA DEL FISCAL GENERAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("199240cf-7e2a-4f72-99f9-90a3d9e93ec1"), Nombre = "ORGANO INTERNO DE CONTROL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("2c1dcd2b-da26-414b-9a97-652f0d2809a4"), Nombre = "UNIDAD DE TRANSPARENCIA" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("53f19eac-b8f3-4486-8be4-4ef56fcb5084"), Nombre = "UNIDAD ESPECIALIZADA EN MATERIA DE EXTINCION DE DOMINIO" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78"), Nombre = "VISITADURIA GENERAL" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"), Nombre = "GENERAL" });
+           
             //// Usuarios
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("1139861b-5044-4257-b89a-db1b5d4402bf"), Nombre = "root", Correo="root@root.com", Clave = "123", Activo = true, RolID = Guid.Parse("77a225a3-1266-4b1f-b11c-504969afa856"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61") });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("7467db95-c0a1-41df-a844-bbb00b60b952"), Nombre = "Administrador", Correo="administrador@administrador.com", Clave = "123", Activo = true, RolID = Guid.Parse("9a39bcce-b092-4f90-9de7-9e0fb2137034"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61") });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("a22533a6-7621-492c-b10b-a9363668a2f4"), Nombre = "Angel Sayago Arcos", Correo="angel@gmail.com", Clave = "123", Activo = true, RolID = Guid.Parse("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), DepartamentoID= Guid.Parse("8a6aeedd-336d-4e65-bede-b95f4bf83cf5") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("1139861b-5044-4257-b89a-db1b5d4402bf"), Nombre = "root", Correo="root@root.com", Clave = "123", Activo = true, RolID = Guid.Parse("77a225a3-1266-4b1f-b11c-504969afa856"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("7467db95-c0a1-41df-a844-bbb00b60b952"), Nombre = "Administrador", Correo="administrador@administrador.com", Clave = "123", Activo = true, RolID = Guid.Parse("9a39bcce-b092-4f90-9de7-9e0fb2137034"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("a22533a6-7621-492c-b10b-a9363668a2f4"), Nombre = "Angel Sayago Arcos", Correo="angel@gmail.com", Clave = "123", Activo = true, RolID = Guid.Parse("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), DepartamentoID= Guid.Parse("8a6aeedd-336d-4e65-bede-b95f4bf83cf5"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("2e3ff721-5a7d-4b82-87bb-3a593824ce25"), Nombre = "Magali Herrera Ramirez", Correo="magali@gmail.com", Clave = "123", Activo = true, RolID = Guid.Parse("942f1900-7987-4820-a40b-7f4b78099d85"), DepartamentoID= Guid.Parse("8ecec734-2171-4bec-aaec-eba010af2489"), UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+
 
             ////Municipios
             modelBuilder.Entity<Municipio>().HasData(new Municipio { MunicipioID = new Guid("8a2eec57-3f89-4815-a37e-4a8794f23932"), Nombre = "ACAJETE" });
@@ -318,42 +360,7 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Municipio>().HasData(new Municipio { MunicipioID = new Guid("d15ff9e1-3f2a-470d-beaf-8e656c62e542"), Nombre = "ZOQUIAPAN" });
             modelBuilder.Entity<Municipio>().HasData(new Municipio { MunicipioID = new Guid("d8c697be-c4c2-45ed-9e52-a54fcc5db144"), Nombre = "ZOQUITLAN" });
 
-            //// Unidades Administrativas
-
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4b0240b3-98e7-4f86-881b-10f760c32f71"), Nombre = "AGENCIA ESTATAL DE INVESTIGACION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("dbfcacdf-82c3-49cd-b035-f992aa39a4e0"), Nombre = "COORDINACION GENERAL DE ANALISIS DE INFORMACION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("9bfcf217-97d8-469f-9652-d6741fce84a1"), Nombre = "COORDINACION GENERAL DE ASUNTOS JURIDICOS" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("30ebd546-ab4e-4cb6-8d0e-9623d50a7869"), Nombre = "COORDINACION GENERAL DE COLABORACION INTERINSTITUCIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("f9e1ead4-61d4-473e-a73a-a8389fc13e33"), Nombre = "COORDINACION GENERAL DE DESARROLLO INSTITUCIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4"), Nombre = "COORDINACION GENERAL DE ESTADISTICA Y SISTEMAS DE INFORMACION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("6a8e78c6-a792-46b3-8a09-ef0d5eeccbae"), Nombre = "COORDINACION GENERAL DE GESTION DOCUMENTAL INSTITUCIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("0d9102d0-d3c8-4e18-a13d-21fdedb7d9d6"), Nombre = "COORDINACION GENERAL DE INVESTIGACION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("6f3bc61c-6e7e-42b0-b89e-00b919d5a096"), Nombre = "COORDINACION GENERAL DE LITIGACION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("c76d8cbc-34a8-47ad-a75a-7342eb11974f"), Nombre = "COORDINACION GENERAL DE MECANISMOS ALTERNATIVOS DE SOLUCION DE CONTROVERSIAS EN MATERIA PENAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("766edba0-def6-4c84-98ed-ee5329c8a055"), Nombre = "COORDINACION GENERAL DE SERVICIOS A LA COMUNIDAD" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("039c76d3-4ca7-4c63-aa74-cbc7e001553d"), Nombre = "DIRECCION GENERAL DE COMUNICACION ESTRATEGICA Y VINCULACION SOCIAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4619dc4c-d498-4726-81a7-78d4d624d790"), Nombre = "DIRECCION GENERAL DE PLANEACION INSTITUCIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("58da64f2-2cb3-4912-b378-4b6b53e29a37"), Nombre = "DIRECCION GENERAL DE SEGURIDAD INSTITUCIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("32c97d34-0fd4-46a0-9366-67843e3864ee"), Nombre = "FISCALIA DE INVESTIGACION METROPOLITANA" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("32d4cca4-63fb-460d-8c7a-62a652346378"), Nombre = "FISCALIA DE INVESTIGACION REGIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("61e8ffa1-6e7a-4855-a5ba-437c8ea6a815"), Nombre = "FISCALIA ESPECIALIZADA DE ASUNTOS INTERNOS" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("da78b3f2-8cb2-4c60-ae7a-c390a99febfe"), Nombre = "FISCALIA ESPECIALIZADA DE COMBATE A LA CORRUPCION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("d052658e-e743-478d-aa94-21f279ddde3d"), Nombre = "FISCALIA ESPECIALIZADA EN DERECHOS HUMANOS" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("dfafd2a3-a200-4f1e-aebd-f791bd14d879"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE DELITOS DE ALTA INCIDENCIA" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("31a77f82-63e0-44c5-afea-337d6d8af47d"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE DELITOS DE VIOLENCIA DE GENERO CONTRA LAS MUJERES" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("96559f1b-3880-4339-9c73-fed0ec116105"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE DELITOS ELECTORALES" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("00fe8231-6879-4189-b706-e3abdf62d4b7"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE LOS DELITOS DE DESAPARICION FORZADA DE PERSONAS Y DESAPARICION COMETIDA POR PARTICULARES" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("2c9b14d2-8868-49ac-a503-584f44b7a6a1"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE LOS DELITOS DE OPERACIONES CON RECURSOS DE PROCEDENCIA ILICITA FISCALES Y RELACIONADOS" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("e1a28eb5-19d7-4aa6-a340-d6366c46118c"), Nombre = "FISCALIA ESPECIALIZADA EN INVESTIGACION DE SECUESTRO Y EXTORSION" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("3a719e2b-7777-4694-aceb-157be081f8b3"), Nombre = "FISCALIA GENERAL DEL ESTADO" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("b467dc5a-5fb0-4399-9740-5877f10ce814"), Nombre = "INSTITUTO DE CIENCIAS FORENSES" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("bbe7a98c-7420-43da-8a4a-e80d331f4517"), Nombre = "INSTITUTO DE FORMACION PROFESIONAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("1c52fb81-0802-49f1-ad79-f53a05fc65fa"), Nombre = "OFICIALIA MAYOR" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("98b8fe5f-ba52-45cc-a416-cd509356cef1"), Nombre = "OFICINA DEL FISCAL GENERAL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("199240cf-7e2a-4f72-99f9-90a3d9e93ec1"), Nombre = "ORGANO INTERNO DE CONTROL" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("2c1dcd2b-da26-414b-9a97-652f0d2809a4"), Nombre = "UNIDAD DE TRANSPARENCIA" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("53f19eac-b8f3-4486-8be4-4ef56fcb5084"), Nombre = "UNIDAD ESPECIALIZADA EN MATERIA DE EXTINCION DE DOMINIO" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78"), Nombre = "VISITADURIA GENERAL" });
+            
         }
 
         //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

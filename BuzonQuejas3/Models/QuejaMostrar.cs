@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BuzonQuejas3.Models
+{
+    public class QuejaMostrar
+    {
+        public Guid QuejaID { get; set; }
+        public string NombreQuejante { get; set; }
+        //public string Direccion { get; set; }
+        //public string Telefono { get; set; }
+        //public string Correo { get; set; }
+        public string MotivoQueja { get; set; }
+        public string RelatoHechos { get; set; }
+        public string ServidorInvolucrado { get; set; }
+        public DateTime FechaCreacion { get; set; }
+        public string Estatus { get; set; }
+        //public DateTime FechaAtencion { get; set; }
+        //public string AtendidoPor { get; set; }
+        //public string Resolucion { get; set; }
+        public Guid DepartamentoID { get; set; }
+        //public Guid MunicipioID { get; set; }
+        public Guid UnidadAdministrativaID { get; set; }
+        public string UnidadAdministrativa { get; set; }
+        //public Guid CentroTrabajoID { get; set; }
+    }
+}

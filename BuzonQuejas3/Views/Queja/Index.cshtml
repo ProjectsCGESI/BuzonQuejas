@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BuzonQuejas3.Models.Queja>
+﻿@*@model IEnumerable<BuzonQuejas3.Models.Queja>*@
+@model IEnumerable<BuzonQuejas3.Models.QuejaMostrar>
+@using Microsoft.AspNetCore.Identity
 
 @{
     ViewData["Title"] = "Inicio";
@@ -11,22 +13,21 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
 <link rel="stylesheet" href="~/css/IndexQueja.css" />
-@*<div class="container-fluid">*@
 <div class="row align-items-center">
     <div class="col-12">
-        <div class="row align-items-center mb-5">
+        <div class="row align-items-center mb-2">
             <div class="col-12 align-self-center mb-5">
                 <h1 class="text-center titulo">Buzón de quejas  </h1>
             </div>
-            <div class="col-12">
+            <!--<div class="col-12">
                 <div class="row  align-items-center">
                     <div class="col-6">
                         <form asp-controller="Queja" asp-action="Index">
                             <div class="form-row align-items-center">
                                 <div class="col-8">
-                                    <input type="text" name="buscar" class="form-control" placeholder="nombre">
-                                    @*<input type="submit" value="Buscar" class="btn form-control btn-sm btn-dark" />*@
-                                </div>
+                                    <input type="text" name="buscar" class="form-control" placeholder="nombre">-->
+            @*<input type="submit" value="Buscar" class="btn form-control btn-sm btn-dark" />*@
+            <!--</div>
                                 <div class="col-4">
                                     <input type="submit" value="Buscar" class="btn  btn-sm buscar-bttn" />
                                 </div>
@@ -40,7 +41,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="col-12 ">
@@ -48,84 +49,58 @@
             <table class="table table-hover ">
                 <thead>
                     <tr class="align-text-top header-table">
-                        <th>
+                        <th class="align-text-top">
                             @Html.DisplayName("Nombre Quejante")
-                            @*@username*@
-                            @*@Html.DisplayNameFor(model => model.NombreCreador)*@
-                        </th>
-                        <!--<th>
-                            @Html.DisplayName("Dirección")-->
-                        @*@Html.DisplayNameFor(model => model.Direccion)*@
-                        <!--</th>
-                        <th>
-                            @Html.DisplayName("Teléfono")-->
-                        @*@Html.DisplayNameFor(model => model.Telefono)*@
-                        <!--</th>
-                        <th>
-                            @Html.DisplayName("Correo")-->
-                        @*@Html.DisplayNameFor(model => model.Correo)*@
-                        <!--</th>-->
-                        <th class="align-text-top">
-                            @Html.DisplayName("Fecha")
-                            @*@Html.DisplayNameFor(model => model.FechaCreacion)*@
                         </th>
                         <th class="align-text-top">
-                            @Html.DisplayName("Unidad Administrativa")
-                            @*@Html.DisplayNameFor(model => model.FechaCreacion)*@
+                            <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroFecha"]">
+                                @Html.DisplayName("Fecha")
+                                <span class="material-icons size-order ">arrow_downward</span>
+                            </a>
                         </th>
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+                        {
+                            <th class="align-text-top col-4 ">
+                                <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroUnidad"]">
+                                    @*@Html.DisplayName("Unidad Administrativa")*@
+                                    Unidad Administrativa
+                                    <span class="material-icons size-order ">arrow_downward</span>
+                                </a>
+                            </th>
+                        }
+                        else
+                        {
+                            <th class="align-text-top col-4 ">
+                                @Html.DisplayName("Unidad Administrativa")
+                            </th>
+                        }
                         <th class="align-text-top">
                             @Html.DisplayName("Motivo")
-                            @*@Html.DisplayNameFor(model => model.MotivoQueja)*@
                         </th>
                         <th class="align-text-top">
                             @Html.DisplayName("Hechos")
-                            @*@Html.DisplayNameFor(model => model.RelatoHechos)*@
                         </th>
                         <th class="align-text-top">
                             @Html.DisplayName("Servidor Involucrado")
-                            @*@Html.DisplayNameFor(model => model.ServidorInvolucrado)*@
+                        </th>
+                        <th class="align-text-top">
+                            @Html.DisplayName("Reasignar")
                         </th>
                         <th class="align-text-top">
                             @Html.DisplayName("Seguimiento ")
                         </th>
                         <th class="align-text-top">
-                            @{ if (!String.IsNullOrEmpty(nombre))
-                                {
+                            <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroEstatus"]">
+                                <div class="row">
+                                    <div class="col-2 mr-4">
+                                        @Html.DisplayName("Estatus")
+                                    </div>
+                                    <div class="col-1 ">
+                                        <span class="material-icons size-order ">arrow_downward</span>
+                                    </div>
 
-                                    <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroEstatus"]" asp-route-buscar="@nombre">
-                                        <div class="row">
-                                            <div class="col-2 mr-4">
-                                                @Html.DisplayName("Estatus")
-                                            </div>
-                                            <div class="col-1 ">
-                                                <span class="material-icons size-order ">arrow_downward</span>
-                                            </div>
-
-                                        </div>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroEstatus"]">
-                                        <div class="row">
-                                            <div class="col-2 mr-4">
-                                                @Html.DisplayName("Estatus")
-                                            </div>
-                                            <div class="col-1 ">
-                                                <span class="material-icons size-order ">arrow_downward</span>
-                                            </div>
-
-                                        </div>
-                                    </a>
-
-                                }
-
-
-                            }
-
-
-
-                            @*@Html.DisplayNameFor(model => model.FechaCreacion)*@
+                                </div>
+                            </a>
                         </th>
                     </tr>
                 </thead>
@@ -141,19 +116,7 @@
                                 @Html.DisplayFor(modelItem => item.FechaCreacion)
                             </td>
                             <td class="col-2 ">
-
-
-                                @foreach (var unidad in UnidadAdministrativa)
-                                {
-                                    if (!item.UnidadAdministrativaID.ToString().Equals(""))
-                                    {
-                                        if (unidad.UnidadAdministrativaID.Equals(item.UnidadAdministrativaID))
-                                        {
-                                            @unidad.Nombre
-                                            break;
-                                        }
-                                    }
-                                }
+                                @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.MotivoQueja)
@@ -166,10 +129,15 @@
                             </td>
                             <td class="text-center">
 
+                                <button type="button" class="btn reasignar reasignar-bttn align-top" data-toggle="modal" data-target="#exampleModal" id="@item.QuejaID">
+                                    Reasignar
+                                </button>
+                            </td>
+                            <td class="text-center">
+
                                 <a asp-action="Seguimiento" asp-route-id="@item.QuejaID" class="btn seguimiento-bttn "><span class="material-icons size-icon ">shortcut</span></a>
                             </td>
                             <td>
-                                @*@Html.DisplayFor(modelItem => item.Estatus)*@
                                 @{
                                     if (@item.Estatus == "Pendiente")
                                     {
@@ -181,14 +149,45 @@
                                     }
                                 }
                             </td>
-
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-
+        <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center align-content-center">
+                        <h5 class="modal-title  " id="exampleModalLabel">Reasignar queja</h5>
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-modal-bttn">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                    </div>
+                    <div class="modal-body" id="modalReasignar">
+                        <form asp-controller="Queja" asp-action="Reasignar">
+                            <div class="form-group" id="SelectUnidad">
+                                <label for="exampleInputEmail1">Unidad administrativa actual</label>
+                                <input type="text" readonly class="form-control" id="showID">
+                            </div>
+                            <div class="form-group">
+                                <label>Unidad administrativa a reasignar</label>
+                                <select class="form-control" id="unidad" name="unidadId">
+                                    <option id="optionPrincipal"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" hidden class="form-control" name="QuejaId" id="QuejaId">
+                            </div>
+                            <button type="submit" class="btn reasignar-modal-bttn" id="reasignar-bttn">Reasignar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn salir-modal-bttn" data-dismiss="modal" id="salir-bttn">Salir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
-@*</div>*@
+
+<script src="~/js/Quejas.js" asp-append-version="true"></script>

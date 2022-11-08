@@ -13,22 +13,13 @@
     --animation-background-color: #A5957E;
     --animation-hover-color: #332700;
     --facebook-twitter-background-color: gray;
+    --gris--fuerte2: #5b5e63;
+    --gris--fuerte: #b3b7bb;
+    --table-hover-bg: #bdc1bf;
+    --table-hover-bg2: #EAECEB;
 }
 
-.enviar-bttn-seguimiento {
-    width: 100%;
-    background: var(--secondary-color) !important;
-    color: white !important;
-}
-
-.enviar-bttn-seguimiento:hover {
-    width: 100%;
-    background: var(--hover-text-color) !important;
-    color: white !important;
-}
-
-.titulo-seguimiento {
+.titulo {
     color: var(--gris--fuerte2) !important;
     font-weight: bold;
 }
-

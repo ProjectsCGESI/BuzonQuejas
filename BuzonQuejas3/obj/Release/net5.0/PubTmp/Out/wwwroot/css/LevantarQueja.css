@@ -1,7 +1,7 @@
 ﻿:root {
     --primary-color: #BDC1BF;
     --secondary-color: #B28510;
-    --hover-text-color: #ffc107;
+    --hover-text-color: #DBAB00;
     --primary-color-rgba: rgba(10, 10, 10, 0.5);
     --white-menu-color: white;
     --black-menu-color: black;
@@ -13,12 +13,32 @@
     --animation-background-color: #A5957E;
     --animation-hover-color: #332700;
     --facebook-twitter-background-color: gray;
+    --gris--fuerte2: #5b5e63;
+    --gris--fuerte: #b3b7bb;
+    --table-hover-bg: #bdc1bf;
 }
 /*body {
     background: var(--tabs-options-color) !important;
 }*/
-.enviar-bttn {
-    width: 50%;
-    background: var(--tabs-options-color) !important;
+.enviar-bttn-queja {
+    width: 100%;
+    background: var(--secondary-color) !important;
     color: white !important;
 }
+
+.enviar-bttn-queja:hover {
+    width: 100%;
+    background: var(--hover-text-color) !important;
+    color: white !important;
+}
+
+.titulo-nueva{
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
+}
+
+.bg-form-nueva {
+    background: var(--gris--fuerte) !important;
+    border-radius: 25px;
+}
+

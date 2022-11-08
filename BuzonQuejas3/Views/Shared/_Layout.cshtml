@@ -22,28 +22,32 @@
                         </div>
                         <div class="col-8">
                             <div class="row justify-content-center">
-                                <div class="col-auto mr-auto ">
-                                    <a class="nav-link opcion-color" asp-area="" asp-controller="Queja" asp-action="Index">Mis Quejas</a>
-                                </div>
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Administrativo"))
                                 {
-                                    <div class="col-auto mr-auto">
-                                        <a class="nav-link opcion-color" asp-area="" asp-controller="Queja" asp-action="Create">Levantar Queja</a>
+                                    <div class="col mr-auto text-center">
+                                        <a class="nav-link opcion-color w-75 mx-auto" asp-area="" asp-controller="Queja" asp-action="Index">Mis Quejas</a>
+                                    </div>
+                                }
+
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
+                                {
+                                    <div class="col mr-auto text-center">
+                                        <a class="nav-link opcion-color w-75 mx-auto" asp-area="" asp-controller="Queja" asp-action="Create">Levantar Queja</a>
                                     </div>
                                 }
 
                                 @if (User.IsInRole("Administrador") || User.IsInRole("Root"))
                                 {
-                                <div class="col-auto mr-auto">
-                                    <a class="nav-link opcion-color" asp-area="" asp-controller="Queja" asp-action="Tablero">Tablero</a>
-                                </div>
+                                    <div class="col mr-auto text-center">
+                                        <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Queja" asp-action="Tablero">Tablero</a>
+                                    </div>
                                 }
-                                <div class="col-auto mr-auto ">
-                                    <a class="nav-link opcion-color" asp-area="" asp-controller="Acceso" asp-action="Salir">Salir</a>
+                                <div class="col mr-auto text-center ">
+                                    <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Acceso" asp-action="Salir">Salir</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <img src="~/imagenes/Logotipo_institucional.png" class="mx-auto d-block" style="width:11vw;" alt="Fiscalia General del Estado de Puebla">
                         </div>
                     </div>
@@ -60,14 +64,16 @@
     </div>
 
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - BuzonQuejas3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; 2022 - BuzonQuejas3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Login.js" asp-append-version="true"></script>
     <script src="~/js/CrearQueja.js" asp-append-version="true"></script>
+    <script src="~/js/Quejas.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿:root {
     --primary-color: #BDC1BF;
     --secondary-color: #B28510;
-    --hover-text-color: #ffc107;
+    --hover-text-color: #DBAB00;
     --primary-color-rgba: rgba(10, 10, 10, 0.5);
     --white-menu-color: white;
     --black-menu-color: black;
@@ -13,30 +13,14 @@
     --animation-background-color: #A5957E;
     --animation-hover-color: #332700;
     --facebook-twitter-background-color: gray;
+    --gris--fuerte2: #5b5e63;
+    --gris--fuerte: #b3b7bb;
+    --table-hover-bg: #bdc1bf;
+    --table-hover-bg2: #EAECEB;
 }
 
 .contenedor-tabla {
     border-color: var(--primary-color) !important;
-}
-
-.table-warning{
-    background-color: red !important;
-}
-
-
-/*estilos nav*/
-.opcion-color {
-    color: var(--secondary-color) !important;
-    border-bottom: 1px solid #B28510;
-}
-
-.opcion-color:hover {
-        color: #ffc107;
-        /*background-color: #ffc107 !important;*/
-    }
-
-.border-color-nav {
-    border-bottom: 5px solid #B28510 !important;
 }
 
 /*.row-table:hover {
@@ -46,7 +30,101 @@
 
 .enviar-bttn {
     color: white !important;
-    width: 100%;
+    width: 80%;
     background: var(--tabs-options-color) !important;
 }
 
+
+.buscar-bttn {
+    color: white !important;
+    width: 50%;
+    background: var(--secondary-color) !important;
+}
+
+    .buscar-bttn:hover {
+        color: white !important;
+        width: 50%;
+        background: var(--hover-text-color) !important;
+    }
+
+.seguimiento-bttn {
+    color: white !important;
+    width: 50%;
+    height: 30px;
+    background: var(--secondary-color) !important;
+    /*font-size:10px;*/
+}
+
+    .seguimiento-bttn:hover {
+        color: white !important;
+        width: 50%;
+        background: var(--hover-text-color) !important;
+    }
+
+.reasignar-bttn {
+    color: white !important;
+    width: 100%;
+    height: 30px;
+    background: var(--secondary-color) !important;
+    vertical-align: middle;
+    padding: 0px;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.reasignar-modal-bttn {
+    color: white !important;
+    width: 100%;
+    background: var(--secondary-color) !important;
+}
+
+.salir-modal-bttn {
+    color: white !important;
+    width: 20%;
+    background: var(--secondary-color) !important;
+}
+
+.size-icon {
+    font-size: 20px;
+    text-align: center;
+}
+
+.size-order {
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.header-table {
+    background-color: var(--gris--fuerte) !important;
+}
+
+td {
+    border-bottom: 2px solid var(--gris--fuerte) !important;
+}
+
+.table-row:hover {
+    background-color: var(--table-hover-bg2) !important;
+}
+
+.titulo {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
+}
+
+/*.titulo:hover{
+    color: var(--tabs-options-color);
+}*/
+
+.td-index {
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+    max-height:5px !important;
+}
+
+.text-icon {
+    font-size: 10px;
+
+}
