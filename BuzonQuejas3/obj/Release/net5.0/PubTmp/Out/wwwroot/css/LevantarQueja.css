@@ -32,6 +32,12 @@
     color: white !important;
 }
 
+.aceptar-bttn {
+    width: 20%;
+    background: var(--secondary-color) !important;
+    color: white !important;
+}
+
 .titulo-nueva{
     color: var(--gris--fuerte2) !important;
     font-weight: bold;
@@ -42,3 +48,13 @@
     border-radius: 25px;
 }
 
+/*select{
+    width: 200px;
+    height: auto;
+    word-wrap: break-word;
+    white-space: normal;*/
+    /*color: var(--secondary-color) !important;*/
+    /*font-size: 15px !important;
+    text-transform: lowercase;*/
+    /*text-transform: capitalize;*/
+/*}*/

@@ -120,7 +120,7 @@ namespace BuzonQuejas3.Controllers
                 case "UnidadDescendiente":
                     quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.UnidadAdministrativa);
                     break;
-                
+
                 case "FechaDescendiente":
                     quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.FechaCreacion);
                     break;
@@ -128,7 +128,7 @@ namespace BuzonQuejas3.Controllers
                 case "UnidadAscendente":
                     quejasMostrar = quejasMostrar.OrderBy(queja => queja.UnidadAdministrativa);
                     break;
-                
+
                 case "FechaAscendente":
                     quejasMostrar = quejasMostrar.OrderBy(queja => queja.FechaCreacion);
                     break;
@@ -363,47 +363,132 @@ namespace BuzonQuejas3.Controllers
         [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Tablero(string buscar, String filtro)
         {
-            //Traer todas las quejas tipo IQuerable<Queja>
+            ////Traer todas las quejas tipo IQuerable<Queja>
+            //var quejas = from Queja in _context.Quejas select Queja;
+
+            ////Traer la lista de unidades adim. 
+            //var unidades = await _context.UnidadAdministrativas.ToListAsync();
+            ////ViewData["unidades"] = unidades;
+
+            ////Traer la lista de municipios. 
+            //var municipios = await _context.Municipios.ToListAsync();
+            ////ViewData["unidades"] = unidades;
+
+            ////creación de un diccionario para llenar con cada unidad y su total de quejas
+            //Dictionary<string, string> totalPorUnidad = new Dictionary<string, string>();
+            //foreach (var unidad in unidades)
+            //{
+            //    int total = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID);
+            //    totalPorUnidad.Add(unidad.Nombre, total.ToString());
+            //}
+            //ViewData["TotalPorUnidad"] = totalPorUnidad;
+
+
+            ////creación de un diccionario para llenar sólo los municipios que tengan quejas
+            //Dictionary<string, string> totalPorMunicipio = new Dictionary<string, string>();
+            //foreach (var municipio in municipios)
+            //{
+            //    int total = quejas.Count(q => q.MunicipioID == municipio.MunicipioID);
+            //    if (total > 0)
+            //    {
+            //        totalPorMunicipio.Add(municipio.Nombre, total.ToString());
+            //    }
+            //}
+            //ViewData["TotalPorMunicipio"] = totalPorMunicipio;
+
+            ////contar el total de quejas atendidas y pedientes
+            //var totalAtendidas = quejas.Count(q => q.Estatus == "Atendido");
+            //var totalPendientes = quejas.Count(q => q.Estatus == "Pendiente");
+
+            //ViewBag.TotalAtendidas = totalAtendidas;
+            //ViewBag.TotalPendientes = totalPendientes;
+
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root")]
+        public List<Object> GetQuejasPorUnidades()
+        {
             var quejas = from Queja in _context.Quejas select Queja;
+            var unidades = _context.UnidadAdministrativas.ToList();
 
-            //Traer la lista de unidades adim. 
-            var unidades = await _context.UnidadAdministrativas.ToListAsync();
-            //ViewData["unidades"] = unidades;
+            List<Object> data = new List<Object>();
+            List<string> unidadesNombre = new List<string>();
+            List<int> unidadesTotal = new List<int>();
 
-            //Traer la lista de municipios. 
-            var municipios = await _context.Municipios.ToListAsync();
-            //ViewData["unidades"] = unidades;
-
-            //creación de un diccionario para llenar con cada unidad y su total de quejas
-            Dictionary<string, string> totalPorUnidad = new Dictionary<string, string>();
             foreach (var unidad in unidades)
             {
                 int total = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID);
-                totalPorUnidad.Add(unidad.Nombre, total.ToString());
+
+                if (total > 0)
+                {
+                    unidadesNombre.Add(unidad.Nombre);
+                    unidadesTotal.Add(total);
+                }
             }
-            ViewData["TotalPorUnidad"] = totalPorUnidad;
 
+            data.Add(unidadesNombre);
+            data.Add(unidadesTotal);
 
-            //creación de un diccionario para llenar sólo los municipios que tengan quejas
-            Dictionary<string, string> totalPorMunicipio = new Dictionary<string, string>();
+            return data;
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root")]
+        public List<Object> GetQuejasPorMunicipio()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            var municipios = _context.Municipios.OrderBy(m=> m.Nombre).ToList();
+
+            List<Object> data = new List<Object>();
+            List<string> municipiosNombre = new List<string>();
+            List<int> municipiosTotal = new List<int>();
+
             foreach (var municipio in municipios)
             {
                 int total = quejas.Count(q => q.MunicipioID == municipio.MunicipioID);
+                Console.WriteLine("total"+municipio.Nombre+ " : " +total);
+
                 if (total > 0)
                 {
-                    totalPorMunicipio.Add(municipio.Nombre, total.ToString());
+                    municipiosNombre.Add(municipio.Nombre);
+                    municipiosTotal.Add(total);
                 }
             }
-            ViewData["TotalPorMunicipio"] = totalPorMunicipio;
 
-            //contar el total de quejas atendidas y pedientes
-            var totalAtendidas = quejas.Count(q => q.Estatus == "Atendido");
-            var totalPendientes = quejas.Count(q => q.Estatus == "Pendiente");
+            data.Add(municipiosNombre);
+            data.Add(municipiosTotal);
 
-            ViewBag.TotalAtendidas = totalAtendidas;
-            ViewBag.TotalPendientes = totalPendientes;
+            return data;
 
-            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root")]
+        public List<Object> GetQuejasEstatusTotal()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            //var unidades = _context.UnidadAdministrativas.ToList();
+
+            List<Object> data = new List<Object>();
+            List<string> estatus = new List<string> { "Atendido", "Pendiente" };
+            List<int> estatusTotal = new List<int>();
+
+
+            int totalAtendidas = quejas.Count(q => q.Estatus == "Atendido");
+            int totalPendientes = quejas.Count(q => q.Estatus == "Pendiente");
+
+
+            estatusTotal.Add(totalAtendidas);
+            estatusTotal.Add(totalPendientes);
+
+            data.Add(estatus);
+            data.Add(estatusTotal);
+
+            return data;
+
         }
 
         [HttpGet]
@@ -424,7 +509,7 @@ namespace BuzonQuejas3.Controllers
             var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID.Equals(queja.UnidadAdministrativaID));
             return unidad;
         }
-        
+
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Administrativo")]
@@ -433,7 +518,7 @@ namespace BuzonQuejas3.Controllers
             var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID.Equals(Guid.Parse(idUnidad)));
             return unidad;
         }
-        
+
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Administrativo")]

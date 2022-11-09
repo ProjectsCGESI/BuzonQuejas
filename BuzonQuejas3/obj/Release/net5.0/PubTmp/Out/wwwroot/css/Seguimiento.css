@@ -32,3 +32,9 @@
     font-weight: bold;
 }
 
+.aceptar-bttn {
+    width: 20%;
+    background: var(--secondary-color) !important;
+    color: white !important;
+}
+

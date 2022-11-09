@@ -3,6 +3,8 @@
     $("#radioYes").prop('checked', true);
     $("#selectDepartamento").prop('disabled', true);
     $("#departamentoFalse").hide();
+    $(".modal-ok").modal("show");
+    //$('.modal-ok').modal({ backdrop: 'static', keyboard: false })
 
     $("#radioYes").click(function () {
 

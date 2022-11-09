@@ -2,8 +2,6 @@
 
     $('body').on('click', '.reasignar', function () {
         var idQueja = $(this).attr("id") + "";
-        //$("#modalbodi").append(idEmpleado);
-        //$("#showID").val(idQueja);
         $("#QuejaId").val(idQueja);
 
         $.ajax({
@@ -42,4 +40,12 @@
             }
         });
     });
+
+    $("#salir-bttn").click(function () {
+        $('#unidad option:not(:first)').remove();
+    });
+
+    //$("close-modal-bttn").click(function () {
+    //    $('#unidad option:not(:first)').remove();
+    //});
 });

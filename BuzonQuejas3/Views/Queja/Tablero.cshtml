@@ -4,14 +4,58 @@
     ViewData["Title"] = "Tablero Central";
     Layout = "~/Views/Shared/_Layout.cshtml";
     //var UnidadAdministrativa = (List<UnidadAdministrativa>)ViewData["unidades"];
-    var totalesPorUnidad = (Dictionary<string, string>)ViewData["totalPorUnidad"];
-    var totalesPorMunicipio = (Dictionary<string, string>)ViewData["totalPorMunicipio"];
+    //var totalesPorUnidad = (Dictionary<string, string>)ViewData["totalPorUnidad"];
+    //var totalesPorMunicipio = (Dictionary<string, string>)ViewData["totalPorMunicipio"];
     //var username = Context.User.FindFirst("Correo");
 }
-@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
 <link rel="stylesheet" href="~/css/Tablero.css" />
-@*<div class="container-fluid">*@
-<div class="row align-items-center">
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center titulo">Tablero Central de Quejas  </h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-5">
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <canvas id="EstatusGraph" style="max-width:400px; max-height:400px;"></canvas>
+
+            </div>
+            <div class="col-8">
+                <canvas id="MunicipiosGraph" ></canvas>
+            </div>
+            <div class="col-12 mt-5">
+                <canvas id="UnidadesGraph" style="max-width:800px; max-height:800px;"></canvas>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
+@*<script type="text/javascript" src="~/js/Tablero.js" asp-append-version="true"></script>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
+
+
+<!--<div class="row align-items-center">
     <div class="col-12">
         <div class="row align-items-center mb-5">
             <div class="col-12 align-self-center mb-5">
@@ -68,22 +112,13 @@
                                     <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroEstatus"]">
                                         @Html.DisplayName("Estatus")
                                     </a>-->
-                                @*@Html.DisplayNameFor(model => model.FechaCreacion)*@
-                                <!--</th>-->
-                            </tr>
+-->
+<!--@*@Html.DisplayNameFor(model => model.FechaCreacion)*@-->
+<!--</th>-->
+<!--</tr>
                         </thead>
                         <tbody>
-                            @foreach (var total in totalesPorUnidad)
-                            {
-                                <tr>
-                                    <td>
-                                        @total.Key
-                                    </td>
-                                    <td class="text-right">
-                                        @total.Value
-                                    </td>
-                                </tr>
-                            }
+
                         </tbody>
                     </table>
                 </div>
@@ -110,17 +145,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var total in totalesPorMunicipio)
-                            {
-                                <tr>
-                                    <td>
-                                        @total.Key
-                                    </td>
-                                    <td>
-                                        @total.Value
-                                    </td>
-                                </tr>
-                            }
+
                         </tbody>
                     </table>
                 </div>
@@ -130,7 +155,4 @@
 
     </div>
 
-</div>
-@*</div>*@
-
-
+</div>-->
