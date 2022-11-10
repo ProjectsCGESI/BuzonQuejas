@@ -435,3 +435,4 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Deb
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\Razor\Views\Queja\Seguimiento.cshtml.g.cs
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\Razor\Views\Acceso\Index.cshtml.g.cs
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\Razor\Views\Queja\Tablero.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\BuzonQuejas3.csproj.AssemblyReference.cache

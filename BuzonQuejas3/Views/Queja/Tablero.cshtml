@@ -24,8 +24,8 @@
                 <canvas id="EstatusGraph" style="max-width:400px; max-height:400px;"></canvas>
 
             </div>
-            <div class="col-8">
-                <canvas id="MunicipiosGraph" ></canvas>
+            <div class="col-12">
+                <canvas id="MunicipiosGraph"></canvas>
             </div>
             <div class="col-12 mt-5">
                 <canvas id="UnidadesGraph" style="max-width:800px; max-height:800px;"></canvas>
@@ -37,6 +37,11 @@
 
 </div>
 
+@*<script src="~/js/Tablero.js" asp-append-version="true"></script>*@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
 
@@ -47,8 +52,6 @@
 
 
 
-
-@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
 @*<script type="text/javascript" src="~/js/Tablero.js" asp-append-version="true"></script>
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

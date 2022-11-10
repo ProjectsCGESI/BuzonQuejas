@@ -1,12 +1,4 @@
 ﻿$(document).ready(function () {
-    //$('body').bind('cut copy paste', function (e) {
-    //    e.preventDefault();
-    //});
-
-    ////Disable mouse right click
-    //$("body").on("contextmenu", function (e) {
-    //    return false;
-    //});
 
     //Mostrar gráfico para total de quejas por ESTATUS
     $.ajax({
@@ -182,17 +174,12 @@ function drawMunicipios(data) {
     var _chartData = _data[1];
     var barColor = [];
 
-    console.log("labels: " + _chartLabels.length);
-    console.log("data: " + _chartData.length);
-
     _chartLabels.forEach(function (name) {
         barColor.push("yellow");
     });
 
     //Chart.defaults.elements.bar.backgroundColor = "green";
     //Chart.defaults.elements.bar.borderWidth = 5;
-    //Chart.defaults.scales.linear.min = 0;
-    //Chart.defaults.scales.linear.max = 990;
 
     var ctx = document.getElementById("MunicipiosGraph");
     const myChart = new Chart(ctx,
@@ -206,42 +193,7 @@ function drawMunicipios(data) {
                     data: _chartData
                 }]
             },
-            responsive: true,
             options: {
-                scaleShowValues: true,
-                scales: {
-                    x: {
-                        stacked: true,
-                        ticks: {
-                          //autoSkip: false,
-                            maxRotation: 90,
-                            minRotation: 90,
-                            font: {
-                                size: 12,
-                            }
-                        },
-
-                    },
-                    y: {
-                        min: 0,
-                        max: 50,
-                        
-                    }
-                    //yAxes: [{
-                    //    ticks: {
-                    //        beginAtZero: true
-                    //    }
-                    //}],
-                    //xAxes: [{
-                    //    ticks: {
-                    //        autoSkip: false,
-                    //        maxRotation: 90,
-                    //        minRotation: 90
-                    //    },
-                    //    barPercentage: 0.1
-                    //}]
-                },
-                //indexAxis: 'y',
                 plugins: {
                     title: {
                         display: true,
