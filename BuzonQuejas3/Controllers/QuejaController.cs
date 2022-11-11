@@ -42,6 +42,7 @@ namespace BuzonQuejas3.Controllers
                                 select new QuejaMostrar
                                 {
                                     QuejaID = queja.QuejaID,
+                                    Folio = queja.Folio,
                                     NombreQuejante = queja.NombreQuejante,
                                     MotivoQueja = queja.MotivoQueja,
                                     ServidorInvolucrado = queja.ServidorInvolucrado,
@@ -64,6 +65,7 @@ namespace BuzonQuejas3.Controllers
                                 select new QuejaMostrar
                                 {
                                     QuejaID = queja.QuejaID,
+                                    Folio = queja.Folio,
                                     NombreQuejante = queja.NombreQuejante,
                                     MotivoQueja = queja.MotivoQueja,
                                     ServidorInvolucrado = queja.ServidorInvolucrado,
@@ -80,13 +82,18 @@ namespace BuzonQuejas3.Controllers
             //ViewData["unidades"] = unidades;
             //var quejas = from Queja in _context.Quejas where Queja.Correo ==username select Queja;
 
-            ViewData["FiltroEstatus"] = String.IsNullOrEmpty(filtro) ? "EstatusDescendiente" : "";
+            ViewData["FiltroFolio"] = String.IsNullOrEmpty(filtro) ? "FolioDescendiente" : "";
             ViewData["FiltroMedio"] = filtro == "MedioAscendente" ? "MedioDescendiente" : "MedioAscendente";
             ViewData["FiltroFecha"] = filtro == "FechaAscendente" ? "FechaDescendiente" : "FechaAscendente";
+            ViewData["FiltroEstatus"] = filtro == "EstatusAscendente" ? "EstatusDescendiente" : "EstatusAscendente";
 
 
             switch (filtro)
             {
+                case "FolioDescendiente":
+                    quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.Folio);
+                    break;
+                
                 case "EstatusDescendiente":
                     quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.Estatus);
                     break;
@@ -99,6 +106,10 @@ namespace BuzonQuejas3.Controllers
                     quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.FechaCreacion);
                     break;
 
+                case "EstatusAscendente":
+                    quejasMostrar = quejasMostrar.OrderBy(queja => queja.Estatus);
+                    break;
+                
                 case "MedioAscendente":
                     quejasMostrar = quejasMostrar.OrderBy(queja => queja.MedioID);
                     break;
@@ -108,7 +119,7 @@ namespace BuzonQuejas3.Controllers
                     break;
 
                 default:
-                    quejasMostrar = quejasMostrar.OrderBy(queja => queja.Estatus);
+                    quejasMostrar = quejasMostrar.OrderBy(queja => queja.Folio);
                     break;
 
             }
@@ -151,6 +162,8 @@ namespace BuzonQuejas3.Controllers
             var listaMedios = new SelectList(lMedios.OrderBy(o => o.Nombre), "MedioID", "Nombre");
             ViewBag.medios = listaMedios;
 
+            //ViewBag.cadena = identificador + year + month + day;
+
             //var lUnidadAdministrativa = _context.UnidadAdministrativas.Where(q => q.Nombre != "General").ToList();
             //var listaUnidadAdministrativas = new SelectList(lUnidadAdministrativa.OrderBy(o => o.Nombre), "UnidadAdministrativaID", "Nombre");
             //ViewBag.unidadAdministrativas = listaUnidadAdministrativas;
@@ -165,11 +178,48 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root,Departamental")]
-        public async Task<IActionResult> Create([Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID")] Queja queja)
+        public async Task<IActionResult> Create([Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,Folio")] Queja queja)
         {
             queja.AtendidoPor = "";
             queja.Resolucion = "";
             queja.FechaAtencion = queja.FechaCreacion;
+
+            string identificador = "BQ";
+            string year = DateTime.Now.ToString("yy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            var ultimaQueja = _context.Quejas.OrderBy(q => q.FechaCreacion).LastOrDefault();
+
+            if (ultimaQueja != null)
+            {
+                string ultimoFolio = ultimaQueja.Folio;
+                int tam_var = ultimoFolio.Length;
+
+                string fechaUltimaQueja = ultimoFolio.Substring((tam_var - 10), 6);
+                string actualFecha = year + month + day;
+
+                if (Int32.Parse(actualFecha) == Int32.Parse(fechaUltimaQueja))
+                {
+                    
+                int ultimosDigitosInt = Int32.Parse(ultimoFolio.Substring((tam_var - 4), 4));
+                ultimosDigitosInt++;
+                string nuevosDigitos = ultimosDigitosInt.ToString("0000");
+                string nuevoFolio = identificador + year + month + day + nuevosDigitos;
+
+                queja.Folio = nuevoFolio;
+                }
+                else
+                {
+                    queja.Folio = identificador + year + month + day + "0000";
+                }
+            }
+            else
+            {
+                queja.Folio = identificador + year + month + day + "0000";
+            }
+
+            Console.WriteLine(queja);
+
 
             if (ModelState.IsValid)
             {

@@ -12,6 +12,10 @@ namespace BuzonQuejas3.Models
         public Guid QuejaID { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(13)]
+        public string Folio { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
         [StringLength(100)]
         public string NombreQuejante { get; set; }
 

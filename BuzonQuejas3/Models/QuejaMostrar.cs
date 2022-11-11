@@ -10,7 +10,7 @@ namespace BuzonQuejas3.Models
     {
         public Guid QuejaID { get; set; }
         public string NombreQuejante { get; set; }
-        //public string Direccion { get; set; }
+        public string Folio { get; set; }
         //public string Telefono { get; set; }
         //public string Correo { get; set; }
         public string MotivoQueja { get; set; }

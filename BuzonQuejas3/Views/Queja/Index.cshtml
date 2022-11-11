@@ -25,6 +25,12 @@
                 <thead>
                     <tr class="align-text-top header-table">
                         <th class="align-text-top">
+                            <a class="text-dark" asp-action="Index" asp-route-filtro="@ViewData["FiltroFolio"]">
+                                @Html.DisplayName("Folio")
+                                <span class="material-icons size-order ">arrow_downward</span>
+                            </a>
+                        </th>
+                        <th class="align-text-top">
                             @Html.DisplayName("Nombre del Quejoso")
                         </th>
                         <th class="align-text-top">
@@ -76,9 +82,9 @@
                         </th>
                         @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
                         {
-                        <th class="align-text-top">
-                            @Html.DisplayName("Reasignar")
-                        </th>
+                            <th class="align-text-top">
+                                @Html.DisplayName("Reasignar")
+                            </th>
                         }
                         <th class="align-text-top">
                             @Html.DisplayName("Seguimiento ")
@@ -88,48 +94,51 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr class="table-row">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NombreQuejante)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaCreacion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MotivoQueja)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ServidorInvolucrado)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Medio)
-                        </td>
-                        <td>
-                            @{
-                                if (@item.Estatus == "Pendiente")
-                                {
-                                    <p class="text-danger">Pendiente</p>
+                        <tr class="table-row">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Folio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NombreQuejante)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaCreacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MotivoQueja)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ServidorInvolucrado)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Medio)
+                            </td>
+                            <td>
+                                @{
+                                    if (@item.Estatus == "Pendiente")
+                                    {
+                                        <p class="text-danger">Pendiente</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success">Atendido</p>
+                                    }
                                 }
-                                else
-                                {
-                                    <p class="text-success">Atendido</p>
-                                }
+                            </td>
+                            @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
+                            {
+                                <td class="text-center">
+
+                                    <button type="button" class="btn reasignar reasignar-bttn align-top" data-toggle="modal" data-target="#exampleModal" id="@item.QuejaID">
+                                        Reasignar
+                                    </button>
+                                </td>
                             }
-                        </td>
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
-                        {
-                        <td class="text-center">
+                            <td class="text-center">
 
-                            <button type="button" class="btn reasignar reasignar-bttn align-top" data-toggle="modal" data-target="#exampleModal" id="@item.QuejaID">
-                                Reasignar
-                            </button>
-                        </td>
-                        }
-                        <td class="text-center">
-
-                            <a asp-action="Seguimiento" asp-route-id="@item.QuejaID" class="btn seguimiento-bttn "><span class="material-icons size-icon ">shortcut</span></a>
-                        </td>
-                    </tr>
+                                <a asp-action="Seguimiento" asp-route-id="@item.QuejaID" class="btn seguimiento-bttn "><span class="material-icons size-icon ">shortcut</span></a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
