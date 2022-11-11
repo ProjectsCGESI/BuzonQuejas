@@ -48,6 +48,8 @@
                 <input type="hidden" asp-for="UnidadAdministrativaID" />
                 <input type="hidden" asp-for="MunicipioID" />
                 <input type="hidden" asp-for="DepartamentoID" />
+                <input type="hidden" asp-for="MedioID" />
+                <input type="hidden" asp-for="CargoID" />
                 <input type="hidden" asp-for="Telefono" />
                 <input type="hidden" asp-for="Correo" />
                 <input type="hidden" asp-for="MotivoQueja" />
@@ -56,7 +58,7 @@
                 <input type="hidden" asp-for="FechaCreacion" />
                 <div class="col-4">
                     <div class="form-group">
-                        <label class="control-label">Nombre del quejante</label>
+                        <label class="control-label">Nombre del quejoso</label>
                         <textarea disabled asp-for="NombreQuejante" class="form-control"></textarea>
                     </div>
                 </div>
@@ -68,7 +70,7 @@
                 </div>
                 <div class="col-4 ">
                     <div class="form-group">
-                        <label class="control-label">Unidad Administrativa</label>
+                        <label class="control-label">Unidad administrativa asignada</label>
                         <textarea disabled asp-for="UnidadAdministrativaID" class="form-control" id="unidadSeguimiento"></textarea>
                     </div>
                 </div>
@@ -114,6 +116,12 @@
                         <textarea disabled asp-for="MunicipioID" class="form-control" id="municipioSeguimiento"></textarea>
                     </div>
                 </div>
+                <div class="col-3 ">
+                    <div class="form-group">
+                        <label class="control-label">Medio de recepción</label>
+                        <input disabled asp-for="MedioID" class="form-control" id="medioSeguimiento"/>
+                    </div>
+                </div>
 
                 @*<div class="col-3">
             @foreach (var municipio in Municipio)
@@ -132,10 +140,16 @@
                 }
             }
         </div>*@
-                <div class="col-6">
+                <div class="col-5">
                     <div class="form-group">
                         <label class="control-label">Servidor público involucrado</label>
                         <input disabled asp-for="ServidorInvolucrado" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-4 ">
+                    <div class="form-group">
+                        <label class="control-label">Cargo</label>
+                        <textarea disabled asp-for="CargoID" class="form-control" id="cargoSeguimiento"></textarea>
                     </div>
                 </div>
 

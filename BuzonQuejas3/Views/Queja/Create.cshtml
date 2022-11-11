@@ -9,7 +9,7 @@
 
 }
 
-<link rel="stylesheet" href="~/css/LevantarQueja.css" />
+<link rel="stylesheet" href="~/css/CrearQueja.css" />
 
 <div class="row justify-content-center">
     <div class="col-12 ">
@@ -77,6 +77,7 @@
             <input type="hidden" asp-for="Resolucion" value="na" />
             <input type="hidden" asp-for="FechaAtencion" value="@DateTime.Now" />
             <input type="hidden" asp-for="DepartamentoID" value=@DepartamentoUsuario />
+            <input type="hidden" asp-for="UnidadAdministrativaID" value="88f8cf91-458b-438c-b882-75a842387c64" />
             <div class="form-group mt-3">
                 <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" />
                 <span asp-validation-for="NombreQuejante" class="text-danger"></span>
@@ -92,17 +93,11 @@
                 <span asp-validation-for="MunicipioID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <select asp-for="UnidadAdministrativaID" asp-items="ViewBag.unidadAdministrativas" class="form-control">
-                    <option value="">Seleccione una unidad administrativa</option>
+                <select asp-for="MedioID" asp-items="ViewBag.medios" class="form-control">
+                    <option value="">Seleccione un medio de recepción</option>
                 </select>
-                <span asp-validation-for="UnidadAdministrativaID" class="text-danger"></span>
+                <span asp-validation-for="MedioID" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <select asp-for="CentroTrabajoID" asp-items="ViewBag.centrosTrabajo" class="form-control">
-                        <option value="">Seleccione un centro de trabajo</option>
-                    </select>
-                    <span asp-validation-for="CentroTrabajoID" class="text-danger"></span>
-                </div>*@
             <div class="form-group">
                 <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
@@ -124,35 +119,12 @@
                 <input asp-for="ServidorInvolucrado" class="form-control" placeholder="Servidor público involucrado*" />
                 <span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>
             </div>
-
-            @*<div class="form-group">
-                    <label class="control-label">¿Es tu departamento?</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="esMiDepartamento" id="radioYes" value="true">
-                        <label class="form-check-label" for="radioYes">
-                            Sí
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="esMiDepartamento" id="radioNo" value="false" >
-                        <label class="form-check-label" for="radioNo">
-                            No
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group" id="departamentoFalse">
-                    <select asp-for="DepartamentoID" asp-items="ViewBag.departamentos" class="form-control" id="selectDepartamento">
-                        <option value="">Seleccione un departamento</option>
-                    </select>
-                    <span asp-validation-for="DepartamentoID" class="text-danger"></span>
-                </div>
-
-
-                <div class="form-group" id="departamentoTrue">
-                    <input type="hidden" asp-for="DepartamentoID" value=@DepartamentoUsuario />
-                </div>*@
-
+            <div class="form-group">
+                <select asp-for="CargoID" asp-items="ViewBag.cargos" class="form-control cargoSelect" >
+                    <option value="">Seleccione un cargo</option>
+                </select>
+                <span asp-validation-for="CargoID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label class="control-label">Fecha de creación*</label>
                 <input asp-for="FechaCreacion" class="form-control" />

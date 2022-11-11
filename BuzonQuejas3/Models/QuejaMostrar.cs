@@ -14,7 +14,7 @@ namespace BuzonQuejas3.Models
         //public string Telefono { get; set; }
         //public string Correo { get; set; }
         public string MotivoQueja { get; set; }
-        public string RelatoHechos { get; set; }
+        //public string RelatoHechos { get; set; }
         public string ServidorInvolucrado { get; set; }
         public DateTime FechaCreacion { get; set; }
         public string Estatus { get; set; }
@@ -22,9 +22,12 @@ namespace BuzonQuejas3.Models
         //public string AtendidoPor { get; set; }
         //public string Resolucion { get; set; }
         public Guid DepartamentoID { get; set; }
+        public Guid MedioID { get; set; }
+        public string Medio { get; set; }
+
         //public Guid MunicipioID { get; set; }
-        public Guid UnidadAdministrativaID { get; set; }
-        public string UnidadAdministrativa { get; set; }
+        //public Guid UnidadAdministrativaID { get; set; }
+        //public string UnidadAdministrativa { get; set; }
         //public Guid CentroTrabajoID { get; set; }
     }
 }

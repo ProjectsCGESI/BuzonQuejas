@@ -82,6 +82,20 @@ namespace BuzonQuejas3.Models
 
         [ForeignKey("UnidadAdministrativaID")]
         public UnidadAdministrativa UnidadAdministrativa { get; set; }
+        
+        //Llave foranea Medio
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid MedioID { get; set; }
+
+        [ForeignKey("MedioID")]
+        public Medio Medio { get; set; }
+        
+        //Llave foranea Cargo
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid CargoID { get; set; }
+
+        [ForeignKey("CargoID")]
+        public Cargo Cargo { get; set; }
 
     }
 }

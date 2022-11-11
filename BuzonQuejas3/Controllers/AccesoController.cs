@@ -40,21 +40,21 @@ namespace BuzonQuejas3.Controllers
 
                 if (usuario != null)
                 {
-                var rol = await _context.Roles.FirstOrDefaultAsync(m => m.RolID == usuario.RolID);
-                //var departamento = await _context.Departamentos.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
-                //var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
+                    var rol = await _context.Roles.FirstOrDefaultAsync(m => m.RolID == usuario.RolID);
+                    //var departamento = await _context.Departamentos.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
+                    //var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
 
                     //2.- CONFIGURACION DE LA AUTENTICACION
                     #region AUTENTICACTION
                     var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, usuario.Nombre),
-                    new Claim("Correo", usuario.Correo),
-                    //new Claim("Departamento", departamento.Nombre),
-                    new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
-                    new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
-                    new Claim(ClaimTypes.Role, rol.Nombre),
-                };
+                    {
+                        new Claim(ClaimTypes.Name, usuario.Nombre),
+                        new Claim("Correo", usuario.Correo),
+						//new Claim("Departamento", departamento.Nombre),
+						new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
+                        new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
+                        new Claim(ClaimTypes.Role, rol.Nombre),
+                    };
                     //foreach (string rol in usuario.R)
                     //{
                     //claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
@@ -64,26 +64,18 @@ namespace BuzonQuejas3.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                     #endregion
 
-                    if(rol.Nombre != "Departamental")
-                    {
                     return RedirectToAction("Index", "Queja");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Create", "Queja");
-                    }
-
                 }
                 else
                 {
 
-            ViewData["error"] = true;
-            return View();
+                    ViewData["error"] = true;
+                    return View();
                 }
             }
             else
             {
-            return View();
+                return View();
             }
 
 

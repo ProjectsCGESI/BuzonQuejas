@@ -138,7 +138,7 @@ function drawUnidades(data) {
     var ctx = document.getElementById("UnidadesGraph");
     const myChart = new Chart(ctx,
         {
-            type: "bar",
+            type: "line",
             data: {
                 labels: _chartLabels,
                 datasets: [{
@@ -148,6 +148,26 @@ function drawUnidades(data) {
                 }]
             },
             options: {
+                scaleShowValues: true,
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            //autoSkip: false,
+                            //maxRotation: 90,
+                            //minRotation: 90,
+                            font: {
+                                size: 12,
+                            }
+                        },
+
+                    },
+                    y: {
+                        min: 0,
+                        max: 10,
+
+                    }
+                },
                 plugins: {
                     title: {
                         display: true,
