@@ -93,7 +93,7 @@ namespace BuzonQuejas3.Controllers
                 case "FolioDescendiente":
                     quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.Folio);
                     break;
-                
+
                 case "EstatusDescendiente":
                     quejasMostrar = quejasMostrar.OrderByDescending(queja => queja.Estatus);
                     break;
@@ -109,7 +109,7 @@ namespace BuzonQuejas3.Controllers
                 case "EstatusAscendente":
                     quejasMostrar = quejasMostrar.OrderBy(queja => queja.Estatus);
                     break;
-                
+
                 case "MedioAscendente":
                     quejasMostrar = quejasMostrar.OrderBy(queja => queja.MedioID);
                     break;
@@ -200,13 +200,13 @@ namespace BuzonQuejas3.Controllers
 
                 if (Int32.Parse(actualFecha) == Int32.Parse(fechaUltimaQueja))
                 {
-                    
-                int ultimosDigitosInt = Int32.Parse(ultimoFolio.Substring((tam_var - 4), 4));
-                ultimosDigitosInt++;
-                string nuevosDigitos = ultimosDigitosInt.ToString("0000");
-                string nuevoFolio = identificador + year + month + day + nuevosDigitos;
 
-                queja.Folio = nuevoFolio;
+                    int ultimosDigitosInt = Int32.Parse(ultimoFolio.Substring((tam_var - 4), 4));
+                    ultimosDigitosInt++;
+                    string nuevosDigitos = ultimosDigitosInt.ToString("0000");
+                    string nuevoFolio = identificador + year + month + day + nuevosDigitos;
+
+                    queja.Folio = nuevoFolio;
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace BuzonQuejas3.Controllers
                 ViewBag.SuccessMessage = " Hubo un error al levantar la queja";
                 return View();
             }
-            
+
         }
 
         // GET: Queja/Edit/5
@@ -326,12 +326,12 @@ namespace BuzonQuejas3.Controllers
         //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
         public async Task<IActionResult> Seguimiento(Guid? id)
         {
-            var unidades = await _context.UnidadAdministrativas.ToListAsync();
-            ViewData["unidades"] = unidades;
-            var municipios = await _context.Municipios.ToListAsync();
-            ViewData["municipios"] = municipios;
-            var departamentos = await _context.Departamentos.ToListAsync();
-            ViewData["departamentos"] = departamentos;
+            //var unidades = await _context.UnidadAdministrativas.ToListAsync();
+            //ViewData["unidades"] = unidades;
+            //var municipios = await _context.Municipios.ToListAsync();
+            //ViewData["municipios"] = municipios;
+            //var departamentos = await _context.Departamentos.ToListAsync();
+            //ViewData["departamentos"] = departamentos;
 
             if (id == null)
             {
@@ -352,7 +352,7 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
-        public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoID,MunicipioID,UnidadAdministrativaID,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,CargoID,MedioID")] Queja queja)
+        public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoID,MunicipioID,UnidadAdministrativaID,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,CargoID,MedioID,Folio")] Queja queja)
         {
             if (id != queja.QuejaID)
             {
@@ -362,7 +362,7 @@ namespace BuzonQuejas3.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+            {
                     _context.Update(queja);
                     await _context.SaveChangesAsync();
                     ViewBag.SuccessMessageSeguimiento = "Se han guardado correctamente los cambios";
@@ -370,6 +370,8 @@ namespace BuzonQuejas3.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    ViewBag.SuccessMessageSeguimiento = "Error";
+
                     if (!QuejaExists(queja.QuejaID))
                     {
                         return NotFound();
@@ -379,9 +381,9 @@ namespace BuzonQuejas3.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Index));
             }
             return View();
+            //return RedirectToAction(nameof(Index));
             //return View(queja);
         }
 
@@ -437,7 +439,7 @@ namespace BuzonQuejas3.Controllers
         public List<Object> GetQuejasPorUnidades()
         {
             var quejas = from Queja in _context.Quejas select Queja;
-            var unidades = _context.UnidadAdministrativas.ToList();
+            var unidades = _context.UnidadAdministrativas.OrderBy(u=> u.Nombre).ToList();
 
             List<Object> data = new List<Object>();
             List<string> unidadesNombre = new List<string>();
@@ -446,10 +448,11 @@ namespace BuzonQuejas3.Controllers
             foreach (var unidad in unidades)
             {
                 int total = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID);
+                //var randomNumber = new Random().Next(0, 1000);
 
                 if (total > 0)
                 {
-                    unidadesNombre.Add(unidad.Nombre == "No Aplica" ? "Sin Asignar": unidad.Nombre);
+                    unidadesNombre.Add(unidad.Nombre == "No Aplica" ? "Sin Asignar" : unidad.Nombre);
                     unidadesTotal.Add(total);
                 }
             }
@@ -460,22 +463,87 @@ namespace BuzonQuejas3.Controllers
             return data;
 
         }
+        
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
+        public List<Object> GetQuejasPorDepartamento()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            var departamentos = _context.Departamentos.ToList();
+
+            List<Object> data = new List<Object>();
+            List<string> departamentosNombre = new List<string>();
+            List<int> departamentosTotal = new List<int>();
+
+            foreach (var departamento in departamentos)
+            {
+                int total = quejas.Count(q => q.DepartamentoID == departamento.DepartamentoID);
+                //var randomNumber = new Random().Next(0, 100000);
+
+                if (total > 0)
+                {
+                    departamentosNombre.Add(departamento.Nombre == "No Aplica" ? "Sin Asignar" : departamento.Nombre);
+                    departamentosTotal.Add(total);
+                }
+            }
+
+            data.Add(departamentosNombre);
+            data.Add(departamentosTotal);
+
+            return data;
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
+        public List<Object> GetQuejasEstatusPorUnidades()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            var unidades = _context.UnidadAdministrativas.OrderBy(u => u.Nombre).ToList();
+
+            List<Object> data = new List<Object>();
+            List<string> unidadesNombre = new List<string>();
+            List<int> atendidasTotal = new List<int>();
+            List<int> pendientesTotal = new List<int>();
+
+            foreach (var unidad in unidades)
+            {
+                int totalAtendidos = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID && q.Estatus == "Atendido");
+                int totalPendientes = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID && q.Estatus == "Pendiente");
+                //var randomNumber = new Random().Next(0, 1000);
+
+                if(totalAtendidos > 0 || totalPendientes > 0)
+                {
+                unidadesNombre.Add(unidad.Nombre == "No Aplica" ? "Sin Asignar" : unidad.Nombre);
+                atendidasTotal.Add(totalAtendidos);
+                pendientesTotal.Add(totalPendientes);
+                }
+            }
+
+            data.Add(unidadesNombre);
+            data.Add(atendidasTotal);
+            data.Add(pendientesTotal);
+
+            return data;
+
+        }
 
         [HttpPost]
         [Authorize(Roles = "Administrador,Root,Departamental")]
         public List<Object> GetQuejasPorMunicipio()
         {
             var quejas = from Queja in _context.Quejas select Queja;
-            var municipios = _context.Municipios.OrderBy(m=> m.Nombre).ToList();
+            var municipios = _context.Municipios.OrderBy(m => m.Nombre).ToList();
 
             List<Object> data = new List<Object>();
             List<string> municipiosNombre = new List<string>();
             List<int> municipiosTotal = new List<int>();
 
+
             foreach (var municipio in municipios)
             {
                 int total = quejas.Count(q => q.MunicipioID == municipio.MunicipioID);
-                Console.WriteLine("total"+municipio.Nombre+ " : " +total);
+                //var randomNumber = new Random().Next(0, 100000);
 
                 if (total > 0)
                 {
@@ -505,10 +573,45 @@ namespace BuzonQuejas3.Controllers
 
             int totalAtendidas = quejas.Count(q => q.Estatus == "Atendido");
             int totalPendientes = quejas.Count(q => q.Estatus == "Pendiente");
+            int totalQuejas = quejas.Count();
 
 
             estatusTotal.Add(totalAtendidas);
             estatusTotal.Add(totalPendientes);
+            estatusTotal.Add(totalQuejas);
+
+            data.Add(estatus);
+            data.Add(estatusTotal);
+
+            return data;
+
+        }       
+        
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
+        public List<Object> GetQuejasEstatusDiario()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            var dateTimeActual = DateTime.Now.Date;
+            //Console.WriteLine("date"+ dateTimeActual);
+            //var unidades = _context.UnidadAdministrativas.ToList();
+
+            var queja = _context.Quejas.FirstOrDefault(m => m.Resolucion == "nada");
+            Console.WriteLine(queja.FechaCreacion.Date == dateTimeActual);
+
+            List<Object> data = new List<Object>();
+            List<string> estatus = new List<string> { "Total","Atendido", "Pendiente" };
+            List<int> estatusTotal = new List<int>();
+
+
+            int totalAtendidas = quejas.Where(q=> q.FechaCreacion.Date == dateTimeActual ).Count(q => q.Estatus == "Atendido");
+            int totalPendientes = quejas.Where(q => q.FechaCreacion.Date== dateTimeActual).Count(q => q.Estatus == "Pendiente");
+            int totalQuejas = quejas.Where(q => q.FechaCreacion.Date == dateTimeActual).Count();
+
+
+            estatusTotal.Add(totalAtendidas);
+            estatusTotal.Add(totalPendientes);
+            estatusTotal.Add(totalQuejas);
 
             data.Add(estatus);
             data.Add(estatusTotal);
@@ -516,6 +619,67 @@ namespace BuzonQuejas3.Controllers
             return data;
 
         }
+        
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
+        public List<Object> GetQuejasEstatusAnual()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            var dateTimeActual = DateTime.Now;
+            //Console.WriteLine("date"+ dateTimeActual);
+            //var unidades = _context.UnidadAdministrativas.ToList();
+
+            var queja = _context.Quejas.FirstOrDefault(m => m.Resolucion == "nada");
+            Console.WriteLine(queja.FechaCreacion.Date == dateTimeActual);
+
+            List<Object> data = new List<Object>();
+            List<string> estatus = new List<string> { "Enero","Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+            List<int> estatusTotalPendientes = new List<int>();
+            List<int> estatusTotalAtendidas = new List<int>();
+
+            for (int i = 0; i < 12; i++)
+            {
+            int totalAtendidas = quejas.Where(q=> q.FechaCreacion.Month == i+1 && q.FechaCreacion.Year == dateTimeActual.Year).Count(q => q.Estatus == "Atendido");
+            int totalPendientes = quejas.Where(q => q.FechaCreacion.Month == i+1 && q.FechaCreacion.Year == dateTimeActual.Year).Count(q => q.Estatus == "Pendiente");
+             estatusTotalAtendidas.Add(totalAtendidas);
+             estatusTotalPendientes.Add(totalPendientes);
+            }
+
+            data.Add(estatus);
+            data.Add(estatusTotalAtendidas);
+            data.Add(estatusTotalPendientes);
+
+            return data;
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador,Root,Departamental")]
+        public List<Object> GetQuejasMedio()
+        {
+            var quejas = from Queja in _context.Quejas select Queja;
+            var medios = _context.Medios.ToList();
+
+            List<Object> data = new List<Object>();
+            List<string> mediosNombre = new List<string>();
+            List<int> mediosTotal = new List<int>();
+
+            foreach (var medio in medios)
+            {
+                int total = quejas.Count(q => q.MedioID == medio.MedioID);
+
+                mediosNombre.Add(medio.Nombre);
+                mediosTotal.Add(total);
+            }
+
+            data.Add(mediosNombre);
+            data.Add(mediosTotal);
+
+            return data;
+
+        }
+
+
 
         [HttpGet]
         [Produces("application/json")]
@@ -558,7 +722,7 @@ namespace BuzonQuejas3.Controllers
             var municipio = await _context.Municipios.FirstOrDefaultAsync(m => m.MunicipioID.Equals(Guid.Parse(idMunicipio)));
             return municipio;
         }
-        
+
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
@@ -568,7 +732,7 @@ namespace BuzonQuejas3.Controllers
             var medio = await _context.Medios.FirstOrDefaultAsync(m => m.MedioID.Equals(Guid.Parse(idMedio)));
             return medio;
         }
-        
+
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]

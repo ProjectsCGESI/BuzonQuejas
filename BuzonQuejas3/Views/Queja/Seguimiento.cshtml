@@ -4,9 +4,9 @@
 @{
     ViewData["Title"] = "Seguimiento";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var UnidadAdministrativa = (List<UnidadAdministrativa>)ViewData["unidades"];
-    var Departamento = (List<Departamento>)ViewData["departamentos"];
-    var Municipio = (List<Municipio>)ViewData["municipios"];
+    //var UnidadAdministrativa = (List<UnidadAdministrativa>)ViewData["unidades"];
+    //var Departamento = (List<Departamento>)ViewData["departamentos"];
+    //var Municipio = (List<Municipio>)ViewData["municipios"];
 }
 <link rel="stylesheet" href="~/css/Seguimiento.css" />
 
@@ -43,6 +43,7 @@
             <div class="row">
                 @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
                 <input type="hidden" asp-for="QuejaID" />
+                <input type="hidden" asp-for="Folio" />
                 <input type="hidden" asp-for="NombreQuejante" />
                 <input type="hidden" asp-for="Direccion" />
                 <input type="hidden" asp-for="UnidadAdministrativaID" />
@@ -75,22 +76,22 @@
                     </div>
                 </div>
                 @*<div class="col-4 ">
-            @foreach (var unidad in UnidadAdministrativa)
-            {
-                if (!@Model.UnidadAdministrativaID.ToString().Equals(""))
-                {
-                    if (unidad.UnidadAdministrativaID.Equals(@Model.UnidadAdministrativaID))
-                    {
+                        @foreach (var unidad in UnidadAdministrativa)
+                        {
+                            if (!@Model.UnidadAdministrativaID.ToString().Equals(""))
+                            {
+                                if (unidad.UnidadAdministrativaID.Equals(@Model.UnidadAdministrativaID))
+                                {
 
-                        <div class="form-group">
-                            <label class="control-label">Unidad Administrativa</label>
-                            <textarea disabled class="form-control">@unidad.Nombre</textarea>
-                        </div>
-                        break;
-                    }
-                }
-            }
-        </div>*@
+                                    <div class="form-group">
+                                        <label class="control-label">Unidad Administrativa</label>
+                                        <textarea disabled class="form-control">@unidad.Nombre</textarea>
+                                    </div>
+                                    break;
+                                }
+                            }
+                        }
+                    </div>*@
                 <div class="col-2">
                     <div class="form-group">
                         <label class="control-label">Teléfono</label>
@@ -119,27 +120,27 @@
                 <div class="col-3 ">
                     <div class="form-group">
                         <label class="control-label">Medio de recepción</label>
-                        <input disabled asp-for="MedioID" class="form-control" id="medioSeguimiento"/>
+                        <input disabled asp-for="MedioID" class="form-control" id="medioSeguimiento" />
                     </div>
                 </div>
 
                 @*<div class="col-3">
-            @foreach (var municipio in Municipio)
-            {
-                if (!@Model.MunicipioID.ToString().Equals(""))
-                {
-                    if (municipio.MunicipioID.Equals(@Model.MunicipioID))
-                    {
+                        @foreach (var municipio in Municipio)
+                        {
+                            if (!@Model.MunicipioID.ToString().Equals(""))
+                            {
+                                if (municipio.MunicipioID.Equals(@Model.MunicipioID))
+                                {
 
-                        <div class="form-group">
-                            <label class="control-label">Municipio</label>
-                            <input disabled value="@municipio.Nombre" class="form-control" />
-                        </div>
-                        break;
-                    }
-                }
-            }
-        </div>*@
+                                    <div class="form-group">
+                                        <label class="control-label">Municipio</label>
+                                        <input disabled value="@municipio.Nombre" class="form-control" />
+                                    </div>
+                                    break;
+                                }
+                            }
+                        }
+                    </div>*@
                 <div class="col-5">
                     <div class="form-group">
                         <label class="control-label">Servidor público involucrado</label>
