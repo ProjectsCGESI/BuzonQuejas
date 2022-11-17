@@ -184,7 +184,7 @@ function drawEstatusDiario(data) {
                 datasets: [
                     {
                     backgroundColor: ["Blue","green","red"],
-                    label: 'Total',
+                    label: 'Quejas',
                         data: [_chartDataT, _chartDataA, _chartDataP]
                     },
                 ]
@@ -228,12 +228,19 @@ function scrollUnidadesHandle(ev) {
 function drawUnidades(data) {
 
     var _data = data;
-    var _chartLabels = _data[0];
+    var _chartLabels = [];
     var _chartData = [];
+
+    _data[0].forEach(function (label, index) {
+        const palabras = label.split(" ");
+        palabras.join(" ");
+        _chartLabels.push(palabras);
+
+    });
 
     _data[1].forEach(function (total,index) {
         _chartData.push(total);
-        var newwidth = $('.chartAreaWrapper2Unidad').width() + index;
+        var newwidth = $('.chartAreaWrapper2Unidad').width() + 20;
         $('.chartAreaWrapper2Unidad').width(newwidth);
     });
 
@@ -260,7 +267,7 @@ function drawUnidades(data) {
                 layout: {
                     padding: {
                         bottom: 10,
-                        left: 120,
+                        left: 10,
                     },
                 },
                 scales: {
@@ -271,7 +278,7 @@ function drawUnidades(data) {
                         },
                         ticks: {
                             autoSkip: false,
-                            //maxRotation: 90,
+                            maxRotation: 0,
                             //minRotation: 20,
                             font: {
                                 size: 9,
@@ -321,13 +328,26 @@ function scrollMunicipiosHandle(ev) {
 //Gráfico para quejas por MUNICIPIO
 function drawMunicipios(data) {
     var _data = data;
-    var _chartLabels = _data[0];
+    var _chartLabels = [];
     var _chartData = [];
 
-    _data[1].forEach(function (total,index) {
+    _data[0].forEach(function (label,index) {
+        const palabras = label.split(" ");
+
+        for (let i = 0; i < palabras.length; i++) {
+            var subPalabra = palabras[i].substr(1);
+            var subPalabraLower = subPalabra.toLowerCase();
+            palabras[i] = palabras[i][0].toUpperCase() + subPalabraLower;
+        }
+
+        const nueva = palabras.join(" ");
+        _chartLabels.push(nueva);
+
+    });
+
+    _data[1].forEach(function (total, index) {
         _chartData.push(total);
-        console.log("index",index);
-        var newwidth = $('.chartAreaWrapper2Municipio').width() + index/2;
+        var newwidth = $('.chartAreaWrapper2Municipio').width() + 10;
         $('.chartAreaWrapper2Municipio').width(newwidth);
 
     });
@@ -362,8 +382,8 @@ function drawMunicipios(data) {
                 clip: true,
                 layout: {
                     padding: {
-                        bottom: 50,
-                        left: 50,
+                        bottom: 10,
+                        left: 10,
                     }
                 },
                 scales: {
@@ -372,6 +392,8 @@ function drawMunicipios(data) {
                             display: false
                         },
                         ticks: {
+                            autoSkip: false,
+                            maxRotation: 90,
                             font: {
                                 size: 12,
                             }
@@ -477,7 +499,7 @@ function scrollEstatusUnidadesHandle(ev) {
 function drawEstatusUnidades(data) {
 
     var _data = data;
-    var _chartLabels = _data[0];
+    var _chartLabels = [];
     var _chartDataA = [];
     var _chartDataP = [];
 
@@ -485,9 +507,16 @@ function drawEstatusUnidades(data) {
     console.log(_data[1]);
     console.log(_data[2]);
 
+    _data[0].forEach(function (label, index) {
+        const palabras = label.split(" ");
+        palabras.join(" ");
+        _chartLabels.push(palabras);
+
+    });
+
     _data[1].forEach(function (total,index) {
         _chartDataA.push(total);
-        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + index;
+        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + 20;
         $('.chartAreaWrapper2EstatusUnidad').width(newwidth);
 
     });
@@ -536,7 +565,7 @@ function drawEstatusUnidades(data) {
                 layout: {
                     padding: {
                         bottom: 10,
-                        left: 110,
+                        left: 10,
                     },
                 },
                 scales: {
@@ -547,7 +576,7 @@ function drawEstatusUnidades(data) {
                         },
                         ticks: {
                             autoSkip: false,
-                            //maxRotation: 90,
+                            maxRotation: 0,
                             //minRotation: 30,
                             font: {
                                 size: 9,

@@ -143,12 +143,16 @@
     color: black;
 }
 
-.card-total{
+.card-total {
     background-color: var(--gris--fuerte) !important;
+    border: 2px solid var(--gris--fuerte2);
+    /*border-radius: 10px;*/
 }
 
-.card-a-p{
+.card-a-p {
     background-color: var(--gris--fuerte) !important;
+    border: 2px solid var(--gris--fuerte2);
+    /*border-radius: 10px;*/
 }
 
 .titulo-card {
@@ -156,4 +160,9 @@
     /*color:var(--gris--fuerte2);*/
     font-weight:bold;
     font-size:20px;
+}
+
+.card-all {
+    border: 2px solid var(--gris--fuerte2);
+    /*border-radius: 10px;*/
 }

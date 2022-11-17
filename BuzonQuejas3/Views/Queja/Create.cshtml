@@ -46,16 +46,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         @*<button asp-action="Create" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
-                                        @{
-                                            if (User.IsInRole("Administrador") || User.IsInRole("Root"))
-                                            {
-                                                <a asp-action="Index" class="btn aceptar-bttn">Aceptar</a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-action="Create" class="btn aceptar-bttn">Aceptar</a>
-                                            }
-                                        }
+                                        <a asp-action="Index" class="btn aceptar-bttn">Aceptar</a>
                                         @*<a asp-action="Create" class="btn aceptar-bttn">Aceptar</a>*@
                                     </div>
                                 </div>
@@ -122,7 +113,7 @@
                 <span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <select asp-for="CargoID" asp-items="ViewBag.cargos" class="form-control cargoSelect" >
+                <select asp-for="CargoID" asp-items="ViewBag.cargos" class="form-control cargoSelect">
                     <option value="">Seleccione un cargo</option>
                 </select>
                 <span asp-validation-for="CargoID" class="text-danger"></span>

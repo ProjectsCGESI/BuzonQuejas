@@ -1,5 +1,5 @@
 ﻿@*@model IEnumerable<BuzonQuejas3.Models.Queja>*@
-
+@using Microsoft.AspNetCore.Identity;
 @{
     ViewData["Title"] = "Tablero Central";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,19 +21,19 @@
         </div>
         <div class="col-12 mt-2">
             <div class="row no-gutters">
-                <div class="col-6 ">
+                <div class="col-4 ">
                     <div class="row no-gutters">
                         @* card total quejas *@
                         <div class="col-12 ">
-                            <div class="card text-white card-total">
+                            <div class="card text-white card-total rounded-0">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6 text-center">
+                                        <div class="col-2 text-center">
                                             <span class="material-icons icon-home">
-                                                home
+                                                email
                                             </span>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-10">
                                             <div class="row">
                                                 <div class="col-12 text-center size-total" id="totalQuejas">
 
@@ -49,16 +49,16 @@
                             </div>
                         </div>
                         @* card total atendidas *@
-                        <div class="col-6 mt-2">
-                            <div class="card text-white card-a-p">
+                        <div class="col-6">
+                            <div class="card text-white card-a-p rounded-0">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6 text-center">
+                                        <div class="col-4 text-center">
                                             <span class="material-icons icon-atendidas">
-                                                gpp_good
+                                                mark_email_read
                                             </span>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-8">
                                             <div class="row">
                                                 <div class="col-12 text-center size-total-atendidas" id="totalAtendidas">
 
@@ -74,16 +74,16 @@
                             </div>
                         </div>
                         @* card total pendientes *@
-                        <div class="col-6 mt-2">
-                            <div class="card text-white card-a-p">
+                        <div class="col-6">
+                            <div class="card text-white card-a-p rounded-0">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6 text-center">
+                                        <div class="col-4 text-center">
                                             <span class="material-icons icon-pendientes">
-                                                gpp_bad
+                                                mail_lock
                                             </span>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-8">
                                             <div class="row">
                                                 <div class="col-12 text-center size-total-pendientes" id="totalPendientes">
 
@@ -101,24 +101,24 @@
 
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="card bg-light">
+                <div class="col-4">
+                    <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Quejas de hoy @DateTime.Now.Date.ToShortDateString()</div>
                         <div class="card-body">
                             <canvas id="EstatusDiarioGraph" style="max-height: 200px; width: 100%;height:200px;border-radius: 10px;background-color: white"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="card bg-light">
+                <div class="col-4">
+                    <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Estatus global de quejas</div>
                         <div class="card-body">
-                            <canvas id="EstatusGraph" style="max-height: 400px; width: 100%;height:400px;border-radius: 10px;background-color: white"></canvas>
+                            <canvas id="EstatusGraph" style="max-height: 200px; width: 100%;height:200px;border-radius: 10px;background-color: white"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="card bg-light">
+                <div class="col-4">
+                    <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Quejas por municipio</div>
                         <div class="card-body">
                             <div class=" chartWrapperMunicipio">
@@ -132,14 +132,14 @@
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <div class="card bg-light">
-                        <div class="card-header text-center titulo-card">Total de quejas por unidad administrativa</div>
+                <div class="col-4">
+                    <div class="card bg-light card-all">
+                        <div class="card-header text-center titulo-card">Quejas por unidad administrativa</div>
                         <div class="card-body">
                             <div class="chartWrapperUnidad">
                                 <div id="chartAreaWrapperUnidad" class="chartAreaWrapperUnidad" onwheel="scrollUnidadesHandle(event)">
                                     <div id="chartAreaWrapper2Unidad" class="chartAreaWrapper2Unidad">
-                                        <canvas id="UnidadesGraph" style="max-height: 500px; width: 100%; height: 500px; border-radius: 10px; background-color: white "></canvas>
+                                        <canvas id="UnidadesGraph" style="max-height: 400px; width: 100%; height: 400px; border-radius: 10px; background-color: white "></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -148,50 +148,63 @@
                 </div>
 
 
-                <div class="col-6">
-                    <div class="card bg-light">
-                        <div class="card-header text-center titulo-card">Estatus de quejas por UA</div>
+                <div class="col-4">
+                    <div class="card bg-light card-all">
+                        <div class="card-header text-center titulo-card">Estatus por unidad administrativa</div>
                         <div class="card-body">
                             <div class="chartWrapperEstatusUnidad">
                                 <div id="chartAreaWrapperEstatusUnidad" class="chartAreaWrapperEstatusUnidad" onwheel="scrollEstatusUnidadesHandle(event)">
                                     <div id="chartAreaWrapper2EstatusUnidad" class="chartAreaWrapper2EstatusUnidad">
-                                        <canvas id="EstatusUnidadesGraph" style="max-height: 500px; width: 100%; height: 500px; border-radius: 10px; background-color: white "></canvas>
+                                        <canvas id="EstatusUnidadesGraph" style="max-height: 400px; width: 100%; height: 400px; border-radius: 10px; background-color: white "></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-6">
-                    <div class="card bg-light">
+                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Fiscal"))
+                {
+                <div class="col-3">
+                    <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Departamentos</div>
                         <div class="card-body">
                             <div class="chartWrapperDpto">
                                 <div id="chartAreaWrapperDpto" class="chartAreaWrapperDpto" onwheel="scrollDepartamentosHandle(event)">
                                     <div id="chartAreaWrapper2Dpto" class="chartAreaWrapper2Dpto">
-                                        <canvas id="DepartamentosGraph" style="max-height: 400px; width: 100%; height: 400px; border-radius: 10px; background-color: white "></canvas>
+                                        <canvas id="DepartamentosGraph" style="max-height: 300px; width: 100%; height: 300px; border-radius: 10px; background-color: white "></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-6">
-                    <div class="card bg-light">
+                <div class="col-3">
+                    <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Medios de recepción</div>
                         <div class="card-body">
-                            <canvas id="MediosGraph" style="max-height: 400px; width: 100%;height:400px;border-radius: 10px;background-color: white"></canvas>
+                            <canvas id="MediosGraph" style="max-height: 300px; width: 100%;height:300px;border-radius: 10px;background-color: white"></canvas>
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-12">
-                    <div class="card bg-light">
+                }
+            else
+            {
+            <div class="col-6">
+                <div class="card bg-light card-all">
+                    <div class="card-header text-center titulo-card">Medios de recepción</div>
+                    <div class="card-body">
+                        <canvas id="MediosGraph" style="max-height: 300px; width: 100%;height:300px;border-radius: 10px;background-color: white"></canvas>
+                    </div>
+                </div>
+            </div>
+            }
+
+
+                <div class="col-6">
+                    <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Total de quejas por año (@DateTime.Now.Year)</div>
                         <div class="card-body">
-                            <canvas id="EstatusAnualGraph" style="max-height: 400px; width: 100%;height:400px;border-radius: 10px;background-color: white"></canvas>
+                            <canvas id="EstatusAnualGraph" style="max-height: 300px; width: 100%;height:300px;border-radius: 10px;background-color: white"></canvas>
                         </div>
                     </div>
                 </div>
