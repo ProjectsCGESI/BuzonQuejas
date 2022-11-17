@@ -64,7 +64,14 @@ namespace BuzonQuejas3.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                     #endregion
 
-                    return RedirectToAction("Index", "Queja");
+                    if (rol.Nombre != "Fiscal")
+                    {
+                        return RedirectToAction("Index", "Queja");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Tablero", "Queja");
+                    }
                 }
                 else
                 {

@@ -351,7 +351,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
         public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoID,MunicipioID,UnidadAdministrativaID,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,CargoID,MedioID,Folio")] Queja queja)
         {
             if (id != queja.QuejaID)
@@ -388,7 +388,7 @@ namespace BuzonQuejas3.Controllers
         }
 
 
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public IActionResult Tablero(string buscar, String filtro)
         {
             ////Traer todas las quejas tipo IQuerable<Queja>
@@ -435,7 +435,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasPorUnidades()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -465,7 +465,7 @@ namespace BuzonQuejas3.Controllers
         }
         
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasPorDepartamento()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -495,7 +495,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusPorUnidades()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -529,7 +529,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasPorMunicipio()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -560,7 +560,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusTotal()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -588,7 +588,7 @@ namespace BuzonQuejas3.Controllers
         }       
         
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusDiario()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -621,7 +621,7 @@ namespace BuzonQuejas3.Controllers
         }
         
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusAnual()
         {
             var quejas = from Queja in _context.Quejas select Queja;
@@ -654,7 +654,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasMedio()
         {
             var quejas = from Queja in _context.Quejas select Queja;

@@ -17,15 +17,18 @@
             <div class="container-fluid ">
                 <div class="container-fluid">
                     <div class="row align-items-center ">
-                        
+
                         <div oncontextmenu='return false' ondragstart='return false' onmousedown='return false' onselectstart='return false' class="col-2">
                             <img src="~/imagenes/escudoPuebla.png" class="mx-auto d-block" style="width:4vw;" alt="Escudo de Puebla">
                         </div>
                         <div class="col-8">
                             <div class="row justify-content-center">
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("UnidadAdministrativa"))
+                                {
                                     <div class="col mr-auto text-center">
                                         <a class="nav-link opcion-color w-75 mx-auto" asp-area="" asp-controller="Queja" asp-action="Index">Mis Quejas</a>
                                     </div>
+                                }
 
                                 @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
                                 {
@@ -34,7 +37,7 @@
                                     </div>
                                 }
 
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("Fiscal"))
                                 {
                                     <div class="col mr-auto text-center">
                                         <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Queja" asp-action="Tablero">Tablero</a>
