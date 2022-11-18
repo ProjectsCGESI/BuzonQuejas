@@ -144,7 +144,7 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("2c1dcd2b-da26-414b-9a97-652f0d2809a4"), Nombre = "Unidad de Transparencia" });
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("53f19eac-b8f3-4486-8be4-4ef56fcb5084"), Nombre = "Unidad Especializada en Materia de Extinción de Dominio" });
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78"), Nombre = "Visitaduría General" });
-            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"), Nombre = "No Aplica" });
+            modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"), Nombre = "Sin Asignar" });
            
             //// Usuarios
             modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("1139861b-5044-4257-b89a-db1b5d4402bf"), Nombre = "root", Correo="root@root.com", Clave = "123", Activo = true, RolID = Guid.Parse("77a225a3-1266-4b1f-b11c-504969afa856"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });

@@ -143,7 +143,7 @@ function drawEstatus(data) {
             data: {
                 labels: _chartLabels,
                 datasets: [{
-                    backgroundColor: ["green", "red"],
+                    backgroundColor: ["#00e600", "#ff3333"],
                     label: 'Total de quejas',
                     data: _chartData
                 }]
@@ -183,7 +183,9 @@ function drawEstatusDiario(data) {
                 labels: _chartLabels,
                 datasets: [
                     {
-                    backgroundColor: ["Blue","green","red"],
+                        backgroundColor: ["rgb(0, 184, 230,0.2)", "rgb(0, 230, 0,0.2)","rgb(255, 51, 51,0.2)"],
+                        borderColor: ["#00ccff", "#00e600", "#ff3333"],
+                    borderWidth: 2,
                     label: 'Quejas',
                         data: [_chartDataT, _chartDataA, _chartDataP]
                     },
@@ -196,11 +198,19 @@ function drawEstatusDiario(data) {
                             beginAtZero: true,
                             callback: function (value) { if (value % 1 === 0) { return value; } }
                         }
+                    },
+                    x: {
+                        ticks: {
+                            //align: "center"
+                        },
+                        grid: {
+                            display: false,
+                        }
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true,
+                        display: false,
                         labels: {
                             font: {
                                 size: 14
@@ -240,7 +250,7 @@ function drawUnidades(data) {
 
     _data[1].forEach(function (total,index) {
         _chartData.push(total);
-        var newwidth = $('.chartAreaWrapper2Unidad').width() + 20;
+        var newwidth = $('.chartAreaWrapper2Unidad').width() + index + index +index;
         $('.chartAreaWrapper2Unidad').width(newwidth);
     });
 
@@ -253,8 +263,8 @@ function drawUnidades(data) {
                 datasets: [
                     {
                         label: 'Número de quejas',
-                        backgroundColor: "rgb(255, 255, 51,0.1)",
-                        borderColor: "#cccc00",
+                        backgroundColor: "rgb(0, 255, 255,0.2)",
+                        borderColor: "#00b3b3",
                         toolTipOrder: 3,
                         fill:true,
                         data: _chartData,
@@ -361,8 +371,9 @@ function drawMunicipios(data) {
                 datasets: [
                     {
                         label: 'Total de quejas',
-                        backgroundColor: "yellow",
-                        borderColor: "#F3BC00",
+                        backgroundColor: "rgb(255, 255, 0,0.5)",
+                        borderColor: "#b38600",
+                        borderWidth:1,
                         toolTipOrder: 3,
                         data: _chartData,
                         yAxisID: "y",
@@ -516,7 +527,7 @@ function drawEstatusUnidades(data) {
 
     _data[1].forEach(function (total,index) {
         _chartDataA.push(total);
-        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + 20;
+        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + index*3;
         $('.chartAreaWrapper2EstatusUnidad').width(newwidth);
 
     });
@@ -534,8 +545,9 @@ function drawEstatusUnidades(data) {
                 datasets: [
                     {
                         label: 'Atendidas',
-                        backgroundColor: "green",
-                        borderColor: "green",
+                        backgroundColor: "rgb(0, 230, 0,0.5)",
+                        borderColor: "#00e600",
+                        borderWidth: 1,
                         toolTipOrder: 3,
                         data: _chartDataA,
                         yAxisID: "y",
@@ -547,8 +559,9 @@ function drawEstatusUnidades(data) {
                     },
                     {
                         label: 'Pendientes',
-                        backgroundColor: "red",
-                        borderColor: "red",
+                        backgroundColor: "rgb(255, 51, 51,0.5)",
+                        borderColor: "#ff3333",
+                        borderWidth: 1,
                         toolTipOrder: 3,
                         data: _chartDataP,
                         yAxisID: "y",
@@ -651,8 +664,9 @@ function drawDepartamentos(data) {
                 datasets: [
                     {
                         label: 'Quejas registradas',
-                        backgroundColor: "green",
-                        borderColor: "green",
+                        backgroundColor: "rgb(187, 153, 255,0.5)",
+                        borderColor: "#bb99ff",
+                        borderWidth: 2,
                         toolTipOrder: 3,
                         data: _chartData,
                         yAxisID: "y",
@@ -739,7 +753,7 @@ function drawQuejasAnual(data) {
                 labels: _chartLabels,
                 datasets: [
                     {
-                        label: 'Atendidas',
+                        label: 'Pendientes',
                         backgroundColor: "rgb(255, 92, 51,0.1)",
                         borderColor: "rgb(255, 92, 51)",
                         fill: true,
@@ -749,7 +763,7 @@ function drawQuejasAnual(data) {
                         barThickness: 15,
                     },
                     {
-                        label: 'Pendientes',
+                        label: 'Atendidas',
                         backgroundColor: "rgb(0, 179, 0,0.1)",
                         borderColor: "rgb(0, 179, 0)",
                         fill:true,

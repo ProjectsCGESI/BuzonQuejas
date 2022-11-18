@@ -10,9 +10,9 @@
 }
 <link rel="stylesheet" href="~/css/Tablero.css" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div class="container-fluid">
+<div class="container-fluid contenedor-tablero">
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 mt-3 mb-3">
             <div class="row">
                 <div class="col-12">
                     <h1 class="text-center titulo">Tablero Central de Quejas  </h1>
@@ -20,12 +20,12 @@
             </div>
         </div>
         <div class="col-12 mt-2">
-            <div class="row no-gutters">
+            <div class="row">
                 <div class="col-4 ">
                     <div class="row no-gutters">
                         @* card total quejas *@
-                        <div class="col-12 ">
-                            <div class="card text-white card-total rounded-0">
+                        <div class="col-12 mb-1">
+                            <div class="card text-white card-total">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-2 text-center">
@@ -50,10 +50,10 @@
                         </div>
                         @* card total atendidas *@
                         <div class="col-6">
-                            <div class="card text-white card-a-p rounded-0">
+                            <div class="card text-white card-a-p">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-4 text-center">
+                                        <div class="col-4 text-left">
                                             <span class="material-icons icon-atendidas">
                                                 mark_email_read
                                             </span>
@@ -75,7 +75,7 @@
                         </div>
                         @* card total pendientes *@
                         <div class="col-6">
-                            <div class="card text-white card-a-p rounded-0">
+                            <div class="card text-white card-a-p ">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-4 text-center">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 mt-1">
                     <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Quejas por municipio</div>
                         <div class="card-body">
@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <div class="col-4">
+                <div class="col-4 mt-1">
                     <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Quejas por unidad administrativa</div>
                         <div class="card-body">
@@ -148,7 +148,7 @@
                 </div>
 
 
-                <div class="col-4">
+                <div class="col-4 mt-1">
                     <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Estatus por unidad administrativa</div>
                         <div class="card-body">
@@ -164,7 +164,7 @@
                 </div>
                 @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Fiscal"))
                 {
-                <div class="col-3">
+                <div class="col-3 mt-1">
                     <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Departamentos</div>
                         <div class="card-body">
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3 mt-1">
                     <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Medios de recepción</div>
                         <div class="card-body">
@@ -189,7 +189,7 @@
                 }
             else
             {
-            <div class="col-6">
+            <div class="col-6 mt-1">
                 <div class="card bg-light card-all">
                     <div class="card-header text-center titulo-card">Medios de recepción</div>
                     <div class="card-body">
@@ -200,7 +200,7 @@
             }
 
 
-                <div class="col-6">
+                <div class="col-6 mt-1">
                     <div class="card bg-light card-all">
                         <div class="card-header text-center titulo-card">Total de quejas por año (@DateTime.Now.Year)</div>
                         <div class="card-body">

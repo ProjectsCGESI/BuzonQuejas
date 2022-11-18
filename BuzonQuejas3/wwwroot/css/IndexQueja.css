@@ -113,16 +113,23 @@ td {
     font-weight: bold;
 }
 
+.user-name {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold !important;
+    font-size: 12px;
+    border-bottom: 2px solid var(--gris--fuerte) !important;
+    width:15%;
+    float:right;
+}
 /*.titulo:hover{
     color: var(--tabs-options-color);
 }*/
-
 .td-index {
     max-width: 50px;
     overflow: hidden;
     text-overflow: clip;
     white-space: normal;
-    max-height:5px !important;
+    max-height: 5px !important;
 }
 
 .text-icon {

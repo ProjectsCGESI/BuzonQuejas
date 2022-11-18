@@ -453,7 +453,7 @@ namespace BuzonQuejas3.Controllers
 
                 if (total > 0)
                 {
-                    unidadesNombre.Add(unidad.Nombre == "No Aplica" ? "Sin Asignar" : unidad.Nombre);
+                    unidadesNombre.Add(unidad.Nombre);
                     unidadesTotal.Add(total);
                 }
             }
@@ -483,7 +483,7 @@ namespace BuzonQuejas3.Controllers
 
                 if (total > 0)
                 {
-                    departamentosNombre.Add(departamento.Nombre == "No Aplica" ? "Sin Asignar" : departamento.Nombre);
+                    departamentosNombre.Add(departamento.Nombre);
                     departamentosTotal.Add(total);
                 }
             }
@@ -527,7 +527,7 @@ namespace BuzonQuejas3.Controllers
 
                 if (totalAtendidos > 0 || totalPendientes > 0)
                 {
-                    unidadesNombre.Add(unidad.Nombre == "No Aplica" ? "Sin Asignar" : unidad.Nombre);
+                    unidadesNombre.Add(unidad.Nombre);
                     atendidasTotal.Add(totalAtendidos);
                     pendientesTotal.Add(totalPendientes);
                 }
@@ -756,7 +756,7 @@ namespace BuzonQuejas3.Controllers
         public async Task<ActionResult<IEnumerable<UnidadAdministrativa>>> GetUnidades()
         {
             //var unidades = await _context.UnidadAdministrativas.OrderBy(x => x.Nombre).ToListAsync();
-            var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "No Aplica").OrderBy(x => x.Nombre).ToListAsync();
+            var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "Sin Asignar").OrderBy(x => x.Nombre).ToListAsync();
             return unidades;
         }
         [HttpGet]

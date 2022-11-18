@@ -1,20 +1,21 @@
 ﻿@*@model IEnumerable<BuzonQuejas3.Models.Queja>*@
 @model IEnumerable<BuzonQuejas3.Models.QuejaMostrar>
 @using Microsoft.AspNetCore.Identity
-
 @{
     ViewData["Title"] = "Inicio";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //var username = Context.User.FindFirst("Correo");
-    //string nombre = ViewBag.nombreBuscar;
+    var nombreUsuario = User.Claims.ElementAt(0).Value;
 }
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="~/css/IndexQueja.css" />
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-3">
     <div class="col-12">
         <div class="row align-items-center mb-2">
-            <div class="col-12 align-self-center mb-5">
+            <div class="col-12">
+                <p class="text-center user-name ">@nombreUsuario</p>
+            </div>
+            <div class="col-12 mb-5">
                 <h1 class="text-center titulo">Buzón de quejas  </h1>
             </div>
         </div>
