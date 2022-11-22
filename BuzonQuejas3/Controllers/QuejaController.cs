@@ -26,9 +26,8 @@ namespace BuzonQuejas3.Controllers
 
         // GET: Queja
         //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
-        public async Task<IActionResult> Index(string buscar, String filtro)
+        public async Task<IActionResult> Quejas(string buscar, String filtro)
         {
-
             IQueryable<QuejaMostrar> quejasMostrar;
             //IQueryable<Queja> quejas;
 
@@ -52,8 +51,6 @@ namespace BuzonQuejas3.Controllers
                                     Medio = medio.Nombre,
                                     //llamar a todas las propiedades necesarias
                                 };
-
-
             }
             else if(User.IsInRole("Departamental"))
             {
@@ -116,7 +113,6 @@ namespace BuzonQuejas3.Controllers
             ViewData["FiltroFecha"] = filtro == "FechaAscendente" ? "FechaDescendiente" : "FechaAscendente";
             ViewData["FiltroEstatus"] = filtro == "EstatusAscendente" ? "EstatusDescendiente" : "EstatusAscendente";
 
-
             switch (filtro)
             {
                 case "FolioDescendiente":
@@ -150,7 +146,6 @@ namespace BuzonQuejas3.Controllers
                 default:
                     quejasMostrar = quejasMostrar.OrderBy(queja => queja.Folio);
                     break;
-
             }
 
             return View(await quejasMostrar.ToListAsync());
@@ -177,7 +172,7 @@ namespace BuzonQuejas3.Controllers
 
         [Authorize(Roles = "Administrador,Root,Departamental")]
         // GET: Queja/Create
-        public IActionResult Create()
+        public IActionResult AgregarQueja()
         {
             var lMunicipios = _context.Municipios.ToList();
             var listaMunicipios = new SelectList(lMunicipios.OrderBy(o => o.Nombre), "MunicipioID", "Nombre");
@@ -207,7 +202,7 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root,Departamental")]
-        public async Task<IActionResult> Create([Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,Folio")] Queja queja)
+        public async Task<IActionResult> AgregarQueja([Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,Folio")] Queja queja)
         {
             queja.AtendidoPor = "";
             queja.Resolucion = "";
@@ -324,7 +319,7 @@ namespace BuzonQuejas3.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Quejas));
             }
             return View(queja);
         }
@@ -355,7 +350,7 @@ namespace BuzonQuejas3.Controllers
             var queja = await _context.Quejas.FindAsync(id);
             _context.Quejas.Remove(queja);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Quejas));
         }
 
         private bool QuejaExists(Guid id)
@@ -424,7 +419,7 @@ namespace BuzonQuejas3.Controllers
                 }
             }
             return View();
-            //return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Quejas));
             //return View(queja);
         }
 
@@ -838,7 +833,7 @@ namespace BuzonQuejas3.Controllers
             {
                 _context.Update(queja);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Quejas));
 
             }
             catch (DbUpdateConcurrencyException)

@@ -66,7 +66,7 @@ namespace BuzonQuejas3.Controllers
 
                     if (rol.Nombre != "Fiscal")
                     {
-                        return RedirectToAction("Index", "Queja");
+                        return RedirectToAction("Quejas", "Queja");
                     }
                     else
                     {
