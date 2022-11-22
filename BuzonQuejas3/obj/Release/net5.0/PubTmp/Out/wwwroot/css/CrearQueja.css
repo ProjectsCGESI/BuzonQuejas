@@ -48,13 +48,13 @@
     border-radius: 25px;
 }
 
-/*select{
-    width: 200px;
+.cargoSelect option{
+    /*width: 200px;*/
     height: auto;
     word-wrap: break-word;
-    white-space: normal;*/
-    /*color: var(--secondary-color) !important;*/
-    /*font-size: 15px !important;
-    text-transform: lowercase;*/
+    white-space: normal;
+    color: var(--secondary-color) !important;
+    font-size: 10px !important;
+    /*text-transform: lowercase;*/
     /*text-transform: capitalize;*/
-/*}*/
+}

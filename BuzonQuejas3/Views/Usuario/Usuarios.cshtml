@@ -1,0 +1,115 @@
+﻿@model IEnumerable<BuzonQuejas3.Models.UsuarioMostrar>
+
+@{
+    ViewData["Title"] = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="~/css/IndexUsuario.css" />
+
+<div class="row justify-content-center mt-5">
+    <div class="col-12">
+        <h1 class="text-center titulo">Usuarios</h1>
+    </div>
+    <div class="col-10">
+        <div class="row align-items-center">
+            <div class="col-12 mb-2">
+                <p class="text-right ">
+                    <a class="btn agregar-bttn text-center" asp-action="AgregarUsuario">
+                        Agregar usuario
+                    </a>
+                </p>
+            </div>
+            <div class="col-12">
+                <div class="table-responsive border contenedor-tabla">
+                    <table class="table table-hover">
+                        <thead >
+                            <tr class="align-text-top header-table">
+                                <th>
+                                    <a class="text-dark"  asp-action="Index" asp-route-filtro="@ViewData["FiltroNombre"]">
+                                    @Html.DisplayNameFor(model => model.Nombre)
+                                        <span class="material-icons size-order ">height</span>
+                                    </a>
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Correo)
+                                </th>
+                                @*
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Clave)
+                                </th>*@
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Activo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Departamento)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Rol)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UnidadAdministrativa)
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr class="table-row">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Correo)
+                                </td>
+                                @*
+        <td>
+            @Html.DisplayFor(modelItem => item.Clave)
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Departamento)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Rol)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID">
+                                        <span class="material-icons size-icon">
+                                            edit
+                                        </span>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="EliminarUsuario" asp-route-id="@item.UsuarioID" >
+                                        <span class="material-icons size-icon">
+                                            delete
+                                        </span>
+                                    </a>
+                                </td>
+                                @*<td>
+                                    <a asp-action="Edit" asp-route-id="@item.UsuarioID">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.UsuarioID">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.UsuarioID">Delete</a>
+                                </td>*@
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

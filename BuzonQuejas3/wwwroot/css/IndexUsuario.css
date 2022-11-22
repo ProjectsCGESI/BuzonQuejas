@@ -1,0 +1,98 @@
+﻿:root {
+    --primary-color: #BDC1BF;
+    --secondary-color: #B28510;
+    --hover-text-color: #DBAB00;
+    --primary-color-rgba: rgba(10, 10, 10, 0.5);
+    --white-menu-color: white;
+    --black-menu-color: black;
+    --gray-menu-color: #aa9d14;
+    --offcanvas-background-color: gray;
+    --links-color: #232323;
+    --tabs-options-color: #575757;
+    --tabs-options-hover-color: gray;
+    --animation-background-color: #A5957E;
+    --animation-hover-color: #332700;
+    --facebook-twitter-background-color: gray;
+    --gris--fuerte2: #5b5e63;
+    --gris--fuerte: #b3b7bb;
+    --table-hover-bg: #bdc1bf;
+    --table-hover-bg2: #EAECEB;
+}
+
+.contenedor-tabla {
+    border-color: var(--primary-color) !important;
+    border: 1px solid #000;
+}
+
+.agregar-bttn {
+    color: white !important;
+    width: 15%;
+    background: var(--secondary-color) !important;
+}
+
+    .agregar-bttn:hover {
+        color: white !important;
+        width: 15%;
+        background: var(--hover-text-color) !important;
+    }
+
+.size-icon {
+    font-size: 25px;
+    text-align: center;
+    color:var(--secondary-color);
+}
+
+.size-order {
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.header-table {
+    background-color: var(--gris--fuerte) !important;
+}
+
+td {
+    border-bottom: 2px solid var(--gris--fuerte) !important;
+}
+
+.table-row:hover {
+    background-color: var(--table-hover-bg2) !important;
+}
+
+.titulo {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
+}
+
+.user-name {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold !important;
+    font-size: 12px;
+    border-bottom: 2px solid var(--gris--fuerte) !important;
+    width: 15%;
+    float: right;
+}
+/*.titulo:hover{
+    color: var(--tabs-options-color);
+}*/
+.td-index {
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+    max-height: 5px !important;
+}
+
+.text-icon {
+    font-size: 10px;
+}
+
+select option {
+    font-size: 15px;
+    width: 200px;
+    height: auto;
+    word-wrap: break-word;
+    white-space: normal;
+    /*color: var(--secondary-color) !important;*/
+}

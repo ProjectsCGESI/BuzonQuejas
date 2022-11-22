@@ -17,9 +17,156 @@
     --gris--fuerte: #b3b7bb;
     --table-hover-bg: #bdc1bf;
     --table-hover-bg2: #EAECEB;
+    --bg-tablero: #d7dad9;
 }
 
+.contenedor-tablero {
+    background-color: var(--bg-tablero);
+}
 .titulo {
     color: var(--gris--fuerte2) !important;
     font-weight: bold;
+}
+
+.chartWrapperMunicipio {
+    position: relative;
+}
+
+    .chartWrapperMunicipio > canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+    }
+
+.chartAreaWrapperMunicipio {
+    /*width: 400px;*/
+    overflow-x: scroll;
+}
+
+    .chartWrapperUnidad {
+    position: relative;
+}
+
+    .chartWrapperUnidad > canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+    }
+
+.chartAreaWrapperUnidad {
+    /*width: 1000px;
+    height:300px;*/
+    overflow-x: scroll;
+} 
+
+.chartWrapperEstatusUnidad {
+    position: relative;
+}
+
+    .chartWrapperEstatusUnidad > canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+    }
+
+.chartAreaWrapperEstatusUnidad {
+    /*width: 1000px;*/
+    /*height:550px;*/
+    overflow-x: scroll;
+}
+
+.chartWrapperDpto {
+    position: relative;
+}
+
+    .chartWrapperDpto > canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+    }
+
+.chartAreaWrapperDpto {
+    /*width: 1000px;*/
+    /*height:550px;*/
+    overflow-y: scroll;
+}
+
+.icon-home {
+    font-size: 100px !important;
+    text-align: center;
+    color: var(--secondary-color);
+    margin:0px !important;
+    padding:0px !important;
+}
+
+.icon-atendidas {
+    font-size: 60px !important;
+    text-align: center;
+    color: forestgreen;
+}
+
+.icon-pendientes {
+    font-size: 60px !important;
+    text-align: center;
+    color: rgb(255, 51, 51);
+}
+
+.size-total {
+    font-size: 60px !important;
+    text-align: center;
+    color: black;
+}
+
+.size-total-text {
+    font-size: 20px !important;
+    text-align: center;
+    font-weight: 600;
+    color: black;
+}
+
+.text-atendidas-pendientes {
+    font-size: 15px !important;
+    text-align: center;
+    font-weight: 600;
+    color: black;
+}
+
+.size-total-atendidas {
+    font-size: 30px !important;
+    text-align: center;
+    color: black;
+}
+
+.size-total-pendientes {
+    font-size: 30px !important;
+    text-align: center;
+    color: black;
+}
+
+.card-total {
+    background-color: var(--table-hover-bg2) !important;
+    border: 2px solid var(--secondary-color);
+    border-radius: 20px;
+}
+
+.card-a-p {
+    background-color: var(--table-hover-bg2) !important;
+    border: 2px solid var(--secondary-color);
+    border-radius: 20px;
+}
+
+.titulo-card {
+    background-color: var(--table-hover-bg2) !important;
+    /*color:var(--gris--fuerte2);*/
+    font-weight:bold;
+    font-size:20px;
+}
+
+.card-all {
+    border: 2px solid var(--secondary-color);
+    /*border-radius: 10px;*/
 }

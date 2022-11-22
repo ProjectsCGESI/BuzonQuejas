@@ -261,8 +261,19 @@ namespace BuzonQuejas3.Controllers
             }
             else
             {
-                ViewBag.SuccessMessage = " Hubo un error al levantar la queja";
-                return View();
+                //ViewBag.SuccessMessage = " Hubo un error al levantar la queja";
+                var lMunicipios = _context.Municipios.ToList();
+                var listaMunicipios = new SelectList(lMunicipios.OrderBy(o => o.Nombre), "MunicipioID", "Nombre");
+                ViewBag.municipios = listaMunicipios;
+
+                var lCargos = _context.Cargos.ToList();
+                var listaCargos = new SelectList(lCargos.OrderBy(o => o.Nombre), "CargoID", "Nombre");
+                ViewBag.cargos = listaCargos;
+
+                var lMedios = _context.Medios.ToList();
+                var listaMedios = new SelectList(lMedios.OrderBy(o => o.Nombre), "MedioID", "Nombre");
+                ViewBag.medios = listaMedios;
+                return View(queja);
             }
 
         }
@@ -841,11 +852,7 @@ namespace BuzonQuejas3.Controllers
                     throw;
                 }
             }
-
-
             //return View();
-
-
         }
     }
 }

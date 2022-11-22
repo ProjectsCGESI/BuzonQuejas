@@ -1,7 +1,9 @@
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\BuzonQuejas3.exe
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\CrearQueja.css
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\CrearUsuario.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\IndexQueja.css
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\IndexUsuario.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\layout.css
-C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\LevantarQueja.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\login.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\Seguimiento.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\site.css
@@ -12,6 +14,7 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Rel
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\imagenes\Logotipo_institucional.png
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\imagenes\user.png
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\CrearQueja.js
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\CrearUsuario.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\Login.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\Quejas.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\Seguimiento.js

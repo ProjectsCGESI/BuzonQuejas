@@ -1,0 +1,41 @@
+﻿:root {
+    --primary-color: #BDC1BF;
+    --secondary-color: #B28510;
+    --hover-text-color: #DBAB00;
+    --primary-color-rgba: rgba(10, 10, 10, 0.5);
+    --white-menu-color: white;
+    --black-menu-color: black;
+    --gray-menu-color: #aa9d14;
+    --offcanvas-background-color: gray;
+    --links-color: #232323;
+    --tabs-options-color: #575757;
+    --tabs-options-hover-color: gray;
+    --animation-background-color: #A5957E;
+    --animation-hover-color: #332700;
+    --facebook-twitter-background-color: gray;
+    --gris--fuerte2: #5b5e63;
+    --gris--fuerte: #b3b7bb;
+    --table-hover-bg: #bdc1bf;
+}
+
+.titulo-nuevo-usuario {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
+}
+.aceptar-bttn {
+    width: 20%;
+    background: var(--secondary-color) !important;
+    color: white !important;
+}
+
+.enviar-bttn-usuario {
+    width: 100%;
+    background: var(--secondary-color) !important;
+    color: white !important;
+}
+
+    .enviar-bttn-usuario:hover {
+        width: 100%;
+        background: var(--hover-text-color) !important;
+        color: white !important;
+    }

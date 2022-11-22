@@ -1,0 +1,83 @@
+﻿@model BuzonQuejas3.Models.Usuario
+
+@{
+    ViewData["Title"] = "Nuevo Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/CrearUsuario.css" />
+<div class="row justify-content-center mt-5">
+    <div class="col-12">
+        <h1 class="text-center titulo-nuevo-usuario mb-2">Nuevo Usuario</h1>
+    </div>
+    @{
+        if (ViewBag.SuccessMessage != null)
+        {
+            <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <div class="modal fade modal-usuario-ok" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Tarea exitosa</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <strong>@ViewBag.SuccessMessage</strong>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a asp-action="Usuarios" class="btn aceptar-bttn">Aceptar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <div class="col-6">
+        <form asp-action="AgregarUsuario">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-3">
+                <input asp-for="Nombre" class="form-control" placeholder="Nombre*" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Correo" class="form-control" placeholder="Correo*" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Clave" class="form-control" placeholder="Contraseña*" />
+                <span asp-validation-for="Clave" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Activo" /> @Html.DisplayNameFor(model => model.Activo)
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Rol</label>
+                <select asp-for="RolID" asp-items="ViewBag.RolID" class="form-control">
+                    @*<option value="">Seleccione un cargo</option>*@
+                </select>
+                <span asp-validation-for="RolID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Departamento</label>
+                <select asp-for="DepartamentoID" class="form-control" asp-items="ViewBag.DepartamentoID"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Unidad Administrativa</label>
+                <select asp-for="UnidadAdministrativaID" class="form-control" asp-items="ViewBag.UnidadAdministrativaID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Enviar" class="btn enviar-bttn-usuario" />
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+<script src="~/js/CrearUsuario.js" asp-append-version="true"></script>
+}

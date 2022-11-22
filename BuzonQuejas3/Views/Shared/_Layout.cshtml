@@ -37,12 +37,21 @@
                                     </div>
                                 }
 
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+                                {
+                                    <div class="col mr-auto text-center">
+                                        <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Usuario" asp-action="Usuarios">Administrar Usuarios</a>
+                                    </div>
+                                }
+
                                 @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("Fiscal"))
                                 {
                                     <div class="col mr-auto text-center">
                                         <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Queja" asp-action="Tablero">Tablero</a>
                                     </div>
                                 }
+                                
+
                                 <div class="col mr-auto text-center ">
                                     <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Acceso" asp-action="Salir">Salir</a>
                                 </div>
@@ -73,11 +82,12 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/Login.js" asp-append-version="true"></script>
-    <script src="~/js/CrearQueja.js" asp-append-version="true"></script>
-    <script src="~/js/Quejas.js" asp-append-version="true"></script>
-    <script src="~/js/Seguimiento.js" asp-append-version="true"></script>
-    <script src="~/js/Tablero.js" asp-append-version="true"></script>
+    @*<script src="~/js/Login.js" asp-append-version="true"></script>*@
+    @*<script src="~/js/CrearQueja.js" asp-append-version="true"></script>*@
+    @*<script src="~/js/Quejas.js" asp-append-version="true"></script>*@
+    @*<script src="~/js/Seguimiento.js" asp-append-version="true"></script>*@
+    @*<script src="~/js/Tablero.js" asp-append-version="true"></script>*@
+    @*<script src="~/js/EditarUsuario.js" asp-append-version="true"></script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -436,3 +436,8 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Rel
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\BuzonQuejas3.pdb
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\BuzonQuejas3.genruntimeconfig.cache
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Queja\Tablero.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\AgregarUsuario.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\Delete.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\Details.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\Edit.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\Index.cshtml.g.cs
