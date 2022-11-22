@@ -49,12 +49,10 @@
 }
 
 .cargoSelect option{
-    /*width: 200px;*/
     height: auto;
     word-wrap: break-word;
     white-space: normal;
-    color: var(--secondary-color) !important;
+    /*color: var(--secondary-color) !important;*/
     font-size: 10px !important;
-    /*text-transform: lowercase;*/
-    /*text-transform: capitalize;*/
 }
+

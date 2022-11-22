@@ -145,3 +145,7 @@ select option {
     white-space: normal;
     /*color: var(--secondary-color) !important;*/
 }
+
+.header-text{
+    color: black !important;
+}

@@ -26,16 +26,16 @@
                 <thead>
                     <tr class="align-text-top header-table">
                         <th class="align-text-top">
-                            <a class="text-dark" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroFolio"]">
+                            <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroFolio"]">
                                 @Html.DisplayName("Folio")
                                 <span class="material-icons size-order ">height</span>
                             </a>
                         </th>
-                        <th class="align-text-top">
+                        <th class="align-text-top header-text">
                             @Html.DisplayName("Nombre del Quejoso")
                         </th>
-                        <th class="align-text-top">
-                            <a class="text-dark" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroFecha"]">
+                        <th class="align-text-top ">
+                            <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroFecha"]">
                                 @Html.DisplayName("Fecha")
                                 <span class="material-icons size-order ">height</span>
                             </a>
@@ -56,20 +56,20 @@
                                 @Html.DisplayName("Unidad Administrativa")
                             </th>*@
                         @* }*@
-                        <th class="align-text-top">
+                        <th class="align-text-top header-text">
                             @Html.DisplayName("Motivo")
                         </th>
-                        <th class="align-text-top">
+                        <th class="align-text-top header-text">
                             @Html.DisplayName("Servidor Público Involucrado")
                         </th>
                         <th class="align-text-top">
-                            <a class="text-dark" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroMedio"]">
+                            <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroMedio"]">
                                 @Html.DisplayName("Medio de Recepción")
                                 <span class="material-icons size-order ">height</span>
                             </a>
                         </th>
                         <th class="align-text-top">
-                            <a class="text-dark" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroEstatus"]">
+                            <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroEstatus"]">
                                 <div class="row">
                                     <div class="col-2 mr-4">
                                         @Html.DisplayName("Estatus")
@@ -83,13 +83,13 @@
                         </th>
                         @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
                         {
-                            <th class="align-text-top">
+                            <th class="align-text-top header-text">
                                 @Html.DisplayName("Reasignar")
                             </th>
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadAdministrativa"))
                         {
-                            <th class="align-text-top">
+                            <th class="align-text-top header-text">
                                 @Html.DisplayName("Seguimiento ")
                             </th>
                         }

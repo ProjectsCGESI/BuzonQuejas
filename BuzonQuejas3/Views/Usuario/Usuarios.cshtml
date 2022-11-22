@@ -28,28 +28,28 @@
                         <thead >
                             <tr class="align-text-top header-table">
                                 <th>
-                                    <a class="text-dark"  asp-action="Usuarios" asp-route-filtro="@ViewData["FiltroNombre"]">
+                                    <a class="header-text-usuarios"  asp-action="Usuarios" asp-route-filtro="@ViewData["FiltroNombre"]">
                                     @Html.DisplayNameFor(model => model.Nombre)
                                         <span class="material-icons size-order ">height</span>
                                     </a>
                                 </th>
-                                <th>
+                                <th class="header-text-usuarios">
                                     @Html.DisplayNameFor(model => model.Correo)
                                 </th>
                                 @*
                                 <th>
                                     @Html.DisplayNameFor(model => model.Clave)
                                 </th>*@
-                                <th>
+                                <th class="header-text-usuarios">
                                     @Html.DisplayNameFor(model => model.Activo)
                                 </th>
-                                <th>
+                                <th class="header-text-usuarios">
                                     @Html.DisplayNameFor(model => model.Departamento)
                                 </th>
-                                <th>
+                                <th class="header-text-usuarios">
                                     @Html.DisplayNameFor(model => model.Rol)
                                 </th>
-                                <th>
+                                <th class="header-text-usuarios">
                                     @Html.DisplayNameFor(model => model.UnidadAdministrativa)
                                 </th>
                                 <th></th>
