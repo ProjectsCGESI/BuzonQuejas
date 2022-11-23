@@ -2,11 +2,11 @@
 $(document).ready(function () {
     //Mostrar gráfico para total de quejas por ESTATUS
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasEstatusTotal",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasEstatusTotal",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             var totales = data[1];
             drawEstatus(data);
@@ -21,11 +21,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total de quejas por ESTATUS diario
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasEstatusDiario",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasEstatusDiario",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawEstatusDiario(data);
         },
@@ -36,11 +36,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total de quejas por ESTATUS Anual
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasEstatusAnual",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasEstatusAnual",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawQuejasAnual(data);
         },
@@ -51,11 +51,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total de quejas por UNIDAD
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasPorUnidades",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasPorUnidades",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawUnidades(data);
         },
@@ -66,11 +66,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total de quejas por MUNICIPIO
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasPorMunicipio",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasPorMunicipio",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawMunicipios(data);
         },
@@ -81,11 +81,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total de quejas por Medio de recepción
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasMedio",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasMedio",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawMedios(data);
         },
@@ -96,11 +96,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total pendiente y atendido de quejas por unidad administrativa
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasEstatusPorUnidades",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasEstatusPorUnidades",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawEstatusUnidades(data);
         },
@@ -111,11 +111,11 @@ $(document).ready(function () {
 
     //Mostrar gráfico para total por departamento 
     $.ajax({
-        type: 'POST',
-        url: "/Queja/GetQuejasPorDepartamento",
-        dataType: "json",
-        data: "",
-        contentType: "application / json; charset=utf-8",
+        type: 'GET',
+        url: "../Queja/GetQuejasPorDepartamento",
+        //dataType: "json",
+        //data: "",
+        //contentType: "application / json; charset=utf-8",
         success: function (data) {
             drawDepartamentos(data);
         },
@@ -183,10 +183,10 @@ function drawEstatusDiario(data) {
                 labels: _chartLabels,
                 datasets: [
                     {
-                        backgroundColor: ["rgb(0, 184, 230,0.2)", "rgb(0, 230, 0,0.2)","rgb(255, 51, 51,0.2)"],
+                        backgroundColor: ["rgb(0, 184, 230,0.2)", "rgb(0, 230, 0,0.2)", "rgb(255, 51, 51,0.2)"],
                         borderColor: ["#00ccff", "#00e600", "#ff3333"],
-                    borderWidth: 2,
-                    label: 'Quejas',
+                        borderWidth: 2,
+                        label: 'Quejas',
                         data: [_chartDataT, _chartDataA, _chartDataP]
                     },
                 ]
@@ -248,9 +248,9 @@ function drawUnidades(data) {
 
     });
 
-    _data[1].forEach(function (total,index) {
+    _data[1].forEach(function (total, index) {
         _chartData.push(total);
-        var newwidth = $('.chartAreaWrapper2Unidad').width() + index + index +index;
+        var newwidth = $('.chartAreaWrapper2Unidad').width() + index + index + index;
         $('.chartAreaWrapper2Unidad').width(newwidth);
     });
 
@@ -266,7 +266,7 @@ function drawUnidades(data) {
                         backgroundColor: "rgb(0, 255, 255,0.2)",
                         borderColor: "#00b3b3",
                         toolTipOrder: 3,
-                        fill:true,
+                        fill: true,
                         data: _chartData,
                         yAxisID: "y",
                         barThickness: 15,
@@ -341,7 +341,7 @@ function drawMunicipios(data) {
     var _chartLabels = [];
     var _chartData = [];
 
-    _data[0].forEach(function (label,index) {
+    _data[0].forEach(function (label, index) {
         const palabras = label.split(" ");
 
         for (let i = 0; i < palabras.length; i++) {
@@ -373,7 +373,7 @@ function drawMunicipios(data) {
                         label: 'Total de quejas',
                         backgroundColor: "rgb(255, 255, 0,0.5)",
                         borderColor: "#b38600",
-                        borderWidth:1,
+                        borderWidth: 1,
                         toolTipOrder: 3,
                         data: _chartData,
                         yAxisID: "y",
@@ -481,7 +481,7 @@ function drawMedios(data) {
                     },
                 },
                 plugins: {
-                    
+
                     legend: {
                         position: "top",
                         reverse: true,
@@ -525,9 +525,9 @@ function drawEstatusUnidades(data) {
 
     });
 
-    _data[1].forEach(function (total,index) {
+    _data[1].forEach(function (total, index) {
         _chartDataA.push(total);
-        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + index*3;
+        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + index * 3;
         $('.chartAreaWrapper2EstatusUnidad').width(newwidth);
 
     });
@@ -766,7 +766,7 @@ function drawQuejasAnual(data) {
                         label: 'Atendidas',
                         backgroundColor: "rgb(0, 179, 0,0.1)",
                         borderColor: "rgb(0, 179, 0)",
-                        fill:true,
+                        fill: true,
                         toolTipOrder: 3,
                         data: _chartDataA,
                         yAxisID: "y",

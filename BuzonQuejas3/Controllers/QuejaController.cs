@@ -434,7 +434,8 @@ namespace BuzonQuejas3.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasPorUnidades()
         {
@@ -475,7 +476,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasPorDepartamento()
         {
@@ -505,7 +507,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusPorUnidades()
         {
@@ -551,7 +554,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasPorMunicipio()
         {
@@ -594,7 +598,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusTotal()
         {
@@ -634,7 +639,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusDiario()
         {
@@ -676,7 +682,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasEstatusAnual()
         {
@@ -721,7 +728,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public List<Object> GetQuejasMedio()
         {
