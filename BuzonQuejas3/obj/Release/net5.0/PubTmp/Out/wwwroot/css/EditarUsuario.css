@@ -17,19 +17,10 @@
     --gris--fuerte: #b3b7bb;
     --table-hover-bg: #bdc1bf;
 }
-/*body {
-    background: var(--tabs-options-color) !important;
-}*/
-.enviar-bttn-queja {
-    width: 100%;
-    background: var(--secondary-color) !important;
-    color: white !important;
-}
 
-.enviar-bttn-queja:hover {
-    width: 100%;
-    background: var(--hover-text-color) !important;
-    color: white !important;
+.titulo-editar-usuario {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
 }
 
 .aceptar-bttn {
@@ -38,21 +29,14 @@
     color: white !important;
 }
 
-.titulo-nueva{
-    color: var(--gris--fuerte2) !important;
-    font-weight: bold;
+.guardar-bttn-usuario {
+    width: 100%;
+    background: var(--secondary-color) !important;
+    color: white !important;
 }
 
-.bg-form-nueva {
-    background: var(--gris--fuerte) !important;
-    border-radius: 25px;
-}
-
-.cargoSelect option{
-    height: auto;
-    word-wrap: break-word;
-    white-space: normal;
-    /*color: var(--secondary-color) !important;*/
-    font-size: 10px !important;
-}
-
+    .guardar-bttn-usuario:hover {
+        width: 100%;
+        background: var(--hover-text-color) !important;
+        color: white !important;
+    }

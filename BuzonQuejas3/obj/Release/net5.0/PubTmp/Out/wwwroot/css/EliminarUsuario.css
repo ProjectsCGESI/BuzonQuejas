@@ -18,23 +18,18 @@
     --table-hover-bg: #bdc1bf;
 }
 
-.titulo-nuevo-usuario {
+.titulo-eliminar-usuario {
     color: var(--gris--fuerte2) !important;
     font-weight: bold;
 }
-.aceptar-bttn {
-    width: 20%;
-    background: var(--secondary-color) !important;
-    color: white !important;
-}
 
-.enviar-bttn-usuario {
+.eliminar-bttn-usuario {
     width: 100%;
     background: var(--secondary-color) !important;
     color: white !important;
 }
 
-    .enviar-bttn-usuario:hover {
+    .eliminar-bttn-usuario:hover {
         width: 100%;
         background: var(--hover-text-color) !important;
         color: white !important;

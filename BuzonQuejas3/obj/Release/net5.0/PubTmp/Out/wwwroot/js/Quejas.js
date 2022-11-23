@@ -25,7 +25,7 @@
 
         $.ajax({
             type: 'GET',
-            url: "Queja/GetUnidades",
+            url: "/Queja/GetUnidades",
             success: function (response) {
                 $.each(response, function (i, unidad) {
                     $("#unidad").append($('<option>', {

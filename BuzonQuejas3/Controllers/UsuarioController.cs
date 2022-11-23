@@ -114,7 +114,7 @@ namespace BuzonQuejas3.Controllers
             }
             else
             {
-                ViewBag.SuccessMessage = " Hubo un error al levantar la queja,intente de nuevo";
+                //ViewBag.SuccessMessage = " Hubo un error al levantar la queja,intente de nuevo";
                 ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
                 ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre");
                 ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre");

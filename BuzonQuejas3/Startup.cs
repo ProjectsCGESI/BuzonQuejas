@@ -28,16 +28,22 @@ namespace BuzonQuejas3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddDbContext<Dev_BuzonQuejasContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Conexion")));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-
+            services.AddRazorPages()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+            _ => "Debe llenar este campo");
+    });
 
             //Autenticación
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(option => {
+    .AddCookie(option =>
+    {
         option.LoginPath = "/Acceso/Index";
         option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         option.AccessDeniedPath = "/Home/Privacy";

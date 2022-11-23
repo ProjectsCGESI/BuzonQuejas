@@ -18,24 +18,27 @@
     --table-hover-bg: #bdc1bf;
 }
 
-.titulo-nuevo-usuario {
+.titulo-privacidad {
     color: var(--gris--fuerte2) !important;
     font-weight: bold;
 }
-.aceptar-bttn {
-    width: 20%;
-    background: var(--secondary-color) !important;
-    color: white !important;
+
+.subtitulo-privacidad {
+    color: var(--gris--fuerte2) !important;
+    font-weight: bold;
+    opacity: 1;
 }
 
-.enviar-bttn-usuario {
-    width: 100%;
-    background: var(--secondary-color) !important;
-    color: white !important;
-}
+.container-privacy-image {
 
-    .enviar-bttn-usuario:hover {
-        width: 100%;
-        background: var(--hover-text-color) !important;
-        color: white !important;
-    }
+    background-image: url("../imagenes/Logotipo_institucional.png");
+    background-size: cover;
+    height: 500px;
+    opacity: 0.4;
+    margin-top: 150px;
+}
+.container-privacy-text {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+}

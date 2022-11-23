@@ -244,8 +244,6 @@ namespace BuzonQuejas3.Controllers
                 queja.Folio = identificador + year + month + day + "0000";
             }
 
-            Console.WriteLine(queja);
-
 
             if (ModelState.IsValid)
             {
