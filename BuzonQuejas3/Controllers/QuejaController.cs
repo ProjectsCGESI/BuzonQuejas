@@ -25,7 +25,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja
-        //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
         public async Task<IActionResult> Quejas(string buscar, String filtro)
         {
             IQueryable<QuejaMostrar> quejasMostrar;
@@ -153,6 +153,7 @@ namespace BuzonQuejas3.Controllers
 
 
         // GET: Queja/Details/5 No se ocupa
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -274,6 +275,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja/Edit/5
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -294,6 +296,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Edit(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoAsignado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion")] Queja queja)
         {
             if (id != queja.QuejaID)
@@ -325,6 +328,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja/Delete/5
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -345,6 +349,7 @@ namespace BuzonQuejas3.Controllers
         // POST: Queja/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var queja = await _context.Quejas.FindAsync(id);
@@ -360,6 +365,7 @@ namespace BuzonQuejas3.Controllers
 
         // GET: Queja/Edit/5
         //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
         public async Task<IActionResult> Seguimiento(Guid? id)
         {
             //var unidades = await _context.UnidadAdministrativas.ToListAsync();
@@ -387,7 +393,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
         public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoID,MunicipioID,UnidadAdministrativaID,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,CargoID,MedioID,Folio")] Queja queja)
         {
             if (id != queja.QuejaID)

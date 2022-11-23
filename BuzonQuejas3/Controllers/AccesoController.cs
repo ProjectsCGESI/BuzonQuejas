@@ -29,10 +29,6 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Usuario _usuario)
         {
-            //DA_Logica _da_usuario = new DA_Logica();
-
-            //var usuario = _da_usuario.ValidarUsuario(_usuario.Correo, _usuario.Clave);
-            //ListaUsuario().Where(item => item.Correo == _correo && item.Clave == _clave).FirstOrDefault();
             if (_usuario.Correo != null && _usuario.Clave != null)
             {
 
@@ -40,43 +36,43 @@ namespace BuzonQuejas3.Controllers
 
                 if (usuario != null)
                 {
-                    var rol = await _context.Roles.FirstOrDefaultAsync(m => m.RolID == usuario.RolID);
-                    //var departamento = await _context.Departamentos.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
-                    //var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.DepartamentoID == usuario.DepartamentoID);
-
-                    //2.- CONFIGURACION DE LA AUTENTICACION
-                    #region AUTENTICACTION
-                    var claims = new List<Claim>
+                    if (true.Equals(usuario.Activo))
                     {
-                        new Claim(ClaimTypes.Name, usuario.Nombre),
-                        new Claim("Correo", usuario.Correo),
-						//new Claim("Departamento", departamento.Nombre),
-						new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
-                        new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
-                        new Claim(ClaimTypes.Role, rol.Nombre),
-                    };
-                    //foreach (string rol in usuario.R)
-                    //{
-                    //claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
-                    //}
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var rol = await _context.Roles.FirstOrDefaultAsync(m => m.RolID == usuario.RolID);
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                    #endregion
+                        //2.- CONFIGURACION DE LA AUTENTICACION
+                        #region AUTENTICACTION
+                        var claims = new List<Claim>{
+						    new Claim(ClaimTypes.Name, usuario.Nombre),
+						    new Claim("Correo", usuario.Correo),
+						    new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
+						    new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
+						    new Claim(ClaimTypes.Role, rol.Nombre),
+                        };
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    if (rol.Nombre != "Fiscal")
-                    {
-                        return RedirectToAction("Quejas", "Queja");
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        #endregion
+
+                        if (rol.Nombre != "Fiscal")
+                        {
+                            return RedirectToAction("Quejas", "Queja");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Tablero", "Queja");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Tablero", "Queja");
+                        ViewBag.SuccessMessage = "Este usuario no está activo";
+                        return View();
                     }
                 }
                 else
                 {
 
-                    ViewData["error"] = true;
+                    ViewBag.SuccessMessage = "El usuario y/o la contraseña son incorrectos";
                     return View();
                 }
             }

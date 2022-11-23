@@ -21,6 +21,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Usuarios
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Usuarios(String filtro)
         {
             //var usuarios = from Usuario in _context.Usuarios select Usuario;
@@ -64,6 +65,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Usuarios/Details/5
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -85,6 +87,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Usuarios/Create
+        [Authorize(Roles = "Administrador,Root")]
         public IActionResult AgregarUsuario()
         {
             ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
@@ -98,6 +101,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> AgregarUsuario([Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
         {
             if (ModelState.IsValid)
@@ -131,6 +135,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Usuarios/Edit/5
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> EditarUsuario(Guid? id)
         {
             if (id == null)
@@ -154,6 +159,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> EditarUsuario(Guid id, [Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
         {
             if (id != usuario.UsuarioID)
@@ -185,6 +191,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Usuarios/Delete/5
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> EliminarUsuario(Guid? id)
         {
             if (id == null)
@@ -208,6 +215,7 @@ namespace BuzonQuejas3.Controllers
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("EliminarUsuario")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> EliminarUsuarioConfirmado(Guid id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);

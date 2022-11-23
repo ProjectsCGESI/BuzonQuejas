@@ -440,3 +440,4 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Deb
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\Razor\Views\Usuario\EliminarUsuario.cshtml.g.cs
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\Razor\Views\Queja\AgregarQueja.cshtml.g.cs
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\Razor\Views\Queja\Quejas.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\BuzonQuejas3.csproj.AssemblyReference.cache

@@ -1,7 +1,6 @@
 ﻿@model Usuario
 @{
     Layout = null;
-    var error = ViewData["error"];
 }
 
 <!DOCTYPE html>
@@ -36,10 +35,10 @@
                         </div>
                         <div class="form-group">
                             @{
-                                if (true.Equals(ViewData["error"]))
+                                if (ViewBag.SuccessMessage != null)
                                 {
                                     <div class="alert alert-warning alert-dismissible fade show" style="font-size:12px" role="alert">
-                                        <strong>Lo sentimos!</strong> El correo o la contraseña son incorrectos, intente de nuevo.
+                                        <strong>@ViewBag.SuccessMessage</strong>
                                         <button type="button" class="close" data-dismiss="alert">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
