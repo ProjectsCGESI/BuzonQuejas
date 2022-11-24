@@ -1,5 +1,35 @@
 ﻿
+let ChartDrawEstatus;
+let ChartDrawEstatusDiario;
+let ChartDrawQuejasAnual;
+let ChartDrawUnidades;
+let ChartDrawMunicipios;
+let ChartDrawMedios;
+let ChartDrawEstatusUnidades;
+let ChartDrawDepartamentos;
+
+
+
 $(document).ready(function () {
+
+    for (var i = 0; i < 32; i++) {
+        if (i == 0) {
+            $("select[name=dia]").append(new Option("-", "-"));
+        }
+        else {
+            $("select[name=dia]").append(new Option(i, i));
+        }
+    }
+
+    for (var i = 0; i < 13; i++) {
+        if (i == 0) {
+            $("select[name=mes]").append(new Option("-", "-"));
+        }
+        else {
+            $("select[name=mes]").append(new Option(i, i));
+        }
+    }
+
     //Mostrar gráfico para total de quejas por ESTATUS
     $.ajax({
         type: 'GET',
@@ -124,6 +154,167 @@ $(document).ready(function () {
         },
     });
 
+    //$("#AjaxForm").submit(function () {
+    $('body').on('click', '#filtrarFecha', function (e) {
+        e.preventDefault();
+        var valdata = new Array;
+        valdata.push($("#fechaAnio").val());
+        valdata.push($("#fechaMes").val());
+        valdata.push($("#fechaDia").val());
+        console.log(valdata);
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasEstatusTotal",
+            dataType: "json",
+            contextType: "application/json",
+            //contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: { filter: valdata },
+            traditional: true,
+            success: function (data) {
+                var totales = data[1];
+                console.log("quejas filtro" + totales[2]);
+                $("#totalAtendidas").html(totales[0]);
+                $("#totalPendientes").html(totales[1]);
+                $("#totalQuejas").html(totales[2]);
+                if (ChartDrawEstatus) {
+                    ChartDrawEstatus.destroy();
+                }
+                drawEstatus(data);
+            },
+            error: function (err) {
+                alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasEstatusDiario",
+            dataType: "json",
+            contextType: "application/json",
+            data: { filter: valdata },
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawEstatusDiario) {
+                    ChartDrawEstatusDiario.destroy();
+                }
+                drawEstatusDiario(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasEstatusAnual",
+            dataType: "json",
+            data: { filter: valdata },
+            contextType: "application/json",
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawQuejasAnual) {
+                    ChartDrawQuejasAnual.destroy();
+                }
+                drawQuejasAnual(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasPorUnidades",
+            dataType: "json",
+            data: { filter: valdata },
+            contextType: "application/json",
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawUnidades) {
+                    ChartDrawUnidades.destroy();
+                }
+                drawUnidades(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasPorMunicipio",
+            dataType: "json",
+            data: { filter: valdata },
+            contextType: "application/json",
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawMunicipios) {
+                    ChartDrawMunicipios.destroy();
+                }
+                drawMunicipios(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasMedio",
+            dataType: "json",
+            data: { filter: valdata },
+            contextType: "application/json",
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawMedios) {
+                    ChartDrawMedios.destroy();
+                }
+                drawMedios(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasEstatusPorUnidades",
+            dataType: "json",
+            data: { filter: valdata },
+            contextType: "application/json",
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawEstatusUnidades) {
+                    ChartDrawEstatusUnidades.destroy();
+                }
+                drawEstatusUnidades(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "../Queja/GetQuejasPorDepartamento",
+            dataType: "json",
+            data: { filter: valdata },
+            contextType: "application/json",
+            traditional: true,
+            success: function (data) {
+                if (ChartDrawDepartamentos) {
+                    ChartDrawDepartamentos.destroy();
+                }
+                drawDepartamentos(data);
+            },
+            error: function (err) {
+                //alert("error" + err.data);
+            },
+        });
+            
+    });
+
 });
 
 function drawEstatus(data) {
@@ -137,7 +328,7 @@ function drawEstatus(data) {
     });
 
     var ctx = document.getElementById("EstatusGraph");
-    const myChart = new Chart(ctx,
+    ChartDrawEstatus = new Chart(ctx,
         {
             type: "doughnut",
             data: {
@@ -176,7 +367,7 @@ function drawEstatusDiario(data) {
 
 
     var ctx = document.getElementById("EstatusDiarioGraph");
-    const myChart = new Chart(ctx,
+    ChartDrawEstatusDiario = new Chart(ctx,
         {
             type: "bar",
             data: {
@@ -255,7 +446,7 @@ function drawUnidades(data) {
     });
 
     var ctx = document.getElementById("UnidadesGraph").getContext("2d");
-    const myChart = new Chart(ctx,
+    ChartDrawUnidades = new Chart(ctx,
         {
             type: "line",
             data: {
@@ -363,7 +554,7 @@ function drawMunicipios(data) {
     });
 
     var ctx = document.getElementById("MunicipiosGraph").getContext("2d");
-    const myChart = new Chart(ctx,
+    ChartDrawMunicipios = new Chart(ctx,
         {
             type: "bar",
             data: {
@@ -444,7 +635,7 @@ function drawMedios(data) {
     var _chartData = _data[1];
 
     var ctx = document.getElementById("MediosGraph");
-    const myChart = new Chart(ctx,
+    ChartDrawMedios = new Chart(ctx,
         {
             type: "radar",
             data: {
@@ -537,7 +728,7 @@ function drawEstatusUnidades(data) {
     });
 
     var ctx = document.getElementById("EstatusUnidadesGraph").getContext("2d");
-    const myChart = new Chart(ctx,
+    ChartDrawEstatusUnidades = new Chart(ctx,
         {
             type: "bar",
             data: {
@@ -656,7 +847,7 @@ function drawDepartamentos(data) {
     });
 
     var ctx = document.getElementById("DepartamentosGraph").getContext("2d");
-    const myChart = new Chart(ctx,
+    ChartDrawDepartamentos = new Chart(ctx,
         {
             type: "bar",
             data: {
@@ -746,7 +937,7 @@ function drawQuejasAnual(data) {
     //});
 
     var ctx = document.getElementById("EstatusAnualGraph").getContext("2d");
-    const myChart = new Chart(ctx,
+    ChartDrawQuejasAnual = new Chart(ctx,
         {
             type: "line",
             data: {

@@ -56,7 +56,7 @@ namespace BuzonQuejas3.Controllers
             {
                 //var departamentoUsuario = HttpContext.User.FindFirst("DepartamentoID").Value;
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                Console.WriteLine("departamento" + departamentoUsuario);
+                //Console.WriteLine("departamento" + departamentoUsuario);
                 //quejas = from Queja in _context.Quejas where Queja.UnidadAdministrativaID == Guid.Parse(unidadUsuario) select Queja;
                 quejasMostrar = from queja in _context.Quejas
                                 join medio in _context.Medios on queja.MedioID equals medio.MedioID
@@ -214,7 +214,7 @@ namespace BuzonQuejas3.Controllers
             string month = DateTime.Now.ToString("MM");
             string day = DateTime.Now.ToString("dd");
             var ultimaQueja = _context.Quejas.OrderBy(q => q.Folio).ThenBy(x => x.FechaCreacion).LastOrDefault();
-            Console.WriteLine("ultimaQueja" + ultimaQueja.FechaCreacion);
+            //Console.WriteLine("ultimaQueja" + ultimaQueja.FechaCreacion);
 
             if (ultimaQueja != null)
             {
@@ -1280,7 +1280,7 @@ namespace BuzonQuejas3.Controllers
             //var unidades = _context.UnidadAdministrativas.ToList();
 
             var queja = _context.Quejas.FirstOrDefault(m => m.Resolucion == "nada");
-            Console.WriteLine(queja.FechaCreacion.Date == dateTimeActual);
+            //Console.WriteLine(queja.FechaCreacion.Date == dateTimeActual);
 
             List<Object> data = new List<Object>();
             List<string> estatus = new List<string> { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };

@@ -2,6 +2,13 @@
 
     $(".modal-seguimiento-ok").modal("show");
 
+    var fCreacion = $("#fechaCreacion").val();
+    var fAtencion = $("#fechaAtencion").val();
+
+    if (new Date(fCreacion).getTime() == new Date(fAtencion).getTime()) {
+        $("#fechaAtencion").val(null);
+    }
+
     $.ajax({
         type: 'GET',
         url: "../GetUnidadName",

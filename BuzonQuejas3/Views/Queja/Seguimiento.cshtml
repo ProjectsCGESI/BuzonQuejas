@@ -107,7 +107,7 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label class="control-label">Fecha de creación </label>
-                        <input disabled asp-for="FechaCreacion" class="form-control" />
+                        <input disabled asp-for="FechaCreacion" class="form-control" id="fechaCreacion"/>
                     </div>
                 </div>
 
@@ -181,7 +181,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label class="control-label">Fecha de atención*</label>
-                        <input asp-for="FechaAtencion" class="form-control" required title="Este campo es requerido" />
+                        <input asp-for="FechaAtencion" class="form-control" required title="Este campo es requerido" id="fechaAtencion"/>
                         <span asp-validation-for="FechaAtencion" class="text-danger"></span>
                     </div>
                 </div>
