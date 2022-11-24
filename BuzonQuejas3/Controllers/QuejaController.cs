@@ -52,11 +52,11 @@ namespace BuzonQuejas3.Controllers
                                     //llamar a todas las propiedades necesarias
                                 };
             }
-            else if(User.IsInRole("Departamental"))
+            else if (User.IsInRole("Departamental"))
             {
                 //var departamentoUsuario = HttpContext.User.FindFirst("DepartamentoID").Value;
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                Console.WriteLine("departamento"+departamentoUsuario);
+                Console.WriteLine("departamento" + departamentoUsuario);
                 //quejas = from Queja in _context.Quejas where Queja.UnidadAdministrativaID == Guid.Parse(unidadUsuario) select Queja;
                 quejasMostrar = from queja in _context.Quejas
                                 join medio in _context.Medios on queja.MedioID equals medio.MedioID
@@ -214,7 +214,7 @@ namespace BuzonQuejas3.Controllers
             string month = DateTime.Now.ToString("MM");
             string day = DateTime.Now.ToString("dd");
             var ultimaQueja = _context.Quejas.OrderBy(q => q.Folio).ThenBy(x => x.FechaCreacion).LastOrDefault();
-            Console.WriteLine("ultimaQueja"+ ultimaQueja.FechaCreacion);
+            Console.WriteLine("ultimaQueja" + ultimaQueja.FechaCreacion);
 
             if (ultimaQueja != null)
             {
@@ -437,20 +437,109 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasPorUnidades()
+        public List<Object> GetQuejasPorUnidades(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
+
             var unidades = _context.UnidadAdministrativas.OrderBy(u => u.Nombre).ToList();
 
             List<Object> data = new List<Object>();
@@ -479,9 +568,55 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasPorDepartamento()
+        public List<Object> GetQuejasPorDepartamento(string[] filter)
         {
-            var quejas = from Queja in _context.Quejas select Queja;
+            IQueryable<Queja> quejas;
+            if (filter != null && filter.Length != 0)
+            {
+                int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                }
+                else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                }
+                else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                }
+                else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                }
+                else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                }
+                else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                }
+                else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                {
+                    quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+                }
+            }
+            else
+            {
+                quejas = from Queja in _context.Quejas select Queja;
+
+            }
+
+
             var departamentos = _context.Departamentos.ToList();
 
             List<Object> data = new List<Object>();
@@ -510,19 +645,107 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasEstatusPorUnidades()
+        public List<Object> GetQuejasEstatusPorUnidades(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
             //var quejas = from Queja in _context.Quejas select Queja;
             var unidades = _context.UnidadAdministrativas.OrderBy(u => u.Nombre).ToList();
@@ -557,19 +780,107 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasPorMunicipio()
+        public List<Object> GetQuejasPorMunicipio(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
             //var quejas = from Queja in _context.Quejas select Queja;
             var municipios = _context.Municipios.OrderBy(m => m.Nombre).ToList();
@@ -601,19 +912,107 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasEstatusTotal()
+        public List<Object> GetQuejasEstatusTotal(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
             //var quejas = from Queja in _context.Quejas select Queja;
             //var unidades = _context.UnidadAdministrativas.ToList();
@@ -642,19 +1041,107 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasEstatusDiario()
+        public List<Object> GetQuejasEstatusDiario(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
             //var quejas = from Queja in _context.Quejas select Queja;
             var dateTimeActual = DateTime.Now.Date;
@@ -685,19 +1172,107 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasEstatusAnual()
+        public List<Object> GetQuejasEstatusAnual(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
             //var quejas = from Queja in _context.Quejas select Queja;
             var dateTimeActual = DateTime.Now;
@@ -731,19 +1306,107 @@ namespace BuzonQuejas3.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasMedio()
+        public List<Object> GetQuejasMedio(string[] filter)
         {
             IQueryable<Queja> quejas;
 
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+
+                if (filter != null && filter.Length != 0)
+                {
+
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                }
+
 
             }
             else
             {
-                quejas = from Queja in _context.Quejas select Queja;
+                if (filter != null && filter.Length != 0)
+                {
+                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
+                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
+
+                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
+                    }
+                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
+                    {
+                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
+                    }
+                    else
+                    {
+                        quejas = from Queja in _context.Quejas select Queja;
+                    }
+                }
+                else
+                {
+                    quejas = from Queja in _context.Quejas select Queja;
+
+                }
             }
             //var quejas = from Queja in _context.Quejas select Queja;
             var medios = _context.Medios.ToList();

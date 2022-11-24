@@ -170,3 +170,23 @@
     border: 2px solid var(--secondary-color);
     /*border-radius: 10px;*/
 }
+
+.filtrar-bttn {
+    color: white !important;
+    width: 100%;
+    margin-top: 30%;
+    background: var(--secondary-color) !important;
+    padding: 1px;
+    /*margin-top:30px;*/
+    /*font-size:10px;*/
+}
+
+    .filtrar-bttn:hover {
+        color: white !important;
+        background: var(--hover-text-color) !important;
+    }
+
+.text-label{
+    color: black;
+    font-weight:600;
+}

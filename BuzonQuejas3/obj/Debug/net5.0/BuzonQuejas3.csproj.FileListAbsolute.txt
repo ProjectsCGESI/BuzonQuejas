@@ -440,3 +440,4 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Deb
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\ref\BuzonQuejas3.dll
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\BuzonQuejas3.pdb
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\BuzonQuejas3.genruntimeconfig.cache
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Debug\net5.0\BuzonQuejas3.csproj.AssemblyReference.cache
