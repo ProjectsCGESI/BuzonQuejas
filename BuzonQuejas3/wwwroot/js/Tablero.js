@@ -30,6 +30,19 @@ $(document).ready(function () {
         }
     }
 
+    $.ajax({
+        type: 'GET',
+        url: "../Queja/GetFirstLastYear",
+        success: function (response) {
+            $("select[name=anio]").append(new Option("-", ""));
+            for (var i = response[0]; i <= response[1]; i++) {
+
+                $("select[name=anio]").append(new Option(i, i));
+            }
+            $("#fechaAnio").val($("#fechaAnio option:first").val());
+        },
+    });
+
     //Mostrar gráfico para total de quejas por ESTATUS
     $.ajax({
         type: 'GET',
@@ -156,9 +169,13 @@ $(document).ready(function () {
 
     //$("#AjaxForm").submit(function () {
     $('body').on('click', '#filtrarFecha', function (e) {
+        if ($("#fechaMes").val() != "-" && $("#fechaAnio").val() == "") {
+        }
+        else
+        {
         e.preventDefault();
         var valdata = new Array;
-        valdata.push($("#fechaAnio").val());
+            valdata.push($("#fechaAnio").val() == "" ? "-" : $("#fechaAnio").val());
         valdata.push($("#fechaMes").val());
         valdata.push($("#fechaDia").val());
         console.log(valdata);
@@ -312,7 +329,23 @@ $(document).ready(function () {
                 //alert("error" + err.data);
             },
         });
-            
+
+        }
+    });
+
+    $('#group-day').hide();
+
+    $('#fechaMes').on('change', function () {
+        // Para asignar un nuevo valor a la variable global "a" no se usa var, 
+        // solo el nombre de la variable
+        var selectedMes = $("#fechaMes option:selected").text();
+        if (selectedMes != "-") {
+            $('#group-day').show();
+        }
+        else {
+            $('#group-day').hide();
+            $("#fechaDia").val($("#fechaDia option:first").val());
+        }
     });
 
 });

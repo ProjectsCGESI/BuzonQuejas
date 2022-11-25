@@ -25,7 +25,8 @@
                                     <div class="col-2 mr-2">
                                         <div class="form-group text-center">
                                             <label class="text-label">Año</label>
-                                            <input type="text" class="form-control" id="fechaAnio" name="anio" placeholder="p. ej. 2020">
+                                            <select type="text" class="form-control" id="fechaAnio" name="anio" required></select>
+                                            @*<input type="text" class="form-control" id="fechaAnio" name="anio" placeholder="p. ej. 2020" required pattern="[0-9]{1,4} " title="Ingrese 4 números">*@
                                         </div>
                                     </div>
                                     <div class="col-auto mr-2">
@@ -34,7 +35,7 @@
                                             <select type="text" class="form-control" id="fechaMes" name="mes"></select>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" id="group-day">
                                         <div class="form-group text-center">
                                             <label class="text-label">Día</label>
                                             <select type="text" class="form-control " id="fechaDia" name="dia"></select>
@@ -42,8 +43,8 @@
                                     </div>
                                     <div class="col-2 ml-2">
                                         <div class="form-group ">
-                                            <button class="btn filtrar-bttn" id="filtrarFecha">Filtrar</button>
-</div>
+                                            <button type="submit" class="btn filtrar-bttn" id="filtrarFecha">Filtrar</button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -235,7 +236,7 @@
 
                 <div class="col-6 mt-1">
                     <div class="card bg-light card-all">
-                        <div class="card-header text-center titulo-card">Total de quejas por año (@DateTime.Now.Year)</div>
+                        <div class="card-header text-center titulo-card">Total de quejas por año</div>
                         <div class="card-body">
                             <canvas id="EstatusAnualGraph" style="max-height: 300px; width: 100%;height:300px;border-radius: 10px;background-color: white"></canvas>
                         </div>

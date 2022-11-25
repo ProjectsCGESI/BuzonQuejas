@@ -104,10 +104,6 @@ namespace BuzonQuejas3.Controllers
                 return RedirectToAction("Index", "Acceso");
             }
 
-            //var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "General").ToListAsync();
-            //ViewData["unidades"] = unidades;
-            //var quejas = from Queja in _context.Quejas where Queja.Correo ==username select Queja;
-
             ViewData["FiltroFolio"] = String.IsNullOrEmpty(filtro) ? "FolioDescendiente" : "";
             ViewData["FiltroMedio"] = filtro == "MedioAscendente" ? "MedioDescendiente" : "MedioAscendente";
             ViewData["FiltroFecha"] = filtro == "FechaAscendente" ? "FechaDescendiente" : "FechaAscendente";
@@ -186,12 +182,6 @@ namespace BuzonQuejas3.Controllers
             var lMedios = _context.Medios.ToList();
             var listaMedios = new SelectList(lMedios.OrderBy(o => o.Nombre), "MedioID", "Nombre");
             ViewBag.medios = listaMedios;
-
-            //ViewBag.cadena = identificador + year + month + day;
-
-            //var lUnidadAdministrativa = _context.UnidadAdministrativas.Where(q => q.Nombre != "General").ToList();
-            //var listaUnidadAdministrativas = new SelectList(lUnidadAdministrativa.OrderBy(o => o.Nombre), "UnidadAdministrativaID", "Nombre");
-            //ViewBag.unidadAdministrativas = listaUnidadAdministrativas;
 
             return View();
         }
@@ -448,7 +438,7 @@ namespace BuzonQuejas3.Controllers
                 if (filter != null && filter.Length != 0)
                 {
 
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -496,7 +486,7 @@ namespace BuzonQuejas3.Controllers
             {
                 if (filter != null && filter.Length != 0)
                 {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -573,7 +563,7 @@ namespace BuzonQuejas3.Controllers
             IQueryable<Queja> quejas;
             if (filter != null && filter.Length != 0)
             {
-                int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                 int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                 int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -656,7 +646,7 @@ namespace BuzonQuejas3.Controllers
                 if (filter != null && filter.Length != 0)
                 {
 
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -704,7 +694,7 @@ namespace BuzonQuejas3.Controllers
             {
                 if (filter != null && filter.Length != 0)
                 {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -791,7 +781,7 @@ namespace BuzonQuejas3.Controllers
                 if (filter != null && filter.Length != 0)
                 {
 
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -839,7 +829,7 @@ namespace BuzonQuejas3.Controllers
             {
                 if (filter != null && filter.Length != 0)
                 {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -923,7 +913,7 @@ namespace BuzonQuejas3.Controllers
                 if (filter != null && filter.Length != 0)
                 {
 
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -971,7 +961,7 @@ namespace BuzonQuejas3.Controllers
             {
                 if (filter != null && filter.Length != 0)
                 {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -1052,7 +1042,7 @@ namespace BuzonQuejas3.Controllers
                 if (filter != null && filter.Length != 0)
                 {
 
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -1100,7 +1090,7 @@ namespace BuzonQuejas3.Controllers
             {
                 if (filter != null && filter.Length != 0)
                 {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -1179,107 +1169,25 @@ namespace BuzonQuejas3.Controllers
             if (User.IsInRole("Departamental"))
             {
                 var departamentoUsuario = User.Claims.ElementAt(2).Value;
-
-                if (filter != null && filter.Length != 0)
-                {
-
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
-                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
-                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
-
-                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
-                    }
-                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
-                    }
-                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
-                    }
-                    else
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
-                    }
-                }
-                else
-                {
-                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
-                }
-
-
+                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
             }
             else
             {
-                if (filter != null && filter.Length != 0)
-                {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
-                    int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
-                    int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
-
-                    if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
-                    }
-                    else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Year == YearDate select Queja;
-                    }
-                    else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Day == DayDate select Queja;
-                    }
-                    else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
-                    {
-                        quejas = from Queja in _context.Quejas where Queja.FechaCreacion.Month == MonthDate select Queja;
-                    }
-                    else
-                    {
-                        quejas = from Queja in _context.Quejas select Queja;
-                    }
-                }
-                else
-                {
-                    quejas = from Queja in _context.Quejas select Queja;
-
-                }
+                quejas = from Queja in _context.Quejas select Queja;
             }
-            //var quejas = from Queja in _context.Quejas select Queja;
-            var dateTimeActual = DateTime.Now;
-            //Console.WriteLine("date"+ dateTimeActual);
-            //var unidades = _context.UnidadAdministrativas.ToList();
 
-            var queja = _context.Quejas.FirstOrDefault(m => m.Resolucion == "nada");
+            int yearActual;
+
+            if (filter != null && filter.Length != 0)
+            {
+                yearActual = filter[0] == "-" ? DateTime.Now.Year :  Int32.Parse(filter[0]);
+            }
+            else
+            {
+                yearActual = DateTime.Now.Year;
+            }
+
+            //var queja = _context.Quejas.FirstOrDefault(m => m.Resolucion == "nada");
             //Console.WriteLine(queja.FechaCreacion.Date == dateTimeActual);
 
             List<Object> data = new List<Object>();
@@ -1289,8 +1197,8 @@ namespace BuzonQuejas3.Controllers
 
             for (int i = 0; i < 12; i++)
             {
-                int totalAtendidas = quejas.Where(q => q.FechaCreacion.Month == i + 1 && q.FechaCreacion.Year == dateTimeActual.Year).Count(q => q.Estatus == "Atendido");
-                int totalPendientes = quejas.Where(q => q.FechaCreacion.Month == i + 1 && q.FechaCreacion.Year == dateTimeActual.Year).Count(q => q.Estatus == "Pendiente");
+                int totalAtendidas = quejas.Where(q => q.FechaCreacion.Month == i + 1 && q.FechaCreacion.Year == yearActual).Count(q => q.Estatus == "Atendido");
+                int totalPendientes = quejas.Where(q => q.FechaCreacion.Month == i + 1 && q.FechaCreacion.Year == yearActual).Count(q => q.Estatus == "Pendiente");
                 estatusTotalAtendidas.Add(totalAtendidas);
                 estatusTotalPendientes.Add(totalPendientes);
             }
@@ -1317,7 +1225,7 @@ namespace BuzonQuejas3.Controllers
                 if (filter != null && filter.Length != 0)
                 {
 
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -1365,7 +1273,7 @@ namespace BuzonQuejas3.Controllers
             {
                 if (filter != null && filter.Length != 0)
                 {
-                    int YearDate = String.IsNullOrEmpty(filter[0]) ? 0 : Int32.Parse(filter[0]);
+                    int YearDate = filter[0] == "-" ? 0 : Int32.Parse(filter[0]);
                     int MonthDate = filter[1] == "-" ? 0 : Int32.Parse(filter[1]);
                     int DayDate = filter[2] == "-" ? 0 : Int32.Parse(filter[2]);
 
@@ -1427,6 +1335,35 @@ namespace BuzonQuejas3.Controllers
             data.Add(mediosTotal);
 
             return data;
+
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        public List<string> GetFirstLastYear()
+        {
+            Queja primeraQueja;
+            Queja ultimaQueja;
+
+            if (User.IsInRole("Departamental"))
+            {
+                var departamentoUsuario = User.Claims.ElementAt(2).Value;
+                primeraQueja = _context.Quejas.Where(q => q.DepartamentoID == Guid.Parse(departamentoUsuario)).OrderBy(q => q.FechaCreacion).FirstOrDefault();
+                ultimaQueja = _context.Quejas.Where(q => q.DepartamentoID == Guid.Parse(departamentoUsuario)).OrderBy(q => q.FechaCreacion).LastOrDefault();
+            }
+            else
+            {
+                primeraQueja = _context.Quejas.OrderBy(q => q.FechaCreacion).FirstOrDefault();
+                ultimaQueja = _context.Quejas.OrderBy(q => q.FechaCreacion).LastOrDefault();
+            }
+
+            List<string> firstLastQueja = new();
+
+            firstLastQueja.Add(primeraQueja.FechaCreacion.Year.ToString());
+            firstLastQueja.Add(ultimaQueja.FechaCreacion.Year.ToString());
+
+            return firstLastQueja;
 
         }
 
