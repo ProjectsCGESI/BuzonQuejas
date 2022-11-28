@@ -63,7 +63,7 @@
             <input type="hidden" asp-for="DepartamentoID" value=@DepartamentoUsuario />
             <input type="hidden" asp-for="UnidadAdministrativaID" value="88f8cf91-458b-438c-b882-75a842387c64" />
             <div class="form-group mt-3">
-                <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" required />
+                <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" required/>
                 @*<span asp-validation-for="NombreQuejante" class="text-danger"></span>*@
             </div>
             <div class="form-group">
@@ -72,20 +72,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Municipio" class="control-label"></label>
-                <select asp-for="MunicipioID" asp-items="ViewBag.municipios" class="form-control" id="municipioSelect" required>
+                <select asp-for="MunicipioID" asp-items="ViewBag.municipios" class="form-control select2" required>
                     <option value="">Seleccione un municipio</option>
                 </select>
                 @*<span asp-validation-for="MunicipioID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="Medio" class="control-label"></label>
-                <select asp-for="MedioID" asp-items="ViewBag.medios" class="form-control" required>
+                <select asp-for="MedioID" asp-items="ViewBag.medios" class="form-control select2" required>
                     <option value="">Seleccione un medio de recepción</option>
                 </select>
                 @*<span asp-validation-for="MedioID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" required />
+                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" required pattern="[0-9]{10}" title="El teléfono debe constar de 10 dígitos numéricos"  />
                 @*<span asp-validation-for="Telefono" class="text-danger"></span>*@
             </div>
             <div class="form-group">

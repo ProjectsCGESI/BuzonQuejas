@@ -48,22 +48,6 @@
     border-radius: 25px;
 }
 
-/*.cargoSelect option{
-    height: auto;
-    word-wrap: break-word;
-    white-space: normal;*/
-    /*color: var(--secondary-color) !important;*/
-    /*font-size: 10px !important;
-}*/
-
-/*.select2-selection--single {*/
-  /*  height: 100% !important;
-    border: 1px solid red;*/
-/*}*/
-/*.select2-container--default .select2-selection--single .select2-selection__rendered {*/
-    /*border: 1px solid #f0f2f4;*/
-/*}*/
-
 .select2-container--default .select2-selection--single {
     background-color: #fff;
     border: 1px solid #ced4da !important;
