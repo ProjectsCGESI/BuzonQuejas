@@ -10,6 +10,7 @@
 }
 
 <link rel="stylesheet" href="~/css/CrearQueja.css" />
+<link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet"/>
 
 <div class="row justify-content-center mt-5">
     <div class="col-12 ">
@@ -62,11 +63,11 @@
             <input type="hidden" asp-for="DepartamentoID" value=@DepartamentoUsuario />
             <input type="hidden" asp-for="UnidadAdministrativaID" value="88f8cf91-458b-438c-b882-75a842387c64" />
             <div class="form-group mt-3">
-                <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" required/>
+                <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" required />
                 @*<span asp-validation-for="NombreQuejante" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="Direccion" class="form-control" placeholder="Dirección*" required/>
+                <input asp-for="Direccion" class="form-control" placeholder="Dirección*" required />
                 @*<span asp-validation-for="Direccion" class="text-danger"></span>*@
             </div>
             <div class="form-group">
@@ -84,15 +85,15 @@
                 @*<span asp-validation-for="MedioID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" required/>
+                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" required />
                 @*<span asp-validation-for="Telefono" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="Correo" type="email" class="form-control" placeholder="Correo eléctronico*" required/>
+                <input asp-for="Correo" type="email" class="form-control" placeholder="Correo eléctronico*" required />
                 @*<span asp-validation-for="Correo" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="MotivoQueja" class="form-control" placeholder="Motivo de la queja*" required/>
+                <input asp-for="MotivoQueja" class="form-control" placeholder="Motivo de la queja*" required />
                 @*<span asp-validation-for="MotivoQueja" class="text-danger"></span>*@
             </div>
             <div class="form-group">
@@ -101,19 +102,19 @@
                 @*<span asp-validation-for="RelatoHechos" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="ServidorInvolucrado" class="form-control" placeholder="Servidor público involucrado*" required/>
+                <input asp-for="ServidorInvolucrado" class="form-control" placeholder="Servidor público involucrado*" required />
                 @*<span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="Cargo" class="control-label"></label>
-                <select asp-for="CargoID" asp-items="ViewBag.cargos" class="form-control cargoSelect" required>
+                <select asp-for="CargoID" asp-items="ViewBag.cargos" class="form-control .cargoSelect select2" required>
                     <option value="">Seleccione un cargo</option>
                 </select>
                 @*<span asp-validation-for="CargoID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label class="control-label">Fecha de creación*</label>
-                <input asp-for="FechaCreacion" class="form-control"  required/>
+                <input asp-for="FechaCreacion" class="form-control" required />
                 @*<span asp-validation-for="FechaCreacion" class="text-danger"></span>*@
             </div>
 
@@ -128,5 +129,6 @@
 
 
 @section Scripts {
-<script src="~/js/CrearQueja.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
+    <script src="~/js/CrearQueja.js" asp-append-version="true"></script>
 }
