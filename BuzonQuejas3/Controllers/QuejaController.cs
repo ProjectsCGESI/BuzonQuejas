@@ -954,8 +954,6 @@ namespace BuzonQuejas3.Controllers
                 {
                     quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
                 }
-
-
             }
             else
             {
@@ -1377,6 +1375,7 @@ namespace BuzonQuejas3.Controllers
             var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "Sin Asignar").OrderBy(x => x.Nombre).ToListAsync();
             return unidades;
         }
+
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
