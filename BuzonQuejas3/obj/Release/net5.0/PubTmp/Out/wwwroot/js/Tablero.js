@@ -30,6 +30,19 @@ $(document).ready(function () {
         }
     }
 
+    $.ajax({
+        type: 'GET',
+        url: "../Queja/GetFirstLastYear",
+        success: function (response) {
+            $("select[name=anio]").append(new Option("-", ""));
+            for (var i = response[0]; i <= response[1]; i++) {
+
+                $("select[name=anio]").append(new Option(i, i));
+            }
+            $("#fechaAnio").val($("#fechaAnio option:first").val());
+        },
+    });
+
     //Mostrar gráfico para total de quejas por ESTATUS
     $.ajax({
         type: 'GET',
@@ -156,166 +169,198 @@ $(document).ready(function () {
 
     //$("#AjaxForm").submit(function () {
     $('body').on('click', '#filtrarFecha', function (e) {
-        e.preventDefault();
-        var valdata = new Array;
-        valdata.push($("#fechaAnio").val());
-        valdata.push($("#fechaMes").val());
-        valdata.push($("#fechaDia").val());
-        console.log(valdata);
+        if ($("#fechaMes").val() != "-" && $("#fechaAnio").val() == "") {
+        }
+        else {
+            e.preventDefault();
+            var valdata = new Array;
+            valdata.push($("#fechaAnio").val() == "" ? "-" : $("#fechaAnio").val());
+            valdata.push($("#fechaMes").val());
+            valdata.push($("#fechaDia").val());
+            console.log(valdata);
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasEstatusTotal",
-            dataType: "json",
-            contextType: "application/json",
-            //contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            data: { filter: valdata },
-            traditional: true,
-            success: function (data) {
-                var totales = data[1];
-                console.log("quejas filtro" + totales[2]);
-                $("#totalAtendidas").html(totales[0]);
-                $("#totalPendientes").html(totales[1]);
-                $("#totalQuejas").html(totales[2]);
-                if (ChartDrawEstatus) {
-                    ChartDrawEstatus.destroy();
-                }
-                drawEstatus(data);
-            },
-            error: function (err) {
-                alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasEstatusTotal",
+                dataType: "json",
+                contextType: "application/json",
+                //contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: { filter: valdata },
+                traditional: true,
+                success: function (data) {
+                    var totales = data[1];
+                    console.log("quejas filtro" + totales[2]);
+                    $("#totalAtendidas").html(totales[0]);
+                    $("#totalPendientes").html(totales[1]);
+                    $("#totalQuejas").html(totales[2]);
+                    if (ChartDrawEstatus) {
+                        ChartDrawEstatus.destroy();
+                    }
+                    drawEstatus(data);
+                },
+                error: function (err) {
+                    alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasEstatusDiario",
-            dataType: "json",
-            contextType: "application/json",
-            data: { filter: valdata },
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawEstatusDiario) {
-                    ChartDrawEstatusDiario.destroy();
-                }
-                drawEstatusDiario(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasEstatusDiario",
+                dataType: "json",
+                contextType: "application/json",
+                data: { filter: valdata },
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawEstatusDiario) {
+                        ChartDrawEstatusDiario.destroy();
+                    }
+                    drawEstatusDiario(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasEstatusAnual",
-            dataType: "json",
-            data: { filter: valdata },
-            contextType: "application/json",
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawQuejasAnual) {
-                    ChartDrawQuejasAnual.destroy();
-                }
-                drawQuejasAnual(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasEstatusAnual",
+                dataType: "json",
+                data: { filter: valdata },
+                contextType: "application/json",
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawQuejasAnual) {
+                        ChartDrawQuejasAnual.destroy();
+                    }
+                    drawQuejasAnual(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasPorUnidades",
-            dataType: "json",
-            data: { filter: valdata },
-            contextType: "application/json",
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawUnidades) {
-                    ChartDrawUnidades.destroy();
-                }
-                drawUnidades(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasPorUnidades",
+                dataType: "json",
+                data: { filter: valdata },
+                contextType: "application/json",
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawUnidades) {
+                        ChartDrawUnidades.destroy();
+                    }
+                    drawUnidades(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasPorMunicipio",
-            dataType: "json",
-            data: { filter: valdata },
-            contextType: "application/json",
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawMunicipios) {
-                    ChartDrawMunicipios.destroy();
-                }
-                drawMunicipios(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasPorMunicipio",
+                dataType: "json",
+                data: { filter: valdata },
+                contextType: "application/json",
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawMunicipios) {
+                        ChartDrawMunicipios.destroy();
+                    }
+                    drawMunicipios(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasMedio",
-            dataType: "json",
-            data: { filter: valdata },
-            contextType: "application/json",
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawMedios) {
-                    ChartDrawMedios.destroy();
-                }
-                drawMedios(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasMedio",
+                dataType: "json",
+                data: { filter: valdata },
+                contextType: "application/json",
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawMedios) {
+                        ChartDrawMedios.destroy();
+                    }
+                    drawMedios(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasEstatusPorUnidades",
-            dataType: "json",
-            data: { filter: valdata },
-            contextType: "application/json",
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawEstatusUnidades) {
-                    ChartDrawEstatusUnidades.destroy();
-                }
-                drawEstatusUnidades(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasEstatusPorUnidades",
+                dataType: "json",
+                data: { filter: valdata },
+                contextType: "application/json",
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawEstatusUnidades) {
+                        ChartDrawEstatusUnidades.destroy();
+                    }
+                    drawEstatusUnidades(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
 
-        $.ajax({
-            type: 'GET',
-            url: "../Queja/GetQuejasPorDepartamento",
-            dataType: "json",
-            data: { filter: valdata },
-            contextType: "application/json",
-            traditional: true,
-            success: function (data) {
-                if (ChartDrawDepartamentos) {
-                    ChartDrawDepartamentos.destroy();
-                }
-                drawDepartamentos(data);
-            },
-            error: function (err) {
-                //alert("error" + err.data);
-            },
-        });
-            
+            $.ajax({
+                type: 'GET',
+                url: "../Queja/GetQuejasPorDepartamento",
+                dataType: "json",
+                data: { filter: valdata },
+                contextType: "application/json",
+                traditional: true,
+                success: function (data) {
+                    if (ChartDrawDepartamentos) {
+                        ChartDrawDepartamentos.destroy();
+                    }
+                    drawDepartamentos(data);
+                },
+                error: function (err) {
+                    //alert("error" + err.data);
+                },
+            });
+
+        }
+    });
+
+    $('#group-day').hide();
+
+    $('#fechaMes').on('change', function () {
+        // Para asignar un nuevo valor a la variable global "a" no se usa var, 
+        // solo el nombre de la variable
+        var selectedMes = $("#fechaMes option:selected").text();
+        if (selectedMes != "-") {
+            $('#group-day').show();
+        }
+        else {
+            $('#group-day').hide();
+            $("#fechaDia").val($("#fechaDia option:first").val());
+        }
     });
 
 });
+
+const legendMargin = {
+        id: 'legendMargin',
+        beforeInit(chart, legend, options) {
+            const fitValue = chart.legend.fit;
+
+            chart.legend.fit = function fit() {
+                fitValue.bind(chart.legend)();
+                return this.height += 10;
+            }
+
+        }
+};
 
 function drawEstatus(data) {
     var _data = data;
@@ -328,6 +373,8 @@ function drawEstatus(data) {
     });
 
     var ctx = document.getElementById("EstatusGraph");
+
+
     ChartDrawEstatus = new Chart(ctx,
         {
             type: "doughnut",
@@ -339,18 +386,47 @@ function drawEstatus(data) {
                     data: _chartData
                 }]
             },
+            plugins: [ChartDataLabels,legendMargin],
             options: {
+                //showTooltips: false,
                 plugins: {
                     legend: {
                         display: true,
                         labels: {
+                            //padding: 50,
                             font: {
                                 size: 14
+                            },
+                        },
+                    },
+                    datalabels: {
+                        color: "black",
+                        //color: "rgb(62, 66, 64)",
+                        backgroundColor: ["rgb(62, 66, 64,0.3)", "rgb(62, 66, 64,0.3)"],
+                        borderRadius: [10, 10],
+                        font: {
+                            size: 15,
+                            weight: "bold"
+                        },
+                        formatter: (value, ctx) => {
+                            const datapoints = ctx.chart.data.datasets[0].data
+                            if (datapoints[0] > 0 || datapoints[1] > 0) {
+                                const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
+                                const percentage = value / total * 100
+                                return percentage != 0 ? percentage.toFixed(2) + "%" : null;
+                            }
+                            else {
+                                return null;
                             }
                         },
+                        //anchor: "end",
+                        //align: "top",
+                        //offset:10
                     }
-                }
-            }
+                },
+
+            },
+
         });
 
 }
@@ -382,6 +458,7 @@ function drawEstatusDiario(data) {
                     },
                 ]
             },
+            plugins: [ChartDataLabels],
             options: {
                 scales: {
                     y: {
@@ -407,6 +484,19 @@ function drawEstatusDiario(data) {
                                 size: 14
                             }
                         },
+                    },
+                    datalabels: {
+                        color: "black",
+                        backgroundColor: ["rgb(0, 184, 230,0.3)", "rgb(0, 230, 0,0.3)", "rgb(255, 51, 51,0.3)"],
+                        borderRadius:10,
+                        font: {
+                            size: 15,
+                            weight: "bold"
+                        },
+                        formatter: function (value, context) { return value || null; },
+                        //anchor: "end",
+                        //align: "top",
+                        //offset:10
                     }
                 }
             }
@@ -464,6 +554,7 @@ function drawUnidades(data) {
                     }
                 ]
             },
+            plugins: [ChartDataLabels, legendMargin],
             options: {
                 layout: {
                     padding: {
@@ -508,7 +599,20 @@ function drawUnidades(data) {
                         //}
 
                     },
-                }
+                    datalabels: {
+                        color: "black",
+                        backgroundColor: "rgb(0, 255, 255,0.4)",
+                        borderRadius:10,
+                        font: {
+                            size: 14,
+                            weight: "bold"
+                        },
+                        formatter: function (value, context) { return value || null; },
+                        //anchor: "end",
+                        align: "top",
+                        //offset:10
+                    }
+                },
             }
         });
 
@@ -554,8 +658,22 @@ function drawMunicipios(data) {
     });
 
     var ctx = document.getElementById("MunicipiosGraph").getContext("2d");
+
+    const legendMarginMunicipio = {
+        id: 'legendMargin',
+        beforeInit(chart, legend, options) {
+            const fitValue = chart.legend.fit;
+
+            chart.legend.fit = function fit() {
+                fitValue.bind(chart.legend)();
+                return this.height += 15;
+            }
+
+        }
+    };
+
     ChartDrawMunicipios = new Chart(ctx,
-        {
+    {
             type: "bar",
             data: {
                 labels: _chartLabels,
@@ -569,16 +687,35 @@ function drawMunicipios(data) {
                         data: _chartData,
                         yAxisID: "y",
                         barThickness: 15,
+                        datalabels: {
+                            color: "black",
+                            backgroundColor: "rgb(255, 255, 0,0.3)",
+                            borderRadius:30,
+                            font: {
+                                size: 13,
+                                weight: "bold"
+                            },
+                            formatter: function (value, context) { return value || null; },
+                            anchor: "end",
+                            align: "top",
+                            //offset:0
+                            //padding:10
+                            rotation:270
+                        }
                     },
                     {
                         label: "Eff",
                         type: "line",
                         fill: true,
                         data: _chartData,
-                        stepped: "middle"
+                        stepped: "middle",
+                        datalabels: {
+                            display: false,
+                        },
                     }
                 ]
             },
+            plugins: [ChartDataLabels, legendMarginMunicipio],
             options: {
                 maxBarThickness: 55,
                 clip: true,
@@ -647,6 +784,7 @@ function drawMedios(data) {
                     data: _chartData
                 }]
             },
+            plugins: [ChartDataLabels, legendMargin],
             options: {
                 //maxBarThickness: 55,
                 //clip: true,
@@ -664,7 +802,7 @@ function drawMedios(data) {
                         precision: 0,
                         beginAtZero: true,
                         angleLines: {
-                            color: "red",
+                            color: "gray",
                         },
                         ticks: {
                             callback: function (value) { if (value % 1 === 0) { return value; } }
@@ -679,6 +817,19 @@ function drawMedios(data) {
                         display: true
 
                     },
+                    datalabels: {
+                        color: "black",
+                        backgroundColor: "rgb(54, 162, 235,0.8)",
+                        borderRadius: 10,
+                        font: {
+                            size: 15,
+                            weight: "bold"
+                        },
+                        formatter: function (value, context) { return value || null; },
+                        //anchor: "end",
+                        //align: "top",
+                        //offset:10
+                    }
                 }
             }
         });
@@ -696,7 +847,6 @@ function scrollEstatusUnidadesHandle(ev) {
         $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 20);
     }
 }
-
 
 function drawEstatusUnidades(data) {
 
@@ -743,7 +893,7 @@ function drawEstatusUnidades(data) {
                         data: _chartDataA,
                         yAxisID: "y",
                         //barPercentage: 0.1,
-                        barThickness: 15,
+                        //barThickness: 20,
                         //tension: -1,
                         //categoryPercentage: 0.9,
                         //barPercentage: 1
@@ -757,13 +907,14 @@ function drawEstatusUnidades(data) {
                         data: _chartDataP,
                         yAxisID: "y",
                         //barPercentage: 0.1,
-                        barThickness: 15,
+                        //barThickness: 20,
                         //tension: -1,
                         //categoryPercentage: 0.9,
                         //barPercentage: 1
                     },
                 ]
             },
+            plugins: [ChartDataLabels, legendMargin],
             options: {
                 maintainAspectRatio: false,
                 layout: {
@@ -814,6 +965,17 @@ function drawEstatusUnidades(data) {
                         display: true
 
                     },
+                    datalabels: {
+                        color: "black",
+                        font: {
+                            size: 13,
+                            weight: "bold"
+                        },
+                        formatter: function (value, context) { return value || null; },
+                        //anchor: "end",
+                        //align: "top",
+                        //offset:10
+                    }
                 }
             }
         });
@@ -831,7 +993,6 @@ function scrollDepartamentosHandle(ev) {
         $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 20);
     }
 }
-
 
 function drawDepartamentos(data) {
 
@@ -869,6 +1030,7 @@ function drawDepartamentos(data) {
                     },
                 ]
             },
+            plugins: [ChartDataLabels, legendMargin],
             options: {
                 indexAxis: 'y',
                 maintainAspectRatio: false,
@@ -917,6 +1079,19 @@ function drawDepartamentos(data) {
                         display: true
 
                     },
+                    datalabels: {
+                        color: "black",
+                        backgroundColor: "rgb(187, 153, 255,0.2)",
+                        borderRadius:10,
+                        font: {
+                            size: 15,
+                            weight: "bold"
+                        },
+                        formatter: function (value, context) { return value || null; },
+                        anchor: "end",
+                        align: "right",
+                        //offset:10
+                    }
                 }
             }
         });
@@ -952,6 +1127,19 @@ function drawQuejasAnual(data) {
                         data: _chartDataP,
                         yAxisID: "y",
                         barThickness: 15,
+                        datalabels: {
+                            color: "black",
+                            backgroundColor: "rgb(255, 92, 51,0.2)",
+                            borderRadius:10,
+                            font: {
+                                size: 15,
+                                weight: "bold"
+                            },
+                            formatter: function (value, context) { return value || null; },
+                            //anchor: "end",
+                            align: "top",
+                            //offset:10
+                        }
                     },
                     {
                         label: 'Atendidas',
@@ -962,14 +1150,28 @@ function drawQuejasAnual(data) {
                         data: _chartDataA,
                         yAxisID: "y",
                         barThickness: 15,
+                        datalabels: {
+                            color: "black",
+                            backgroundColor: "rgb(0, 179, 0,0.2)",
+                            borderRadius:10,
+                            font: {
+                                size: 15,
+                                weight: "bold"
+                            },
+                            formatter: function (value, context) { return value || null; },
+                            //anchor: "end",
+                            align: "top",
+                            //offset:10
+                        }
                     },
                 ]
             },
+            plugins: [ChartDataLabels, legendMargin],
             options: {
                 layout: {
                     padding: {
                         bottom: 10,
-                        left: 120,
+                        //left: 120,
                     },
                 },
                 scales: {
@@ -1008,6 +1210,7 @@ function drawQuejasAnual(data) {
                         //}
 
                     },
+                    
                 }
             }
         });

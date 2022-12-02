@@ -53,7 +53,7 @@
                                     @Html.DisplayNameFor(model => model.UnidadAdministrativa)
                                 </th>
                                 <th></th>
-                                <th></th>
+                                @*<th></th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -83,19 +83,19 @@
                                     @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
                                 </td>
                                 <td class="text-center">
-                                    <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID">
+                                    <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID" class="btn editar-usuario-bttn">
                                         <span class="material-icons size-icon">
                                             edit
                                         </span>
                                     </a>
                                 </td>
-                                <td class="text-center">
+                                @*<td class="text-center">
                                     <a asp-action="EliminarUsuario" asp-route-id="@item.UsuarioID" >
                                         <span class="material-icons size-icon">
                                             delete
                                         </span>
                                     </a>
-                                </td>
+                                </td>*@
                                 @*<td>
                                     <a asp-action="Edit" asp-route-id="@item.UsuarioID">Edit</a> |
                                     <a asp-action="Details" asp-route-id="@item.UsuarioID">Details</a> |

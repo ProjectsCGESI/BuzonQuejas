@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BuzonQuejas3.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using BuzonQuejas3.Helper;
 
 namespace BuzonQuejas3.Controllers
 {
@@ -45,7 +46,7 @@ namespace BuzonQuejas3.Controllers
 
             switch (filtro)
             {
-                
+
 
                 case "NombreDescendiente":
                     usuarios = usuarios.OrderByDescending(usuario => usuario.Nombre);
@@ -104,22 +105,38 @@ namespace BuzonQuejas3.Controllers
         [Authorize(Roles = "Administrador,Root")]
         public async Task<IActionResult> AgregarUsuario([Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
         {
-            if (ModelState.IsValid)
+            var result = await _context.Usuarios.Where(u => u.Correo == usuario.Correo).FirstOrDefaultAsync();
+
+            if (result != null)
             {
-                usuario.UsuarioID = Guid.NewGuid();
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                ViewBag.SuccessMessage = " Usuario agregado correctamente";
-                return View();
-            }
-            else
-            {
-                //ViewBag.SuccessMessage = " Hubo un error al levantar la queja,intente de nuevo";
+                ViewBag.SuccessMessage = "El correo ingresado ya ha sido registrado, intente con otro";
                 ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
                 ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre");
                 ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre");
                 return View(usuario);
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var hash = HashHelper.Hash(usuario.Clave);
+                    usuario.Clave = hash.Password;
+                    usuario.UsuarioID = Guid.NewGuid();
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+                    ViewBag.SuccessMessage = "Usuario agregado correctamente";
+                    return View();
+                }
+                else
+                {
+                    ViewBag.SuccessMessage = "Hubo un error al levantar la queja,intente de nuevo";
+                    ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
+                    ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre");
+                    ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre");
+                    return View(usuario);
+                }
+            }
+
 
             //if (ModelState.IsValid)
             //{
