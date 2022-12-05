@@ -177,7 +177,7 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root")]
-        public async Task<IActionResult> EditarUsuario(Guid id, [Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
+        public async Task<IActionResult> EditarUsuario(Guid id,string claveUsuario, [Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
         {
             if (id != usuario.UsuarioID)
             {
@@ -186,8 +186,15 @@ namespace BuzonQuejas3.Controllers
 
             if (ModelState.IsValid)
             {
+                if(claveUsuario != usuario.Clave)
+                {
+                    var hash = HashHelper.Hash(usuario.Clave);
+                    usuario.Clave = hash.Password;
+                }
+
                 try
                 {
+                    
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                 }
@@ -244,6 +251,71 @@ namespace BuzonQuejas3.Controllers
         private bool UsuarioExists(Guid id)
         {
             return _context.Usuarios.Any(e => e.UsuarioID == id);
+        }
+
+        // GET: Usuarios/Edit/5
+        [Authorize(Roles = "Administrador,Root,Departamental,UnidadAdministrativa,Fiscal")]
+        public async Task<IActionResult> ReestablecerClave(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            return View(usuario);
+        }
+
+        // POST: Usuarios/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Root,Departamental,UnidadAdministrativa,Fiscal")]
+        public async Task<IActionResult> ReestablecerClave(string userID, string clave, string confirmarClave)
+        {
+            var usuario = await _context.Usuarios.FindAsync(Guid.Parse(userID));
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            if (clave.Equals(confirmarClave))
+            {
+
+                try
+                {
+                    var hash = HashHelper.Hash(clave);
+                    usuario.Clave = hash.Password;
+                    _context.Update(usuario);
+                    await _context.SaveChangesAsync();
+                    ViewBag.SuccessMessage = "Contraseña reestablecida correctamente";
+                    return View();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioExists(usuario.UsuarioID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                //return RedirectToAction(nameof(Usuarios));
+
+
+            }
+            else
+            {
+                ViewBag.SuccessMessage = "Las contraseñas no coinciden, intentelo de nuevo";
+                return View(usuario);
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using BuzonQuejas3.Helper;
 
 namespace BuzonQuejas3.Controllers
 {
@@ -31,8 +32,9 @@ namespace BuzonQuejas3.Controllers
         {
             if (_usuario.Correo != null && _usuario.Clave != null)
             {
+                var hash = HashHelper.Hash(_usuario.Clave);
 
-                var usuario = await _context.Usuarios.FirstOrDefaultAsync(m => m.Correo == _usuario.Correo && m.Clave == _usuario.Clave);
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(m => m.Correo == _usuario.Correo && m.Clave == hash.Password);
 
                 if (usuario != null)
                 {
@@ -54,6 +56,12 @@ namespace BuzonQuejas3.Controllers
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                         #endregion
 
+                        if(usuario.Clave == "gdnrIvSE0unNNIore1PcbsfdwEP9S7cftX+9UCBTo5s=")
+                        {
+                            return RedirectToAction("ReestablecerClave", "Usuario", new { id = usuario.UsuarioID });
+                        }
+                        else
+                        {
                         if (rol.Nombre != "Fiscal")
                         {
                             return RedirectToAction("Quejas", "Queja");
@@ -61,6 +69,7 @@ namespace BuzonQuejas3.Controllers
                         else
                         {
                             return RedirectToAction("Tablero", "Queja");
+                        }
                         }
                     }
                     else

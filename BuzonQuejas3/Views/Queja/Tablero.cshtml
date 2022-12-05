@@ -16,7 +16,14 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-2">
-                    <a asp-action="Quejas" class="btn regresar-bttn  float-right my-4">Ir a quejas</a>
+                    @if (User.IsInRole("Root") || User.IsInRole("Administrador") || User.IsInRole("Departamental"))
+                    {
+                        <a asp-action="Quejas" class="btn regresar-bttn  float-right my-4">Ir a quejas</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Acceso" asp-action="Salir" class="btn regresar-bttn  float-right my-4">Cerrar sesión</a>
+                    }
                 </div>
                 <div class="col-6">
                     <h1 class="text-right titulo my-4">Tablero Central de Quejas  </h1>
@@ -275,16 +282,16 @@
         </div>
         <div class="col-12 mt-2">
             <div class="row">
-               
-                
-                
-                
-
-                
 
 
-                
-               
+
+
+
+
+
+
+
+
 
             </div>
 

@@ -20,7 +20,7 @@ namespace BuzonQuejas3.Models
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(30)]
+        [StringLength(50)]
         public string Clave { get; set; }
 
         public bool Activo { get; set; }

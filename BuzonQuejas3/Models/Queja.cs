@@ -28,7 +28,7 @@ namespace BuzonQuejas3.Models
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(30)]
+        [StringLength(40)]
         //[DataType(DataType.EmailAddress,]
         [EmailAddress(ErrorMessage = "Ingresa un correo electrónico con el formato correcto")]
 
@@ -39,7 +39,7 @@ namespace BuzonQuejas3.Models
         public string MotivoQueja { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(400)]
+        //[StringLength(400)]
         public string RelatoHechos { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
