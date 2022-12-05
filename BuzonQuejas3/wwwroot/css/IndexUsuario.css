@@ -112,3 +112,14 @@ select option {
         color: white !important;
         background: var(--hover-text-color) !important;
     }
+
+.header-usuarios {
+    position: sticky;
+    top: 0;
+}
+
+table {
+    height: 450px;
+    display: inline-block;
+    overflow-y: scroll;
+}

@@ -149,3 +149,20 @@ select option {
 .header-text{
     color: black !important;
 }
+
+.header {
+    position: sticky;
+    top: 0;
+}
+
+table {
+    height: 500px;
+    display: inline-block;
+    overflow-y: scroll;
+}
+
+
+/*tbody {
+    background-color: rebeccapurple;
+}*/
+

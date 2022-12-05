@@ -10,7 +10,7 @@
 
     $("#reestablecerClave").click(function () {
         if ($('#reestablecerClave').prop('checked')) {
-            $("#nueva-clave").val('');
+            //$("#nueva-clave").val('');
             $("#nueva-clave").prop("disabled", false);
             $("#reestablecer-ok").show();
         }
