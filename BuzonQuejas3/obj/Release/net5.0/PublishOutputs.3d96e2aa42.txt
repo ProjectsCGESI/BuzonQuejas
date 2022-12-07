@@ -8,6 +8,7 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Rel
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\layout.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\login.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\Privacy.css
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\ReestablecerClave.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\Seguimiento.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\site.css
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\css\Tablero.css
@@ -20,6 +21,7 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Rel
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\CrearUsuario.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\EditarUsuario.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\Quejas.js
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\ReestablecerClave.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\Seguimiento.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\site.js
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\PubTmp\Out\wwwroot\js\Tablero.js

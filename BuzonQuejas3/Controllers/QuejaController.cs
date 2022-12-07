@@ -104,6 +104,11 @@ namespace BuzonQuejas3.Controllers
                 return RedirectToAction("Index", "Acceso");
             }
 
+            if (!String.IsNullOrEmpty(buscar))
+            {
+                quejasMostrar = quejasMostrar.Where(s => s.NombreQuejante!.Contains(buscar));
+            }
+
             ViewData["FiltroFolio"] = String.IsNullOrEmpty(filtro) ? "FolioDescendiente" : "";
             ViewData["FiltroMedio"] = filtro == "MedioAscendente" ? "MedioDescendiente" : "MedioAscendente";
             ViewData["FiltroFecha"] = filtro == "FechaAscendente" ? "FechaDescendiente" : "FechaAscendente";
@@ -424,10 +429,8 @@ namespace BuzonQuejas3.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasPorUnidades(string[] filter)
+        [Authorize]
+        public IQueryable<Queja> GetQuejas(string[] filter)
         {
             IQueryable<Queja> quejas;
 
@@ -529,6 +532,16 @@ namespace BuzonQuejas3.Controllers
 
                 }
             }
+
+            return quejas;
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        public List<Object> GetQuejasPorUnidades(string[] filter)
+        {
+            IQueryable<Queja> quejas =GetQuejas(filter);
 
             var unidades = _context.UnidadAdministrativas.OrderBy(u => u.Nombre).ToList();
 

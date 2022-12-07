@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="~/css/IndexQueja.css" />
+<link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+
 <div class="row justify-content-center mt-3">
     <div class="col-12">
         <div class="row align-items-center mb-2">
@@ -22,7 +24,7 @@
     </div>
     <div class="col-10 align-self-end ">
         <div class="table-responsive border contenedor-tabla">
-            <table class="table table-fixed " >
+            <table class="table table-fixed ">
                 <thead class="header">
                     <tr class="align-text-top header-table">
                         <th class="align-text-top">
@@ -150,8 +152,9 @@
             </table>
         </div>
         <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            @*<div class="" tabindex="-1" role="dialog" >*@
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content ">
                     <div class="modal-header text-center align-content-center">
                         <h5 class="modal-title  " id="exampleModalLabel">Reasignar queja</h5>
                         @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-modal-bttn">
@@ -165,8 +168,8 @@
                                     <textarea readonly class="form-control" id="showID"> </textarea>
                                 </div>*@
                             <div class="form-group">
-                                <label>Unidad administrativa a reasignar</label>
-                                <select class="form-control" id="unidad" name="unidadId">
+                                <label class="control-label">Unidad administrativa a reasignar</label>
+                                <select class="form-control select2" id="unidad" name="unidadId" style="width: 100%">
                                     @*<option id="optionPrincipal"></option>*@
                                 </select>
                             </div>
@@ -186,5 +189,6 @@
 </div>
 
 @section Scripts {
-<script src="~/js/Quejas.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
+    <script src="~/js/Quejas.js" asp-append-version="true"></script>
 }

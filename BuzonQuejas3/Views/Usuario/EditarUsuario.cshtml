@@ -5,12 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/EditarUsuario.css" />
+<link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="row justify-content-center mt-5">
     <div class="col-12">
         <h1 class="text-center titulo-editar-usuario mb-2">Editar Usuario</h1>
     </div>
-    @*@{
+    @{
             if (ViewBag.SuccessMessage != null)
             {
                 <div class="col-12">
@@ -35,13 +36,13 @@
                     </div>
                 </div>
             }
-        }*@
+        }
 
     <div class="col-6">
         <form asp-action="EditarUsuario">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <input type="hidden" asp-for="UsuarioID" />
-            <input type="hidden" name="claveUsuario" value="@Model.Clave" />
+            <input type="hidden" name="claveUsuario" value="@Model.Clave" id="claveUsuarioHidden"/>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" required />
@@ -66,7 +67,7 @@
 
             @* si no quiere reestablecer *@
             <div class="form-group" id="reestablecer-no">
-                <input asp-for="Clave"  hidden class="form-control" required />
+                <input asp-for="Clave"  hidden class="form-control" required id="claveHidden"/>
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
 
@@ -82,17 +83,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Rol" class="control-label"></label>
-                <select asp-for="RolID" class="form-control" asp-items="ViewBag.RolID" required></select>
+                <select asp-for="RolID" class="form-control select2" asp-items="ViewBag.RolID" required></select>
                 @*<span asp-validation-for="RolID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="Departamento" class="control-label"></label>
-                <select asp-for="DepartamentoID" class="form-control" asp-items="ViewBag.DepartamentoID" required></select>
+                <select asp-for="DepartamentoID" class="form-control select2" asp-items="ViewBag.DepartamentoID" required></select>
                 @*<span asp-validation-for="DepartamentoID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="UnidadAdministrativa" class="control-label"></label>
-                <select asp-for="UnidadAdministrativaID" class="form-control" asp-items="ViewBag.UnidadAdministrativaID" required></select>
+                <select asp-for="UnidadAdministrativaID" class="form-control select2" asp-items="ViewBag.UnidadAdministrativaID" required></select>
                 @*<span asp-validation-for="UnidadAdministrativaID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
@@ -104,5 +105,6 @@
 
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
     <script src="~/js/EditarUsuario.js" asp-append-version="true"></script>
     }

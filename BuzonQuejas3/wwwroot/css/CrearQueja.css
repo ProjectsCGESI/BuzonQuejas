@@ -1,6 +1,7 @@
 ﻿:root {
     --primary-color: #BDC1BF;
     --secondary-color: #B28510;
+    --secondary-color-opacity: rgb(239, 190, 67);
     --hover-text-color: #DBAB00;
     --primary-color-rgba: rgba(10, 10, 10, 0.5);
     --white-menu-color: white;
@@ -41,6 +42,23 @@
 .titulo-nueva{
     color: var(--gris--fuerte2) !important;
     font-weight: bold;
+}
+
+/*.modal-content-reasignar {
+    background-color: var(--table-hover-bg2) !important;
+}*/
+
+.modal-header {
+    background-color: var(--secondary-color) !important;
+    /*background-color: #d6dbda !important;*/
+}
+
+.modal-content {
+    background-color: #d6dbda !important;
+}
+
+.modal-footer {
+    border-top: 0px !important;
 }
 
 /*.bg-form-nueva {
@@ -85,7 +103,7 @@
 
 /*hover css*/
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
-    background-color: var(--secondary-color) !important;
+    background-color: var(--secondary-color-opacity) !important;
     color: white;
 }
 

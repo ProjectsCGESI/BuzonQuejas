@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    var $select2 = $('.select2').select2({
+        width: 'resolve'
+    });
 
     $('body').on('click', '.reasignar', function () {
         var idQueja = $(this).attr("id") + "";
@@ -35,7 +38,7 @@
                 });
                 // console.log(response);
             },
-                error: function (request, status, error) {
+            error: function (request, status, error) {
                 //alert(request);
             }
         });

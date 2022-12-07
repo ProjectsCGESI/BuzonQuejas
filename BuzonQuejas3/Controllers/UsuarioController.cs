@@ -91,9 +91,9 @@ namespace BuzonQuejas3.Controllers
         [Authorize(Roles = "Administrador,Root")]
         public IActionResult AgregarUsuario()
         {
-            ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
-            ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre");
-            ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre");
+            ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre");
+            ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre");
+            ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre");
             return View();
         }
 
@@ -110,9 +110,9 @@ namespace BuzonQuejas3.Controllers
             if (result != null)
             {
                 ViewBag.SuccessMessage = "El correo ingresado ya ha sido registrado, intente con otro";
-                ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
-                ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre");
-                ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre");
+                ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre");
+                ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre");
+                ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre");
                 return View(usuario);
             }
             else
@@ -130,9 +130,9 @@ namespace BuzonQuejas3.Controllers
                 else
                 {
                     ViewBag.SuccessMessage = "Hubo un error al levantar la queja,intente de nuevo";
-                    ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre");
-                    ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre");
-                    ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre");
+                    ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre");
+                    ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre");
+                    ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre");
                     return View(usuario);
                 }
             }
@@ -165,9 +165,9 @@ namespace BuzonQuejas3.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre", usuario.DepartamentoID);
-            ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre", usuario.RolID);
-            ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre", usuario.UnidadAdministrativaID);
+            ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre", usuario.DepartamentoID);
+            ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre", usuario.RolID);
+            ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre", usuario.UnidadAdministrativaID);
             return View(usuario);
         }
 
@@ -197,6 +197,8 @@ namespace BuzonQuejas3.Controllers
                     
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+                    ViewBag.SuccessMessage = "Usuario actualizado correctamente";
+                    return View(usuario);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -208,8 +210,8 @@ namespace BuzonQuejas3.Controllers
                     {
                         throw;
                     }
+                //return RedirectToAction(nameof(Usuarios));
                 }
-                return RedirectToAction(nameof(Usuarios));
             }
             return View(usuario);
         }

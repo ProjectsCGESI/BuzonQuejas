@@ -38,3 +38,16 @@
     color: white !important;
 }
 
+.modal-header {
+    background-color: var(--secondary-color) !important;
+    /*background-color: #d6dbda !important;*/
+}
+
+.modal-content {
+    background-color: #d6dbda !important;
+}
+
+.modal-footer {
+    border-top: 0px !important;
+}
+

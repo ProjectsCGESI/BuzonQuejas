@@ -441,3 +441,4 @@ C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Rel
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\EditarUsuario.cshtml.g.cs
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\EliminarUsuario.cshtml.g.cs
 C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\Usuarios.cshtml.g.cs
+C:\Users\jaime.martinez\Documents\prueba\Buzon\BuzonQuejas3\BuzonQuejas3\obj\Release\net5.0\Razor\Views\Usuario\ReestablecerClave.cshtml.g.cs

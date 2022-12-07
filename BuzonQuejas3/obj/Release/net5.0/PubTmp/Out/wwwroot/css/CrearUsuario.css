@@ -1,6 +1,7 @@
 ﻿:root {
     --primary-color: #BDC1BF;
     --secondary-color: #B28510;
+    --secondary-color-opacity: rgb(239, 190, 67);
     --hover-text-color: #DBAB00;
     --primary-color-rgba: rgba(10, 10, 10, 0.5);
     --white-menu-color: white;
@@ -39,3 +40,52 @@
         background: var(--hover-text-color) !important;
         color: white !important;
     }
+
+.modal-header {
+    background-color: var(--secondary-color) !important;
+    /*background-color: #d6dbda !important;*/
+}
+
+.modal-content {
+    background-color: #d6dbda !important;
+}
+
+.modal-footer {
+    border-top: 0px !important;
+}
+
+.select2-selection__rendered {
+    word-wrap: break-word !important;
+    text-overflow: inherit !important;
+    white-space: normal !important;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #ced4da !important;
+    border-radius: 4px;
+    height: 100% !important;
+}
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444 !important;
+        line-height: 58px;
+    }
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    word-wrap: break-word !important;
+    text-overflow: inherit !important;
+    white-space: normal !important;
+}
+
+/*selected css*/
+.select2-container--default .select2-results__option--selected {
+    color: gray;
+    background: rgb(221 221 221 / 32%) !important;
+}
+
+/*hover css*/
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: var(--secondary-color-opacity) !important;
+    color: white;
+}

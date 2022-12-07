@@ -12,6 +12,8 @@ let ChartDrawDepartamentos;
 
 $(document).ready(function () {
 
+    $("#navBarPrincipal").hide();
+
     for (var i = 0; i < 32; i++) {
         if (i == 0) {
             $("select[name=dia]").append(new Option("-", "-"));
@@ -199,7 +201,8 @@ $(document).ready(function () {
                     drawEstatus(data);
                 },
                 error: function (err) {
-                    alert("error" + err.data);
+                    alert("Tiempo agotado, vuelva a iniciar sesión");
+                    location.reload();
                 },
             });
 
@@ -347,20 +350,42 @@ $(document).ready(function () {
         }
     });
 
+
 });
 
+//const scrollDemo = document.querySelector("#chartAreaWrapperUnidad");
+
+//scrollDemo.addEventListener("scroll", event => {
+//    console.log("haciendo scrooll");
+//    chartAreaWrapper2Unidad.innerHTML = `scrollTop: ${scrollDemo.scrollTop} <br>
+//                                scrollLeft: ${scrollDemo.scrollLeft} `;
+//        }, { passive: true });
+
 const legendMargin = {
-        id: 'legendMargin',
-        beforeInit(chart, legend, options) {
-            const fitValue = chart.legend.fit;
+    id: 'legendMargin',
+    beforeInit(chart, legend, options) {
+        const fitValue = chart.legend.fit;
 
-            chart.legend.fit = function fit() {
-                fitValue.bind(chart.legend)();
-                return this.height += 10;
-            }
-
+        chart.legend.fit = function fit() {
+            fitValue.bind(chart.legend)();
+            return this.height += 20;
         }
+
+    }
 };
+
+const canvasBg = {
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart, args, options) => {
+        const { ctx } = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color || '#002733';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+};
+
 
 function drawEstatus(data) {
     var _data = data;
@@ -371,8 +396,92 @@ function drawEstatus(data) {
         if (index != _data[1].length - 1)
             _chartData.push(value);
     });
+    Chart.register({
+        id: 'doughnut-centertext',
+        beforeDraw: function (chart) {
+            if (chart.options.elements.center) {
+                // Get ctx from string
+                var ctx = chart.ctx;
+                // Get options from the center object in options
+                var centerConfig = chart.options.elements.center;
+                var fontStyle = centerConfig.fontStyle || 'Arial';
+                var txt = centerConfig.text;
+                var color = centerConfig.color || '#000';
+                var maxFontSize = centerConfig.maxFontSize || 75;
+                var sidePadding = centerConfig.sidePadding || 20;
+                var sidePaddingCalculated = (sidePadding / 100) * (chart._metasets[chart._metasets.length - 1].data[0].innerRadius * 2)
+                // Start with a base font of 30px
+                ctx.font = "30px " + fontStyle;
 
-    var ctx = document.getElementById("EstatusGraph");
+                // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                var stringWidth = ctx.measureText(txt).width;
+                var elementWidth = (chart._metasets[chart._metasets.length - 1].data[0].innerRadius * 2) - sidePaddingCalculated;
+
+                // Find out how much the font can grow in width.
+                var widthRatio = elementWidth / stringWidth;
+                var newFontSize = Math.floor(30 * widthRatio);
+                var elementHeight = (chart._metasets[chart._metasets.length - 1].data[0].innerRadius * 2);
+
+                // Pick a new font size so it will not be larger than the height of label.
+                var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                var minFontSize = centerConfig.minFontSize;
+                var lineHeight = centerConfig.lineHeight || 25;
+                var wrapText = false;
+
+                if (minFontSize === undefined) {
+                    minFontSize = 20;
+                }
+
+                if (minFontSize && fontSizeToUse < minFontSize) {
+                    fontSizeToUse = minFontSize;
+                    wrapText = true;
+                }
+
+                // Set font settings to draw it correctly.
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                ctx.font = fontSizeToUse + "px " + fontStyle;
+                ctx.fillStyle = color;
+
+                if (!wrapText) {
+                    ctx.fillText(txt, centerX, centerY);
+                    return;
+                }
+
+                var words = `${txt}`.split(" ");
+                //var words = txt.split(' ');
+                var line = '';
+                var lines = [];
+
+                // Break words up into multiple lines if necessary
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    var testWidth = metrics.width;
+                    if (testWidth > elementWidth && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+
+                // Move the center up depending on line height and number of lines
+                centerY -= (lines.length / 2) * lineHeight;
+
+                for (var m = 0; m < lines.length; m++) {
+                    ctx.fillText(lines[m], centerX, centerY);
+                    centerY += lineHeight;
+                }
+                //Draw text in center
+                ctx.fillText(line, centerX, centerY);
+            }
+        }
+    });
+
+    var ctx = document.getElementById("EstatusGraph").getContext("2d");
 
 
     ChartDrawEstatus = new Chart(ctx,
@@ -386,8 +495,18 @@ function drawEstatus(data) {
                     data: _chartData
                 }]
             },
-            plugins: [ChartDataLabels,legendMargin],
+            plugins: [ChartDataLabels, legendMargin, canvasBg],
             options: {
+                elements: {
+                    center: {
+                        text: 'Quejas',
+                        color: '#FF6384', // Default is #000000
+                        fontStyle: 'Arial', // Default is Arial
+                        sidePadding: 20, // Default is 20 (as a percentage)
+                        minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
+                        lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                    }
+                },
                 //showTooltips: false,
                 plugins: {
                     legend: {
@@ -397,10 +516,14 @@ function drawEstatus(data) {
                             font: {
                                 size: 14
                             },
+                            color: "white"
                         },
                     },
+                    //customCanvasBackgroundColor: {
+                    //    color: '#d7dad9',
+                    //},
                     datalabels: {
-                        color: "black",
+                        color: "white",
                         //color: "rgb(62, 66, 64)",
                         backgroundColor: ["rgb(62, 66, 64,0.3)", "rgb(62, 66, 64,0.3)"],
                         borderRadius: [10, 10],
@@ -422,8 +545,9 @@ function drawEstatus(data) {
                         //anchor: "end",
                         //align: "top",
                         //offset:10
-                    }
+                    },
                 },
+
 
             },
 
@@ -450,25 +574,29 @@ function drawEstatusDiario(data) {
                 labels: _chartLabels,
                 datasets: [
                     {
-                        backgroundColor: ["rgb(0, 184, 230,0.2)", "rgb(0, 230, 0,0.2)", "rgb(255, 51, 51,0.2)"],
-                        borderColor: ["#00ccff", "#00e600", "#ff3333"],
-                        borderWidth: 2,
+                        backgroundColor: ["rgb(26, 209, 255)", "rgb(0, 230, 0)", "rgb(255, 80, 80)"],
+                        borderColor: ["#007a99", "#1d9529", "#ff3333"],
+                        borderWidth: 3,
                         label: 'Quejas',
                         data: [_chartDataT, _chartDataA, _chartDataP]
                     },
                 ]
             },
-            plugins: [ChartDataLabels],
+            plugins: [ChartDataLabels, canvasBg],
             options: {
                 scales: {
                     y: {
                         ticks: {
                             beginAtZero: true,
                             callback: function (value) { if (value % 1 === 0) { return value; } }
+                        },
+                        grid: {
+                            color: "#004e66"
                         }
                     },
                     x: {
                         ticks: {
+                            color: "white",
                             //align: "center"
                         },
                         grid: {
@@ -486,9 +614,9 @@ function drawEstatusDiario(data) {
                         },
                     },
                     datalabels: {
-                        color: "black",
-                        backgroundColor: ["rgb(0, 184, 230,0.3)", "rgb(0, 230, 0,0.3)", "rgb(255, 51, 51,0.3)"],
-                        borderRadius:10,
+                        color: "white",
+                        backgroundColor: "black",
+                        borderRadius: 10,
                         font: {
                             size: 15,
                             weight: "bold"
@@ -506,13 +634,20 @@ function drawEstatusDiario(data) {
 
 function scrollUnidadesHandle(ev) {
     let classNm = ev.currentTarget.className;
+    const chart = Chart.getChart(ev.target);
 
-    if (ev.deltaY < 0) //scroll-up
+    if (ev.deltaY < 0 && chart.scales.x.min > 0) //scroll-up
     {
-        $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() - 20);
-    } else if (ev.deltaY > 0)//scroll-down 
+        chart.options.scales.x.min -= 1;
+        chart.options.scales.x.max -= 1;
+        chart.update();
+        //$(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() - 40);
+    } else if (ev.deltaY > 0 && chart.scales.x.max < chart.data.labels.length - 1)//scroll-down
     {
-        $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 20);
+        chart.options.scales.x.min += 1;
+        chart.options.scales.x.max += 1;
+        chart.update();
+        //$(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 40);
     }
 }
 
@@ -529,10 +664,10 @@ function drawUnidades(data) {
 
     });
 
-    _data[1].forEach(function (total, index) {
+    _data[1].forEach(function (total) {
         _chartData.push(total);
-        var newwidth = $('.chartAreaWrapper2Unidad').width() + index + index + index;
-        $('.chartAreaWrapper2Unidad').width(newwidth);
+        //var newwidth = $('.chartAreaWrapper2Unidad').width() + 60;
+        //$('.chartAreaWrapper2Unidad').width(newwidth);
     });
 
     var ctx = document.getElementById("UnidadesGraph").getContext("2d");
@@ -546,16 +681,16 @@ function drawUnidades(data) {
                         label: 'Número de quejas',
                         backgroundColor: "rgb(0, 255, 255,0.2)",
                         borderColor: "#00b3b3",
-                        toolTipOrder: 3,
                         fill: true,
                         data: _chartData,
-                        yAxisID: "y",
-                        barThickness: 15,
+                        //barThickness: 15,
                     }
                 ]
             },
-            plugins: [ChartDataLabels, legendMargin],
+            plugins: [ChartDataLabels, legendMargin, canvasBg],
             options: {
+                //maxBarThickness: 55,
+                clip: true,
                 layout: {
                     padding: {
                         bottom: 10,
@@ -565,6 +700,8 @@ function drawUnidades(data) {
                 scales: {
                     x: {
                         //stacked: true,
+                        min: 0,
+                        max:9,
                         grid: {
                             display: false,
                         },
@@ -575,17 +712,20 @@ function drawUnidades(data) {
                             font: {
                                 size: 9,
                             },
+                            color: "white"
                         }
                     },
                     y: {
                         position: "left",
                         min: 0,
                         grid: {
-                            display: true
+                            display: true,
+                            color: "#004e66"
                         },
                         ticks: {
                             beginAtZero: true,
-                            callback: function (value) { if (value % 1 === 0) { return value; } }
+                            callback: function (value) { if (value % 1 === 0) { return value; } },
+                            color: "white"
                         }
                     }
                 },
@@ -594,15 +734,20 @@ function drawUnidades(data) {
                         position: "top",
                         reverse: true,
                         display: true,
-                        //labels: {
-                        //    filter: (l) => (l.text !== 'Eff')
-                        //}
-
+                        labels: {
+                            color: "white",
+                            font: {
+                                size: 14
+                            }
+                        },
                     },
+                    //customCanvasBackgroundColor: {
+                    //    color: '#d7dad9',
+                    //},
                     datalabels: {
-                        color: "black",
-                        backgroundColor: "rgb(0, 255, 255,0.4)",
-                        borderRadius:10,
+                        color: "white",
+                        backgroundColor: "rgb(0, 255, 255,0.8)",
+                        borderRadius: 10,
                         font: {
                             size: 14,
                             weight: "bold"
@@ -620,13 +765,20 @@ function drawUnidades(data) {
 
 function scrollMunicipiosHandle(ev) {
     let classNm = ev.currentTarget.className;
+    const chart = Chart.getChart(ev.target);
 
-    if (ev.deltaY < 0) //scroll-up
+    if (ev.deltaY < 0 && chart.scales.x.min > 0) //scroll-up
     {
-        $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() - 20);
-    } else if (ev.deltaY > 0)//scroll-down 
+        chart.options.scales.x.min -= 1;
+        chart.options.scales.x.max -= 1;
+        chart.update();
+        //$(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() - 40);
+    } else if (ev.deltaY > 0 && chart.scales.x.max < chart.data.labels.length - 1)//scroll-down
     {
-        $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 20);
+        chart.options.scales.x.min += 1;
+        chart.options.scales.x.max += 1;
+        chart.update();
+        //$(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 40);
     }
 }
 
@@ -652,8 +804,8 @@ function drawMunicipios(data) {
 
     _data[1].forEach(function (total, index) {
         _chartData.push(total);
-        var newwidth = $('.chartAreaWrapper2Municipio').width() + 10;
-        $('.chartAreaWrapper2Municipio').width(newwidth);
+        //var newwidth = $('.chartAreaWrapper2Municipio').width() + 50;
+        //$('.chartAreaWrapper2Municipio').width(newwidth);
 
     });
 
@@ -673,24 +825,22 @@ function drawMunicipios(data) {
     };
 
     ChartDrawMunicipios = new Chart(ctx,
-    {
+        {
             type: "bar",
             data: {
                 labels: _chartLabels,
                 datasets: [
                     {
                         label: 'Total de quejas',
-                        backgroundColor: "rgb(255, 255, 0,0.5)",
+                        backgroundColor: "rgb(255, 255, 0,0.8)",
                         borderColor: "#b38600",
                         borderWidth: 1,
-                        toolTipOrder: 3,
                         data: _chartData,
-                        yAxisID: "y",
-                        barThickness: 15,
+                        barThickness: 10,
                         datalabels: {
-                            color: "black",
-                            backgroundColor: "rgb(255, 255, 0,0.3)",
-                            borderRadius:30,
+                            color: "white",
+                            backgroundColor: "rgb(255, 255, 0,0.5)",
+                            borderRadius: 30,
                             font: {
                                 size: 13,
                                 weight: "bold"
@@ -700,13 +850,14 @@ function drawMunicipios(data) {
                             align: "top",
                             //offset:0
                             //padding:10
-                            rotation:270
+                            rotation: 270
                         }
                     },
                     {
                         label: "Eff",
                         type: "line",
                         fill: true,
+                        backgroundColor: "rgb(94, 104, 110,0.5)",
                         data: _chartData,
                         stepped: "middle",
                         datalabels: {
@@ -715,10 +866,10 @@ function drawMunicipios(data) {
                     }
                 ]
             },
-            plugins: [ChartDataLabels, legendMarginMunicipio],
+            plugins: [ChartDataLabels, legendMarginMunicipio, canvasBg],
             options: {
                 maxBarThickness: 55,
-                clip: true,
+                //clip: true,
                 layout: {
                     padding: {
                         bottom: 10,
@@ -727,12 +878,16 @@ function drawMunicipios(data) {
                 },
                 scales: {
                     x: {
+                        min: 0,
+                        max:20,
                         grid: {
                             display: false
                         },
                         ticks: {
                             autoSkip: false,
-                            maxRotation: 90,
+                            color: "white",
+                            minRotation: 60,
+                            maxRotation: 60,
                             font: {
                                 size: 12,
                             }
@@ -743,10 +898,12 @@ function drawMunicipios(data) {
                         precision: 0,
                         min: 0,
                         grid: {
-                            display: true
+                            display: true,
+                            color: "#004e66"
                         },
                         ticks: {
-                            callback: function (value) { if (value % 1 === 0) { return value; } }
+                            callback: function (value) { if (value % 1 === 0) { return value; } },
+                            color: "white"
                         }
                     }
                 },
@@ -756,7 +913,11 @@ function drawMunicipios(data) {
                         reverse: true,
                         display: true,
                         labels: {
-                            filter: (l) => (l.text !== 'Eff')
+                            filter: (l) => (l.text !== 'Eff'),
+                            color: "white",
+                            font: {
+                                size: 14
+                            }
                         }
 
                     },
@@ -779,12 +940,12 @@ function drawMedios(data) {
                 labels: _chartLabels,
                 datasets: [{
                     backgroundColor: "#82bc0000",
-                    borderColor: 'rgb(54, 162, 235)',
+                    borderColor: '#c1502e',
                     label: 'Quejas recibidas',
                     data: _chartData
                 }]
             },
-            plugins: [ChartDataLabels, legendMargin],
+            plugins: [ChartDataLabels, legendMargin, canvasBg],
             options: {
                 //maxBarThickness: 55,
                 //clip: true,
@@ -794,19 +955,30 @@ function drawMedios(data) {
                 //        left: 50,
                 //    }
                 //},
-                maintainAspectRatio: false,
+                //maintainAspectRatio: false,
                 scales: {
                     r: {
                         //min: 0,
                         //max: 5,
+                        grid: {
+                            color: "#004e66"
+                        },
                         precision: 0,
                         beginAtZero: true,
                         angleLines: {
-                            color: "gray",
+                            color: "white",
                         },
                         ticks: {
-                            callback: function (value) { if (value % 1 === 0) { return value; } }
-                        }
+                            callback: function (value) { if (value % 1 === 0) { return value; } },
+                            color: "white",
+                            backdropColor: 'transparent'
+                        },
+                        pointLabels: {
+                            color: 'white',
+                            font: {
+                                size: 12,
+                            },
+                        },
                     },
                 },
                 plugins: {
@@ -814,11 +986,17 @@ function drawMedios(data) {
                     legend: {
                         position: "top",
                         reverse: true,
-                        display: true
+                        display: true,
+                        labels: {
+                            color: "white",
+                            font: {
+                                size: 14
+                            }
+                        }
 
                     },
                     datalabels: {
-                        color: "black",
+                        color: "white",
                         backgroundColor: "rgb(54, 162, 235,0.8)",
                         borderRadius: 10,
                         font: {
@@ -838,13 +1016,20 @@ function drawMedios(data) {
 
 function scrollEstatusUnidadesHandle(ev) {
     let classNm = ev.currentTarget.className;
+    const chart = Chart.getChart(ev.target);
 
-    if (ev.deltaY < 0) //scroll-up
+    if (ev.deltaY < 0 && chart.scales.x.min > 0) //scroll-up
     {
-        $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() - 20);
-    } else if (ev.deltaY > 0)//scroll-down 
+        chart.options.scales.x.min -= 1;
+        chart.options.scales.x.max -= 1;
+        chart.update();
+        //$(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() - 40);
+    } else if (ev.deltaY > 0 && chart.scales.x.max < chart.data.labels.length - 1)//scroll-down
     {
-        $(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 20);
+        chart.options.scales.x.min += 1;
+        chart.options.scales.x.max += 1;
+        chart.update();
+        //$(`.${classNm}`).scrollLeft($(`.${classNm}`).scrollLeft() + 40);
     }
 }
 
@@ -868,8 +1053,8 @@ function drawEstatusUnidades(data) {
 
     _data[1].forEach(function (total, index) {
         _chartDataA.push(total);
-        var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + index * 3;
-        $('.chartAreaWrapper2EstatusUnidad').width(newwidth);
+        //var newwidth = $('.chartAreaWrapper2EstatusUnidad').width() + 60;
+        //$('.chartAreaWrapper2EstatusUnidad').width(newwidth);
 
     });
 
@@ -889,9 +1074,9 @@ function drawEstatusUnidades(data) {
                         backgroundColor: "rgb(0, 230, 0,0.5)",
                         borderColor: "#00e600",
                         borderWidth: 1,
-                        toolTipOrder: 3,
+                        //toolTipOrder: 3,
                         data: _chartDataA,
-                        yAxisID: "y",
+                        //yAxisID: "y",
                         //barPercentage: 0.1,
                         //barThickness: 20,
                         //tension: -1,
@@ -903,9 +1088,9 @@ function drawEstatusUnidades(data) {
                         backgroundColor: "rgb(255, 51, 51,0.5)",
                         borderColor: "#ff3333",
                         borderWidth: 1,
-                        toolTipOrder: 3,
+                        //toolTipOrder: 3,
                         data: _chartDataP,
-                        yAxisID: "y",
+                        //yAxisID: "y",
                         //barPercentage: 0.1,
                         //barThickness: 20,
                         //tension: -1,
@@ -914,9 +1099,11 @@ function drawEstatusUnidades(data) {
                     },
                 ]
             },
-            plugins: [ChartDataLabels, legendMargin],
+            plugins: [ChartDataLabels, legendMargin, canvasBg],
             options: {
-                maintainAspectRatio: false,
+                maxBarThickness: 55,
+                responsive: true,
+                maintainAspectRatio: true,
                 layout: {
                     padding: {
                         bottom: 10,
@@ -926,12 +1113,15 @@ function drawEstatusUnidades(data) {
                 scales: {
                     x: {
                         //stacked: true,
+                        min: 0,
+                        max:9,
                         grid: {
                             display: false,
                         },
                         ticks: {
                             autoSkip: false,
                             maxRotation: 0,
+                            color: "white",
                             //minRotation: 30,
                             font: {
                                 size: 9,
@@ -944,11 +1134,13 @@ function drawEstatusUnidades(data) {
                         beginAtZero: true,
                         min: 0,
                         grid: {
-                            display: true
+                            display: true,
+                            color: "#004e66"
                         },
                         stacked: true,
                         ticks: {
-                            callback: function (value) { if (value % 1 === 0) { return value; } }
+                            callback: function (value) { if (value % 1 === 0) { return value; } },
+                            color: "white"
                         }
                     }
                 },
@@ -962,11 +1154,19 @@ function drawEstatusUnidades(data) {
                     legend: {
                         position: "top",
                         reverse: true,
-                        display: true
+                        display: true,
+                        labels: {
+                            color: "white",
+                            font: {
+                                size: 14
+                            }
+                        }
 
                     },
                     datalabels: {
-                        color: "black",
+                        color: "White",
+                        backgroundColor: "rgb(62, 66, 64,0.5)",
+                        borderRadius: 10,
                         font: {
                             size: 13,
                             weight: "bold"
@@ -997,13 +1197,62 @@ function scrollDepartamentosHandle(ev) {
 function drawDepartamentos(data) {
 
     var _data = data;
-    var _chartLabels = _data[0];
+    var _chartLabels = [];
     var _chartData = [];
+
+    _data[0].forEach(function (label, index) {
+        const palabras = label.split(" ");
+        var contadorPalabras = 0;
+
+        var nuevoArr = [];
+        var palabrasNew = [];
+        var tam = palabras.length - 1;
+
+        console.log("palabra: " + palabras);
+        for (var i = 0; i <= tam; i++) {
+            var taaam = tam - i;
+            console.log("tam -i " + taaam);
+            if (tam - i >= 1) {
+                if (contadorPalabras <= 2) {
+                    nuevoArr.push(palabras[i])
+
+                    if (contadorPalabras < 2) {
+                        contadorPalabras++;
+                    }
+                    else {
+                        var res = nuevoArr.join(" ");
+                        palabrasNew.push(res);
+                        nuevoArr = [];
+                        contadorPalabras = 0;
+                    }
+                }
+            }
+            else {
+                console.log("iteró" + i);
+                if (i == tam) {
+                    nuevoArr.push(palabras[i]);
+                    var res = nuevoArr.join(" ");
+                    palabrasNew.push(res);
+
+                }
+                else {
+                    nuevoArr.push(palabras[i])
+                }
+            }
+        }
+        console.log(palabrasNew);
+        palabrasNew.join(" ");
+        _chartLabels.push(palabrasNew);
+
+    });
 
     _data[1].forEach(function (total) {
         _chartData.push(total);
-        //var newHeight = $('.chartAreaWrapper2Dpto').height() + 40;
-        //$('.chartAreaWrapper2Dpto').height(newHeight);
+        var newHeight = $('.chartAreaWrapper2Dpto').height() + 2;
+        $('.chartAreaWrapper2Dpto').height(newHeight);
+
+        //var newWidth = $('.chartAreaWrapper2Dpto').width() + 10;
+        //$('.chartAreaWrapper2Dpto').width(newWidth);
 
     });
 
@@ -1021,7 +1270,7 @@ function drawDepartamentos(data) {
                         borderWidth: 2,
                         toolTipOrder: 3,
                         data: _chartData,
-                        yAxisID: "y",
+                        //yAxisID: "y",
                         //barPercentage: 0.1,
                         barThickness: 15,
                         //tension: -1,
@@ -1030,40 +1279,46 @@ function drawDepartamentos(data) {
                     },
                 ]
             },
-            plugins: [ChartDataLabels, legendMargin],
+            plugins: [ChartDataLabels, legendMargin, canvasBg],
             options: {
                 indexAxis: 'y',
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 layout: {
                     padding: {
                         bottom: 10,
-                        left: 50,
+                        left: 20,
+                        right: 30
                     },
                 },
                 scales: {
-                    x: {
+                    y: {
                         //stacked: true,
                         grid: {
                             display: false,
                         },
                         ticks: {
                             autoSkip: false,
+                            color: "white",
                             //maxRotation: 90,
                             //minRotation: 30,
                             font: {
                                 size: 10,
                             },
                         },
-                        stacked: true,
+                        //stacked: true,
                     },
-                    y: {
-                        position: "left",
+                    x: {
+                        //position: "left",
                         beginAtZero: true,
                         min: 0,
                         grid: {
-                            display: true
+                            display: true,
+                            color: "#004e66"
                         },
-                        stacked: true,
+                        ticks: {
+                            color: "white"
+                        }
+                        //stacked: true,
                     }
                 },
                 plugins: {
@@ -1076,13 +1331,19 @@ function drawDepartamentos(data) {
                     legend: {
                         position: "top",
                         reverse: true,
-                        display: true
+                        display: true,
+                        labels: {
+                            color: "white",
+                            font: {
+                                size: 14
+                            }
+                        }
 
                     },
                     datalabels: {
-                        color: "black",
-                        backgroundColor: "rgb(187, 153, 255,0.2)",
-                        borderRadius:10,
+                        color: "white",
+                        backgroundColor: "rgb(187, 153, 255,0.5)",
+                        borderRadius: 10,
                         font: {
                             size: 15,
                             weight: "bold"
@@ -1120,7 +1381,7 @@ function drawQuejasAnual(data) {
                 datasets: [
                     {
                         label: 'Pendientes',
-                        backgroundColor: "rgb(255, 92, 51,0.1)",
+                        backgroundColor: "rgb(255, 92, 51,0.2)",
                         borderColor: "rgb(255, 92, 51)",
                         fill: true,
                         toolTipOrder: 3,
@@ -1128,9 +1389,9 @@ function drawQuejasAnual(data) {
                         yAxisID: "y",
                         barThickness: 15,
                         datalabels: {
-                            color: "black",
-                            backgroundColor: "rgb(255, 92, 51,0.2)",
-                            borderRadius:10,
+                            color: "white",
+                            backgroundColor: "rgb(255, 92, 51,0.5)",
+                            borderRadius: 10,
                             font: {
                                 size: 15,
                                 weight: "bold"
@@ -1143,7 +1404,7 @@ function drawQuejasAnual(data) {
                     },
                     {
                         label: 'Atendidas',
-                        backgroundColor: "rgb(0, 179, 0,0.1)",
+                        backgroundColor: "rgb(0, 179, 0,0.2)",
                         borderColor: "rgb(0, 179, 0)",
                         fill: true,
                         toolTipOrder: 3,
@@ -1151,9 +1412,9 @@ function drawQuejasAnual(data) {
                         yAxisID: "y",
                         barThickness: 15,
                         datalabels: {
-                            color: "black",
-                            backgroundColor: "rgb(0, 179, 0,0.2)",
-                            borderRadius:10,
+                            color: "white",
+                            backgroundColor: "rgb(0, 179, 0,0.5)",
+                            borderRadius: 10,
                             font: {
                                 size: 15,
                                 weight: "bold"
@@ -1166,13 +1427,14 @@ function drawQuejasAnual(data) {
                     },
                 ]
             },
-            plugins: [ChartDataLabels, legendMargin],
+            plugins: [ChartDataLabels, legendMargin, canvasBg],
             options: {
                 layout: {
                     padding: {
                         bottom: 10,
                         //left: 120,
                     },
+
                 },
                 scales: {
                     x: {
@@ -1182,10 +1444,11 @@ function drawQuejasAnual(data) {
                         },
                         ticks: {
                             autoSkip: false,
+                            color: "white",
                             //maxRotation: 90,
                             //minRotation: 20,
                             font: {
-                                size: 9,
+                                size: 15,
                             },
                         },
                     },
@@ -1193,10 +1456,12 @@ function drawQuejasAnual(data) {
                         position: "left",
                         min: 0,
                         grid: {
-                            display: true
+                            display: true,
+                            color: "#004e66"
                         },
                         ticks: {
-                            callback: function (value) { if (value % 1 === 0) { return value; } }
+                            callback: function (value) { if (value % 1 === 0) { return value; } },
+                            color: "white"
                         }
                     }
                 },
@@ -1205,12 +1470,18 @@ function drawQuejasAnual(data) {
                         position: "top",
                         reverse: true,
                         display: true,
+                        labels: {
+                            color: "white",
+                            font: {
+                                size: 14
+                            }
+                        }
                         //labels: {
                         //    filter: (l) => (l.text !== 'Eff')
                         //}
 
                     },
-                    
+
                 }
             }
         });
