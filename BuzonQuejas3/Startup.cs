@@ -45,7 +45,7 @@ namespace BuzonQuejas3
     .AddCookie(option =>
     {
         option.LoginPath = "/Acceso/Index";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         option.AccessDeniedPath = "/Home/Privacy";
     });
         }
