@@ -39,13 +39,12 @@
 
 .buscar-bttn {
     color: white !important;
-    width: 50%;
+    width: 100%;
     background: var(--secondary-color) !important;
 }
 
     .buscar-bttn:hover {
         color: white !important;
-        width: 50%;
         background: var(--hover-text-color) !important;
     }
 
@@ -152,7 +151,7 @@ td {
 }
 
 table {
-    height: 500px;
+    height: 450px;
     display: inline-block;
     overflow-y: scroll;
 }

@@ -106,7 +106,12 @@ namespace BuzonQuejas3.Controllers
 
             if (!String.IsNullOrEmpty(buscar))
             {
-                quejasMostrar = quejasMostrar.Where(s => s.NombreQuejante!.Contains(buscar));
+                quejasMostrar = quejasMostrar.Where(s => s.NombreQuejante!.Contains(buscar) || s.ServidorInvolucrado!.Contains(buscar) || s.Folio!.Contains(buscar));
+                ViewData["filtroBuscar"] = buscar;
+            }
+            else
+            {
+                ViewData["filtroBuscar"] = "";
             }
 
             ViewData["FiltroFolio"] = String.IsNullOrEmpty(filtro) ? "FolioDescendiente" : "";

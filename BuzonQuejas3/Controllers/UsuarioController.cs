@@ -23,7 +23,7 @@ namespace BuzonQuejas3.Controllers
 
         // GET: Usuarios
         [Authorize(Roles = "Administrador,Root")]
-        public async Task<IActionResult> Usuarios(String filtro)
+        public async Task<IActionResult> Usuarios(string buscar, string filtro)
         {
             //var usuarios = from Usuario in _context.Usuarios select Usuario;
 
@@ -41,6 +41,15 @@ namespace BuzonQuejas3.Controllers
                                Rol = rol.Nombre,
                                UnidadAdministrativa = unidad.Nombre
                            };
+            if (!String.IsNullOrEmpty(buscar))
+            {
+                usuarios = usuarios.Where(s => s.Nombre!.Contains(buscar) || s.Correo!.Contains(buscar));
+                ViewData["filtroBuscar"] = buscar;
+            }
+            else
+            {
+                ViewData["filtroBuscar"] = "";
+            }
 
             ViewData["FiltroNombre"] = String.IsNullOrEmpty(filtro) ? "NombreDescendiente" : "";
 

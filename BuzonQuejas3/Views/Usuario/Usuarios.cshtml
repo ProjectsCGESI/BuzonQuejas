@@ -13,103 +13,122 @@
     <div class="col-12">
         <h1 class="text-center titulo">Usuarios</h1>
     </div>
-    <div class="col-10">
-        <div class="row align-items-center">
-            <div class="col-12 mb-2">
+    <div class="col-10 mt-2">
+        <div class="row justify-content-between">
+
+            <div class="col-6 mb-3">
+                <div class="col-auto  ml-auto ">
+                    <form asp-controller="Usuario" asp-action="Usuarios">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <input type="text" name="buscar" value="@ViewData["filtroBuscar"]" class="form-control">
+                                @*<input type="submit" value="Buscar" class="btn form-control btn-sm btn-dark" />*@
+                            </div>
+                            <div class="col-auto align-self-center">
+                                <input type="submit" value="Buscar" class="btn  btn-sm  buscar-bttn" />
+                            </div>
+                            <div class="col-auto align-self-center">
+                                <a class="btn btn-sm  buscar-bttn" asp-action="Usuarios">Restaurar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6 mb-2">
                 <p class="text-right ">
                     <a class="btn agregar-bttn text-center" asp-action="AgregarUsuario">
                         Agregar usuario
                     </a>
                 </p>
             </div>
-            <div class="col-12">
-                <div class="table-responsive border contenedor-tabla">
-                    <table class="table table-hover">
-                        <thead class="header-usuarios">
-                            <tr class="align-text-top header-table">
-                                <th>
-                                    <a class="header-text-usuarios"  asp-action="Usuarios" asp-route-filtro="@ViewData["FiltroNombre"]">
-                                    @Html.DisplayNameFor(model => model.Nombre)
-                                        <span class="material-icons size-order ">height</span>
-                                    </a>
-                                </th>
-                                <th class="header-text-usuarios">
-                                    @Html.DisplayNameFor(model => model.Correo)
-                                </th>
-                                @*
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Clave)
-                                </th>*@
-                                <th class="header-text-usuarios">
-                                    @Html.DisplayNameFor(model => model.Activo)
-                                </th>
-                                <th class="header-text-usuarios">
-                                    @Html.DisplayNameFor(model => model.Departamento)
-                                </th>
-                                <th class="header-text-usuarios">
-                                    @Html.DisplayNameFor(model => model.Rol)
-                                </th>
-                                <th class="header-text-usuarios">
-                                    @Html.DisplayNameFor(model => model.UnidadAdministrativa)
-                                </th>
-                                <th></th>
-                                @*<th></th>*@
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                            <tr class="table-row">
+        </div>
+    </div>
+    <div class="col-10">
+        <div class="table-responsive border contenedor-tabla ">
+            <table width="100%" class="table table-hover ">
+                <thead class="header-usuarios">
+                    <tr class="align-text-top header-table">
+                        <th>
+                            <a class="header-text-usuarios" asp-action="Usuarios" asp-route-filtro="@ViewData["FiltroNombre"]" asp-route-buscar="@ViewData["filtroBuscar"]">
+                                @Html.DisplayNameFor(model => model.Nombre)
+                                <span class="material-icons size-order ">height</span>
+                            </a>
+                        </th>
+                        <th class="header-text-usuarios">
+                            @Html.DisplayNameFor(model => model.Correo)
+                        </th>
+                        @*
+                            <th>
+                                @Html.DisplayNameFor(model => model.Clave)
+                            </th>*@
+                        <th class="header-text-usuarios">
+                            @Html.DisplayNameFor(model => model.Activo)
+                        </th>
+                        <th class="header-text-usuarios">
+                            @Html.DisplayNameFor(model => model.Departamento)
+                        </th>
+                        <th class="header-text-usuarios">
+                            @Html.DisplayNameFor(model => model.Rol)
+                        </th>
+                        <th class="header-text-usuarios">
+                            @Html.DisplayNameFor(model => model.UnidadAdministrativa)
+                        </th>
+                        <th></th>
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="table-row">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Correo)
+                            </td>
+                            @*
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Correo)
-                                </td>
-                                @*
-        <td>
-            @Html.DisplayFor(modelItem => item.Clave)
-        </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Activo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Departamento)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Rol)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
-                                </td>
-                                <td class="text-center">
-                                    <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID" class="btn editar-usuario-bttn">
-                                        <span class="material-icons size-icon">
-                                            edit
-                                        </span>
-                                    </a>
-                                </td>
-                                @*<td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Clave)
+                                </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Activo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Departamento)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID" class="btn editar-usuario-bttn">
+                                    <span class="material-icons size-icon">
+                                        edit
+                                    </span>
+                                </a>
+                            </td>
+                            @*<td class="text-center">
                                     <a asp-action="EliminarUsuario" asp-route-id="@item.UsuarioID" >
                                         <span class="material-icons size-icon">
                                             delete
                                         </span>
                                     </a>
                                 </td>*@
-                                @*<td>
+                            @*<td>
                                     <a asp-action="Edit" asp-route-id="@item.UsuarioID">Edit</a> |
                                     <a asp-action="Details" asp-route-id="@item.UsuarioID">Details</a> |
                                     <a asp-action="Delete" asp-route-id="@item.UsuarioID">Delete</a>
                                 </td>*@
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-
-
     </div>
+
+
 
 </div>

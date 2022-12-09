@@ -24,15 +24,25 @@
     border: 1px solid #000;
 }
 
+.buscar-bttn {
+    color: white !important;
+    width: 100%;
+    background: var(--secondary-color) !important;
+}
+
+    .buscar-bttn:hover {
+        color: white !important;
+        background: var(--hover-text-color) !important;
+    }
+
 .agregar-bttn {
     color: white !important;
-    width: 15%;
+    width: 30%;
     background: var(--secondary-color) !important;
 }
 
     .agregar-bttn:hover {
         color: white !important;
-        width: 15%;
         background: var(--hover-text-color) !important;
     }
 
@@ -76,13 +86,13 @@ td {
 /*.titulo:hover{
     color: var(--tabs-options-color);
 }*/
-.td-index {
+/*.td-index {
     max-width: 50px;
     overflow: hidden;
     text-overflow: clip;
     white-space: normal;
     max-height: 5px !important;
-}
+}*/
 
 .text-icon {
     font-size: 10px;
@@ -119,7 +129,7 @@ select option {
 }
 
 table {
-    height: 450px;
+    height: 400px;
     display: inline-block;
     overflow-y: scroll;
 }
