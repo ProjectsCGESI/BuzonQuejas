@@ -19,33 +19,24 @@
                         <div class="modal fade modal-ReestablecerClave-ok" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                        <div class="modal-header">
-                                            @if (@ViewBag.SuccessMessage == "Contraseña reestablecida correctamente")
-                                            {
-                                                <h5 class="modal-title" id="exampleModalLabel">Tarea exitosa</h5>
-                                            }
-                                            else
-                                            {
-                                                <h5 class="modal-title" id="exampleModalLabel">Tarea no exitosa</h5>
+                                    <div class="modal-header">
+                                        @if (@ViewBag.SuccessMessage == "Contraseña reestablecida correctamente")
+                                        {
+                                            <h5 class="modal-title" id="exampleModalLabel">Tarea exitosa</h5>
+                                        }
+                                        else
+                                        {
+                                            <h5 class="modal-title" id="exampleModalLabel">Tarea no exitosa</h5>
 
-                                            }
-                                        </div>
+                                        }
+                                    </div>
                                     <div class="modal-body">
                                         <strong>@ViewBag.SuccessMessage</strong>
                                     </div>
                                     <div class="modal-footer">
                                         @if (@ViewBag.SuccessMessage == "Contraseña reestablecida correctamente")
                                         {
-                                            if (User.IsInRole("Fiscal"))
-                                            {
-                                                <a asp-controller="Queja" asp-action="Tablero" class="btn aceptar-bttn">Aceptar</a>
-
-                                            }
-                                            else
-                                            {
-                                                <a asp-controller="Queja" asp-action="Quejas" class="btn aceptar-bttn">Aceptar</a>
-                                            }
-
+                                            <a asp-controller="Queja" asp-action="Quejas" class="btn aceptar-bttn">Aceptar</a>
                                         }
                                         else
                                         {
@@ -66,17 +57,17 @@
             @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <input type="hidden" asp-for="UsuarioID" />
             <div class="form-group">
-                <input type="password" name="clave" class="form-control" required placeholder="Nueva Contraseña*"/>
+                <input type="password" name="clave" class="form-control" required placeholder="Nueva Contraseña*" />
             </div>
             <div class="form-group">
-                <input type="password" name="confirmarClave" class="form-control" required placeholder="Confirmar Contraseña*"/>
+                <input type="password" name="confirmarClave" class="form-control" required placeholder="Confirmar Contraseña*" />
             </div>
 
             <div class="form-group" id="usuario-id">
                 <input name="userID" hidden class="form-control" value="@Html.DisplayFor(modelItem => modelItem.UsuarioID)" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn guardar-bttn-clave" id="guardar"/>
+                <input type="submit" value="Guardar" class="btn guardar-bttn-clave" id="guardar" />
             </div>
         </form>
     </div>

@@ -378,6 +378,7 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Medio>().HasData(new Medio { MedioID = new Guid("57740f1c-c60f-4232-bfc1-a07b08d2dbea"), Nombre = "Correo" });
             modelBuilder.Entity<Medio>().HasData(new Medio { MedioID = new Guid("acfca6b3-1cd0-4f6e-a299-685d9ee6a6ee"), Nombre = "Presencial" });
             modelBuilder.Entity<Medio>().HasData(new Medio { MedioID = new Guid("df534fce-96dc-4346-b47b-589b0f915708"), Nombre = "Buzón" });
+            modelBuilder.Entity<Medio>().HasData(new Medio { MedioID = new Guid("a04c1856-54b5-4699-8660-367a5ac5444d"), Nombre = "Web" });
 
             ////Tipos de Cargos - Nuevos
             modelBuilder.Entity<Cargo>().HasData(new Cargo { CargoID = new Guid("35f230e5-95d9-4740-9d5e-a2d6330bcbb3"), Nombre = "Agente del ministerio público" });
