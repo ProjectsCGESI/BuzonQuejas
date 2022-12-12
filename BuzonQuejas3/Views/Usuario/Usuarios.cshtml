@@ -44,8 +44,8 @@
         </div>
     </div>
     <div class="col-10">
-        <div class="table-responsive border contenedor-tabla ">
-            <table width="100%" class="table table-hover ">
+        <div class="table-responsive border contenedor-tabla">
+            <table class="table table-fixed ">
                 <thead class="header-usuarios">
                     <tr class="align-text-top header-table">
                         <th>
@@ -78,50 +78,61 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @if (Model.Count() > 0)
                     {
-                        <tr class="table-row">
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Correo)
-                            </td>
-                            @*
+                        @foreach (var item in Model)
+                        {
+                            <tr class="table-row">
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Clave)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Departamento)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Rol)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
-                            </td>
-                            <td class="text-center">
-                                <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID" class="btn editar-usuario-bttn">
-                                    <span class="material-icons size-icon">
-                                        edit
-                                    </span>
-                                </a>
-                            </td>
-                            @*<td class="text-center">
-                                    <a asp-action="EliminarUsuario" asp-route-id="@item.UsuarioID" >
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Correo)
+                                </td>
+                                @*
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Clave)
+                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Departamento)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Rol)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="EditarUsuario" asp-route-id="@item.UsuarioID" class="btn editar-usuario-bttn">
                                         <span class="material-icons size-icon">
-                                            delete
+                                            edit
                                         </span>
                                     </a>
-                                </td>*@
-                            @*<td>
-                                    <a asp-action="Edit" asp-route-id="@item.UsuarioID">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.UsuarioID">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.UsuarioID">Delete</a>
-                                </td>*@
+                                </td>
+                                @*<td class="text-center">
+                        <a asp-action="EliminarUsuario" asp-route-id="@item.UsuarioID" >
+                            <span class="material-icons size-icon">
+                                delete
+                            </span>
+                        </a>
+                    </td>*@
+                                @*<td>
+                        <a asp-action="Edit" asp-route-id="@item.UsuarioID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.UsuarioID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.UsuarioID">Delete</a>
+                    </td>*@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="table-row">
+                            <td colspan="7" class="text-center">
+                                No se encontraron resultados
+                            </td>
                         </tr>
                     }
                 </tbody>

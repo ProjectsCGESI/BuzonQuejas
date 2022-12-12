@@ -25,7 +25,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
         public async Task<IActionResult> Quejas(string buscar, String filtro)
         {
             IQueryable<QuejaMostrar> quejasMostrar;
