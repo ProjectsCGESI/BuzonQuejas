@@ -33,7 +33,7 @@
                                             </button>*@
                                     </div>
                                     <div class="modal-body">
-                                        <strong>@ViewBag.SuccessMessage</strong>
+                                        <strong>@Html.Raw(@ViewBag.SuccessMessage)</strong>
                                     </div>
                                     <div class="modal-footer">
                                         @*<button asp-action="Create" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@

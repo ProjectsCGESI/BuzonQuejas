@@ -246,7 +246,7 @@ namespace BuzonQuejas3.Controllers
                 queja.QuejaID = Guid.NewGuid();
                 _context.Add(queja);
                 await _context.SaveChangesAsync();
-                ViewBag.SuccessMessage = " La queja ha sido levantada correctamente";
+                ViewBag.SuccessMessage = $"La queja ha sido levantada correctamente <br/> Folio: {queja.Folio} ";
                 return View();
             }
             else
