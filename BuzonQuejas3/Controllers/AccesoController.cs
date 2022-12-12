@@ -45,31 +45,24 @@ namespace BuzonQuejas3.Controllers
                         //2.- CONFIGURACION DE LA AUTENTICACION
                         #region AUTENTICACTION
                         var claims = new List<Claim>{
-						    new Claim(ClaimTypes.Name, usuario.Nombre),
-						    new Claim("Correo", usuario.Correo),
-						    new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
-						    new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
-						    new Claim(ClaimTypes.Role, rol.Nombre),
+                            new Claim(ClaimTypes.Name, usuario.Nombre),
+                            new Claim("Correo", usuario.Correo),
+                            new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
+                            new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
+                            new Claim(ClaimTypes.Role, rol.Nombre),
                         };
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                         #endregion
 
-                        if(usuario.Clave == "gdnrIvSE0unNNIore1PcbsfdwEP9S7cftX+9UCBTo5s=")
+                        if (usuario.Clave == "gdnrIvSE0unNNIore1PcbsfdwEP9S7cftX+9UCBTo5s=")
                         {
                             return RedirectToAction("ReestablecerClave", "Usuario", new { id = usuario.UsuarioID });
                         }
                         else
                         {
-                        if (rol.Nombre != "Fiscal")
-                        {
                             return RedirectToAction("Quejas", "Queja");
-                        }
-                        else
-                        {
-                            return RedirectToAction("Tablero", "Queja");
-                        }
                         }
                     }
                     else

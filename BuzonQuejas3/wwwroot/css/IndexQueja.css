@@ -121,16 +121,6 @@ td {
     width:15%;
     float:right;
 }
-/*.titulo:hover{
-    color: var(--tabs-options-color);
-}*/
-.td-index {
-    max-width: 50px;
-    overflow: hidden;
-    text-overflow: clip;
-    white-space: normal;
-    max-height: 5px !important;
-}
 
 .text-icon {
     font-size: 10px;

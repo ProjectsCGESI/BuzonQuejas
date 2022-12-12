@@ -31,7 +31,7 @@ namespace BuzonQuejas3.Controllers
             IQueryable<QuejaMostrar> quejasMostrar;
             //IQueryable<Queja> quejas;
 
-            if (User.IsInRole("Administrador") || User.IsInRole("Root"))
+            if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Fiscal"))
             {
                 //quejas = from Queja in _context.Quejas select Queja;
                 quejasMostrar = from queja in _context.Quejas
@@ -157,9 +157,8 @@ namespace BuzonQuejas3.Controllers
             return View(await quejasMostrar.ToListAsync());
         }
 
-
         // GET: Queja/Details/5 No se ocupa
-        [Authorize(Roles = "Administrador,Root")]
+        [Authorize(Roles = "Administrador,Root,Fiscal")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -177,7 +176,7 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         // GET: Queja/Create
         public IActionResult AgregarQueja()
         {
@@ -197,12 +196,9 @@ namespace BuzonQuejas3.Controllers
         }
 
         // POST: Queja/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         public async Task<IActionResult> AgregarQueja([Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,Folio")] Queja queja)
         {
             queja.AtendidoPor = "";
@@ -272,8 +268,8 @@ namespace BuzonQuejas3.Controllers
 
         }
 
-        // GET: Queja/Edit/5
-        [Authorize(Roles = "Administrador,Root")]
+        // GET: Queja/Edit/5 No se ocupa
+        [Authorize(Roles = "Administrador,Root,Fiscal")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -289,12 +285,10 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        // POST: Queja/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Queja/Edit/5 No se ocupa
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root")]
+        [Authorize(Roles = "Administrador,Root,Fiscal")]
         public async Task<IActionResult> Edit(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoAsignado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion")] Queja queja)
         {
             if (id != queja.QuejaID)
@@ -325,8 +319,8 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        // GET: Queja/Delete/5
-        [Authorize(Roles = "Administrador,Root")]
+        // GET: Queja/Delete/5 No se ocupa
+        [Authorize(Roles = "Administrador,Root,Fiscal")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -344,10 +338,10 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        // POST: Queja/Delete/5
+        // POST: Queja/Delete/5 No se ocupa
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root")]
+        [Authorize(Roles = "Administrador,Root,Fiscal")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var queja = await _context.Quejas.FindAsync(id);
@@ -361,9 +355,8 @@ namespace BuzonQuejas3.Controllers
             return _context.Quejas.Any(e => e.QuejaID == id);
         }
 
-        // GET: Queja/Edit/5
-        //[Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
+        // GET: Queja/Seguimiento/5
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Fiscal")]
         public async Task<IActionResult> Seguimiento(Guid? id)
         {
             //var unidades = await _context.UnidadAdministrativas.ToListAsync();
@@ -386,12 +379,10 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        // POST: Queja/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Queja/Seguimiento/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Fiscal")]
         public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoID,MunicipioID,UnidadAdministrativaID,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion,CargoID,MedioID,Folio")] Queja queja)
         {
             if (id != queja.QuejaID)
@@ -427,13 +418,14 @@ namespace BuzonQuejas3.Controllers
             //return View(queja);
         }
 
-
+        // GET: Queja/Tablero/5
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public IActionResult Tablero(string buscar, String filtro)
+        public IActionResult Tablero()
         {
             return View();
         }
 
+        // GET: 
         [Authorize]
         public IQueryable<Queja> GetQuejas(string[] filter)
         {
@@ -541,6 +533,7 @@ namespace BuzonQuejas3.Controllers
             return quejas;
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -573,6 +566,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -605,6 +599,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -642,6 +637,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -676,6 +672,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -706,6 +703,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -739,6 +737,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -791,6 +790,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -820,6 +820,7 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
         [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
@@ -849,32 +850,32 @@ namespace BuzonQuejas3.Controllers
 
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         //get para mostrar unidades administrativas en modal al reasignar
         public async Task<ActionResult<IEnumerable<UnidadAdministrativa>>> GetUnidades()
         {
-            //var unidades = await _context.UnidadAdministrativas.OrderBy(x => x.Nombre).ToListAsync();
             var unidades = await _context.UnidadAdministrativas.Where(q => q.Nombre != "Sin Asignar").OrderBy(x => x.Nombre).ToListAsync();
             return unidades;
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Fiscal")]
         public async Task<UnidadAdministrativa> GetUnidad(string quejaId)
         {
-            //var queja = await _context.Quejas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID == Guid.Parse(quejaId));
             var queja = await _context.Quejas.FindAsync(Guid.Parse(quejaId));
             var unidad = await _context.UnidadAdministrativas.FirstOrDefaultAsync(m => m.UnidadAdministrativaID.Equals(queja.UnidadAdministrativaID));
             return unidad;
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
-
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
         //get para mostrar el nombre de la unidad en vez del id en seguimiento
         public async Task<UnidadAdministrativa> GetUnidadName(string idUnidad)
         {
@@ -882,9 +883,10 @@ namespace BuzonQuejas3.Controllers
             return unidad;
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
         //get para mostrar el nombre del municipio en vez del id en seguimiento
         public async Task<Municipio> GetMunicipioName(string idMunicipio)
         {
@@ -892,9 +894,10 @@ namespace BuzonQuejas3.Controllers
             return municipio;
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
         //get para mostrar el nombre de el medio de reecpción en vez del id en seguimiento
         public async Task<Medio> GetMedioName(string idMedio)
         {
@@ -902,9 +905,10 @@ namespace BuzonQuejas3.Controllers
             return medio;
         }
 
+        // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
 
         //get para mostrar el nombre del cargo en vez del id en seguimiento
         public async Task<Cargo> GetCargoName(string idCargo)
@@ -913,10 +917,10 @@ namespace BuzonQuejas3.Controllers
             return cargo;
         }
 
+        // POST:
         [ActionName("Reasignar")]
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental")]
-
+        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
         //para poder reasignar quejas
         public async Task<IActionResult> Reasignar(string QuejaId, string unidadId)
         {

@@ -106,10 +106,10 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"), Nombre = "Conmutador" });
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8562af28-e0c7-4ba1-a889-9a3294cd70e0"), Nombre = "CG Análisis de la información" });
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), Nombre = "Administración" });
+            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"), Nombre = "Buzón web FGE" });
             modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"), Nombre = "No Aplica" });
 
             //// Unidades Administrativas
-
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4b0240b3-98e7-4f86-881b-10f760c32f71"), Nombre = "Agencia Estatal de Investigación" });
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("dbfcacdf-82c3-49cd-b035-f992aa39a4e0"), Nombre = "Coordinación General de Análisis de Información" });
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("9bfcf217-97d8-469f-9652-d6741fce84a1"), Nombre = "Coordinación General de Asuntos Jurídicos" });

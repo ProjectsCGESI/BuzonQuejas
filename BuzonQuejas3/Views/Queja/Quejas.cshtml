@@ -42,37 +42,37 @@
     </div>
     <div class="col-12 ">
         <div class="table-responsive border contenedor-tabla">
-            <table class="table table-fixed ">
+            <table class="table" height="1">
                 <thead class="header">
                     <tr class="align-text-top header-table">
-                        <th class="align-text-top">
+                        <th class="col-1 align-text-top">
                             <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroFolio"]" asp-route-buscar="@ViewData["filtroBuscar"]">
                                 @Html.DisplayName("Folio")
                                 <span class="material-icons size-order ">height</span>
                             </a>
                         </th>
-                        <th class="align-text-top header-text">
+                        <th class="col-2 align-text-top header-text">
                             @Html.DisplayName("Nombre del Quejoso")
                         </th>
-                        <th class="align-text-top ">
+                        <th class="col-1 align-text-top ">
                             <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroFecha"]" asp-route-buscar="@ViewData["filtroBuscar"]">
                                 @Html.DisplayName("Fecha")
                                 <span class="material-icons size-order ">height</span>
                             </a>
                         </th>
-                        <th class="align-text-top header-text">
+                        <th class=" col-2 align-text-top header-text">
                             @Html.DisplayName("Motivo")
                         </th>
-                        <th class="align-text-top header-text">
+                        <th class=" col-2 align-text-top header-text">
                             @Html.DisplayName("Servidor Público Involucrado")
                         </th>
-                        <th class="align-text-top">
+                        <th class="col-2 align-text-top">
                             <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroMedio"]" asp-route-buscar="@ViewData["filtroBuscar"]">
                                 @Html.DisplayName("Medio de Recepción")
                                 <span class="material-icons size-order ">height</span>
                             </a>
                         </th>
-                        <th class="align-text-top">
+                        <th class="col-1 align-text-top">
                             <a class="header-text" asp-action="Quejas" asp-route-filtro="@ViewData["FiltroEstatus"]" asp-route-buscar="@ViewData["filtroBuscar"]">
                                 <div class="row">
                                     <div class="col-2 mr-4">
@@ -85,15 +85,15 @@
                                 </div>
                             </a>
                         </th>
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("Fiscal"))
                         {
-                            <th class="align-text-top header-text">
+                            <th class=" col-1 align-text-top header-text">
                                 @Html.DisplayName("Reasignar")
                             </th>
                         }
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadAdministrativa"))
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadAdministrativa") || User.IsInRole("Fiscal"))
                         {
-                            <th class="align-text-top header-text">
+                            <th class="col-1 align-text-top header-text">
                                 @Html.DisplayName("Seguimiento ")
                             </th>
                         }
@@ -135,7 +135,7 @@
                                         }
                                     }
                                 </td>
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental"))
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("Fiscal"))
                                 {
                                     <td class="text-center">
                                         <button type="button" class="btn reasignar reasignar-bttn align-top" data-toggle="modal" data-target="#exampleModal" id="@item.QuejaID">
@@ -144,7 +144,7 @@
                                     </td>
                                 }
 
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadAdministrativa"))
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadAdministrativa") || User.IsInRole("Fiscal"))
                                 {
                                     <td class="text-center">
                                         <a asp-action="Seguimiento" asp-route-id="@item.QuejaID" class="btn seguimiento-bttn "><span class="material-icons size-icon ">shortcut</span></a>
