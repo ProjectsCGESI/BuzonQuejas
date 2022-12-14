@@ -8,12 +8,6 @@
     var claveBD = $("#claveUsuarioHidden").val();
     $("#claveHidden").val(claveBD);
 
-
-    //$("#reestablecerClave").on("change", function () {
-    //    var valor = $("input:checkbox[name=reestablecerClave]:checked").val();
-    //    console.log(valor);
-    //})
-
     $("#reestablecerClave").click(function () {
         if ($('#reestablecerClave').prop('checked')) {
             //$("#nueva-clave").val('');

@@ -22,7 +22,6 @@
                         <div class="form-row align-items-center">
                             <div class="col-auto">
                                 <input type="text" name="buscar" value="@ViewData["filtroBuscar"]" class="form-control">
-                                @*<input type="submit" value="Buscar" class="btn form-control btn-sm btn-dark" />*@
                             </div>
                             <div class="col-auto align-self-center">
                                 <input type="submit" value="Buscar" class="btn  btn-sm  buscar-bttn" />
@@ -47,7 +46,7 @@
         <div class="table-responsive border contenedor-tabla">
             <table class="table">
                 <thead class="header-usuarios">
-                    <tr class="align-text-top header-table">
+                    <tr class="align-text-top header-table mt-0">
                         <th class="col-3 header-text-usuarios">
                             <a class="header-text-usuarios" asp-action="Usuarios" asp-route-filtro="@ViewData["FiltroNombre"]" asp-route-buscar="@ViewData["filtroBuscar"]">
                                 @Html.DisplayNameFor(model => model.Nombre)
@@ -57,10 +56,6 @@
                         <th class="col-2 header-text-usuarios">
                             @Html.DisplayNameFor(model => model.Correo)
                         </th>
-                        @*
-                            <th>
-                                @Html.DisplayNameFor(model => model.Clave)
-                            </th>*@
                         <th class="col-1 text-center" >
                             @Html.DisplayNameFor(model => model.Activo)
                         </th>
@@ -74,7 +69,6 @@
                             @Html.DisplayName("Unidad Administrativa")
                         </th>
                         <th class="col-1"></th>
-                        @*<th></th>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -89,10 +83,6 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Correo)
                                 </td>
-                                @*
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Clave)
-                    </td>*@
                                 <td align="center">
                                     @Html.DisplayFor(modelItem => item.Activo)
                                 </td>
@@ -119,11 +109,6 @@
                             </span>
                         </a>
                     </td>*@
-                                @*<td>
-                        <a asp-action="Edit" asp-route-id="@item.UsuarioID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.UsuarioID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.UsuarioID">Delete</a>
-                    </td>*@
                             </tr>
                         }
                     }
@@ -139,7 +124,4 @@
             </table>
         </div>
     </div>
-
-
-
 </div>

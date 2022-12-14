@@ -25,6 +25,7 @@ namespace BuzonQuejas3.Models
         public virtual DbSet<UnidadAdministrativa> UnidadAdministrativas { get; set; }
         public virtual DbSet<Medio> Medios { get; set; }
         public virtual DbSet<Cargo> Cargos { get; set; }
+        public virtual DbSet<Motivo> Motivos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -84,6 +85,11 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Cargo>(entity =>
             {
                 entity.HasKey(e => e.CargoID);
+            });
+            
+            modelBuilder.Entity<Motivo>(entity =>
+            {
+                entity.HasKey(e => e.MotivoID);
             });
 
             //// Roles
@@ -629,6 +635,11 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Cargo>().HasData(new Cargo { CargoID = new Guid("81b47efb-2bfd-43f5-83cb-70fa069ee2c8"), Nombre = "Titular de la unidad de investigación especializada en robo a casa habitación y  robo a comercio" });
             modelBuilder.Entity<Cargo>().HasData(new Cargo { CargoID = new Guid("23637a0a-a8f2-4cfd-a99d-95e4d0a2e70e"), Nombre = "Visitador general" });
             modelBuilder.Entity<Cargo>().HasData(new Cargo { CargoID = new Guid("b9ac7679-b2df-4f1c-aa1f-d54d823bcd91"), Nombre = "Visitadora" });
+
+            //motivos
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("315a7096-1389-4db2-aed4-a423fb96eb5e"), Descripcion = "Problema al hacer cita para Antecendentes no penales", UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("a4bf6977-c3f2-4552-ad40-a159cacfda51"), Descripcion = "Falta a la moral", UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+
         }
 
         //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

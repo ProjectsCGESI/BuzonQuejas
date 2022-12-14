@@ -56,4 +56,16 @@
             // console.log(response);
         },
     });
+
+    $.ajax({
+        type: 'GET',
+        url: "../GetMotivoName",
+        data: {
+            idMotivo: $("#motivoSeguimiento").val()
+        },
+        success: function (response) {
+            $("#motivoSeguimiento").val(response['descripcion'])
+            // console.log(response);
+        },
+    });
 });

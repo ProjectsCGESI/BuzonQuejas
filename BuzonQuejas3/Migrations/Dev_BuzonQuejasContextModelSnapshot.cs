@@ -1350,6 +1350,11 @@ namespace BuzonQuejas3.Migrations
                         },
                         new
                         {
+                            DepartamentoID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"),
+                            Nombre = "Buzón web FGE"
+                        },
+                        new
+                        {
                             DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"),
                             Nombre = "No Aplica"
                         });
@@ -1390,6 +1395,46 @@ namespace BuzonQuejas3.Migrations
                         {
                             MedioID = new Guid("df534fce-96dc-4346-b47b-589b0f915708"),
                             Nombre = "Buzón"
+                        },
+                        new
+                        {
+                            MedioID = new Guid("a04c1856-54b5-4699-8660-367a5ac5444d"),
+                            Nombre = "Web"
+                        });
+                });
+
+            modelBuilder.Entity("BuzonQuejas3.Models.Motivo", b =>
+                {
+                    b.Property<Guid>("MotivoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("UnidadAdministrativaID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MotivoID");
+
+                    b.HasIndex("UnidadAdministrativaID");
+
+                    b.ToTable("Motivos");
+
+                    b.HasData(
+                        new
+                        {
+                            MotivoID = new Guid("315a7096-1389-4db2-aed4-a423fb96eb5e"),
+                            Descripcion = "Problema al hacer cita para Antecendentes no penales",
+                            UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78")
+                        },
+                        new
+                        {
+                            MotivoID = new Guid("a4bf6977-c3f2-4552-ad40-a159cacfda51"),
+                            Descripcion = "Falta a la moral",
+                            UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78")
                         });
                 });
 
@@ -2502,10 +2547,35 @@ namespace BuzonQuejas3.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AtendidoPor")
+                    b.Property<string>("ApellidoMAtendio")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoMQuejante")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoMServidor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPQuejante")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPServidor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid>("CargoID")
                         .HasColumnType("uniqueidentifier");
@@ -2542,18 +2612,30 @@ namespace BuzonQuejas3.Migrations
                     b.Property<Guid>("MedioID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("MotivoQueja")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<Guid>("MotivoID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MunicipioID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("NombreAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("NombreQuejante")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NombreServidor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NumeroPrevio")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("RelatoHechos")
                         .IsRequired()
@@ -2563,11 +2645,6 @@ namespace BuzonQuejas3.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("ServidorInvolucrado")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
@@ -2584,6 +2661,8 @@ namespace BuzonQuejas3.Migrations
                     b.HasIndex("DepartamentoID");
 
                     b.HasIndex("MedioID");
+
+                    b.HasIndex("MotivoID");
 
                     b.HasIndex("MunicipioID");
 
@@ -2929,6 +3008,15 @@ namespace BuzonQuejas3.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BuzonQuejas3.Models.Motivo", b =>
+                {
+                    b.HasOne("BuzonQuejas3.Models.UnidadAdministrativa", "UnidadAdministrativa")
+                        .WithMany()
+                        .HasForeignKey("UnidadAdministrativaID");
+
+                    b.Navigation("UnidadAdministrativa");
+                });
+
             modelBuilder.Entity("BuzonQuejas3.Models.Queja", b =>
                 {
                     b.HasOne("BuzonQuejas3.Models.Cargo", "Cargo")
@@ -2949,6 +3037,12 @@ namespace BuzonQuejas3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BuzonQuejas3.Models.Motivo", "Motivo")
+                        .WithMany()
+                        .HasForeignKey("MotivoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BuzonQuejas3.Models.Municipio", "Municipio")
                         .WithMany()
                         .HasForeignKey("MunicipioID")
@@ -2966,6 +3060,8 @@ namespace BuzonQuejas3.Migrations
                     b.Navigation("Departamento");
 
                     b.Navigation("Medio");
+
+                    b.Navigation("Motivo");
 
                     b.Navigation("Municipio");
 

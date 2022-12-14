@@ -61,10 +61,6 @@ namespace BuzonQuejas3.Controllers
                     usuarios = usuarios.OrderByDescending(usuario => usuario.Nombre);
                     break;
 
-                //case "FechaAscendente":
-                //    quejasMostrar = quejasMostrar.OrderBy(queja => queja.FechaCreacion);
-                //    break;
-
                 default:
                     usuarios = usuarios.OrderBy(usuario => usuario.Nombre);
                     break;

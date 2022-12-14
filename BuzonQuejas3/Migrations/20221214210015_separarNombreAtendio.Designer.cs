@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuzonQuejas3.Migrations
 {
     [DbContext(typeof(Dev_BuzonQuejasContext))]
-    [Migration("20221122203736_MunicipioUpperCase")]
-    partial class MunicipioUpperCase
+    [Migration("20221214210015_separarNombreAtendio")]
+    partial class separarNombreAtendio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1352,6 +1352,11 @@ namespace BuzonQuejas3.Migrations
                         },
                         new
                         {
+                            DepartamentoID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"),
+                            Nombre = "Buzón web FGE"
+                        },
+                        new
+                        {
                             DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"),
                             Nombre = "No Aplica"
                         });
@@ -1392,6 +1397,46 @@ namespace BuzonQuejas3.Migrations
                         {
                             MedioID = new Guid("df534fce-96dc-4346-b47b-589b0f915708"),
                             Nombre = "Buzón"
+                        },
+                        new
+                        {
+                            MedioID = new Guid("a04c1856-54b5-4699-8660-367a5ac5444d"),
+                            Nombre = "Web"
+                        });
+                });
+
+            modelBuilder.Entity("BuzonQuejas3.Models.Motivo", b =>
+                {
+                    b.Property<Guid>("MotivoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("UnidadAdministrativaID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MotivoID");
+
+                    b.HasIndex("UnidadAdministrativaID");
+
+                    b.ToTable("Motivos");
+
+                    b.HasData(
+                        new
+                        {
+                            MotivoID = new Guid("315a7096-1389-4db2-aed4-a423fb96eb5e"),
+                            Descripcion = "Problema al hacer cita para Antecendentes no penales",
+                            UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78")
+                        },
+                        new
+                        {
+                            MotivoID = new Guid("a4bf6977-c3f2-4552-ad40-a159cacfda51"),
+                            Descripcion = "Falta a la moral",
+                            UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78")
                         });
                 });
 
@@ -2504,18 +2549,43 @@ namespace BuzonQuejas3.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AtendidoPor")
+                    b.Property<string>("ApellidoMAtendio")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoMQuejante")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoMServidor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPQuejante")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPServidor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid>("CargoID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Correo")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<Guid>("DepartamentoID")
                         .HasColumnType("uniqueidentifier");
@@ -2544,33 +2614,39 @@ namespace BuzonQuejas3.Migrations
                     b.Property<Guid>("MedioID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("MotivoQueja")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<Guid>("MotivoID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MunicipioID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("NombreAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("NombreQuejante")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NombreServidor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NumeroPrevio")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("RelatoHechos")
                         .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Resolucion")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("ServidorInvolucrado")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
@@ -2587,6 +2663,8 @@ namespace BuzonQuejas3.Migrations
                     b.HasIndex("DepartamentoID");
 
                     b.HasIndex("MedioID");
+
+                    b.HasIndex("MotivoID");
 
                     b.HasIndex("MunicipioID");
 
@@ -2842,8 +2920,8 @@ namespace BuzonQuejas3.Migrations
 
                     b.Property<string>("Clave")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Correo")
                         .IsRequired()
@@ -2879,7 +2957,7 @@ namespace BuzonQuejas3.Migrations
                         {
                             UsuarioID = new Guid("1139861b-5044-4257-b89a-db1b5d4402bf"),
                             Activo = true,
-                            Clave = "123",
+                            Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "root@root.com",
                             DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
                             Nombre = "root",
@@ -2890,7 +2968,7 @@ namespace BuzonQuejas3.Migrations
                         {
                             UsuarioID = new Guid("7467db95-c0a1-41df-a844-bbb00b60b952"),
                             Activo = true,
-                            Clave = "123",
+                            Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "administrador@administrador.com",
                             DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
                             Nombre = "Administrador",
@@ -2901,7 +2979,7 @@ namespace BuzonQuejas3.Migrations
                         {
                             UsuarioID = new Guid("a22533a6-7621-492c-b10b-a9363668a2f4"),
                             Activo = true,
-                            Clave = "123",
+                            Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "angel@gmail.com",
                             DepartamentoID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"),
                             Nombre = "Angel Sayago Arcos",
@@ -2912,7 +2990,7 @@ namespace BuzonQuejas3.Migrations
                         {
                             UsuarioID = new Guid("2e3ff721-5a7d-4b82-87bb-3a593824ce25"),
                             Activo = true,
-                            Clave = "123",
+                            Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "magali@gmail.com",
                             DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"),
                             Nombre = "Magali Herrera Ramirez",
@@ -2923,13 +3001,22 @@ namespace BuzonQuejas3.Migrations
                         {
                             UsuarioID = new Guid("03147300-43fc-4294-81d4-4bc08366f4a4"),
                             Activo = true,
-                            Clave = "123",
+                            Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "fiscal@gmail.com",
                             DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
                             Nombre = "Fiscal Mario",
                             RolID = new Guid("39b991ab-e83e-4441-9638-9bd8fa647cb5"),
                             UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64")
                         });
+                });
+
+            modelBuilder.Entity("BuzonQuejas3.Models.Motivo", b =>
+                {
+                    b.HasOne("BuzonQuejas3.Models.UnidadAdministrativa", "UnidadAdministrativa")
+                        .WithMany()
+                        .HasForeignKey("UnidadAdministrativaID");
+
+                    b.Navigation("UnidadAdministrativa");
                 });
 
             modelBuilder.Entity("BuzonQuejas3.Models.Queja", b =>
@@ -2952,6 +3039,12 @@ namespace BuzonQuejas3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BuzonQuejas3.Models.Motivo", "Motivo")
+                        .WithMany()
+                        .HasForeignKey("MotivoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BuzonQuejas3.Models.Municipio", "Municipio")
                         .WithMany()
                         .HasForeignKey("MunicipioID")
@@ -2969,6 +3062,8 @@ namespace BuzonQuejas3.Migrations
                     b.Navigation("Departamento");
 
                     b.Navigation("Medio");
+
+                    b.Navigation("Motivo");
 
                     b.Navigation("Municipio");
 

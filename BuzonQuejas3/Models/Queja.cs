@@ -16,8 +16,16 @@ namespace BuzonQuejas3.Models
         public string Folio { get; set; }
         
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(100)]
+        [StringLength(50)]
         public string NombreQuejante { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
+        public string ApellidoPQuejante { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
+        public string ApellidoMQuejante { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         [StringLength(100)]
@@ -35,16 +43,20 @@ namespace BuzonQuejas3.Models
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(200)]
-        public string MotivoQueja { get; set; }
-
-        [Required(ErrorMessage = "Debe llenar este campo")]
         //[StringLength(400)]
         public string RelatoHechos { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(100)]
-        public string ServidorInvolucrado { get; set; }
+        [StringLength(50)]
+        public string NombreServidor { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
+        public string ApellidoPServidor { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
+        public string ApellidoMServidor { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         [Display(Name = "Fecha de creación")]
@@ -59,12 +71,23 @@ namespace BuzonQuejas3.Models
         public DateTime FechaAtencion { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
-        [StringLength(100)]
-        public string AtendidoPor { get; set; }
+        [StringLength(50)]
+        public string NombreAtendio { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
+        public string ApellidoPAtendio { get; set; }
+        
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        [StringLength(50)]
+        public string ApellidoMAtendio { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         [StringLength(300)]
         public string Resolucion { get; set; }
+        
+        [StringLength(300)]
+        public string NumeroPrevio { get; set; }
 
         //Llave foranea Departamento
         [Required(ErrorMessage = "Debe llenar este campo")]
@@ -100,6 +123,13 @@ namespace BuzonQuejas3.Models
 
         [ForeignKey("CargoID")]
         public Cargo Cargo { get; set; }
+        
+        //Llave foranea Motivo
+        [Required(ErrorMessage = "Debe llenar este campo")]
+        public Guid MotivoID { get; set; }
+
+        [ForeignKey("MotivoID")]
+        public Motivo Motivo { get; set; }
 
     }
 }

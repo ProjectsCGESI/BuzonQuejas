@@ -1,12 +1,7 @@
-﻿@*@model IEnumerable<BuzonQuejas3.Models.Queja>*@
-@using Microsoft.AspNetCore.Identity;
+﻿@using Microsoft.AspNetCore.Identity;
 @{
     ViewData["Title"] = "Tablero Central";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //var UnidadAdministrativa = (List<UnidadAdministrativa>)ViewData["unidades"];
-    //var totalesPorUnidad = (Dictionary<string, string>)ViewData["totalPorUnidad"];
-    //var totalesPorMunicipio = (Dictionary<string, string>)ViewData["totalPorMunicipio"];
-    //var username = Context.User.FindFirst("Correo");
 }
 
 <link rel="stylesheet" href="~/css/Tablero.css" />
@@ -39,7 +34,6 @@
                                         <div class="form-group text-center">
                                             <label class="text-label">Año</label>
                                             <select type="text" class="form-control" id="fechaAnio" name="anio" required></select>
-                                            @*<input type="text" class="form-control" id="fechaAnio" name="anio" placeholder="p. ej. 2020" required pattern="[0-9]{1,4} " title="Ingrese 4 números">*@
                                         </div>
                                     </div>
                                     <div class="col-auto mr-2">

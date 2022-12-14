@@ -98,6 +98,7 @@
 
 .header-table {
     background-color: var(--gris--fuerte) !important;
+    margin-top:20px !important;
 }
 
 td {

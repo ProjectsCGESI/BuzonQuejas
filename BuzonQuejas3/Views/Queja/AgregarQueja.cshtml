@@ -10,7 +10,7 @@
 }
 
 <link rel="stylesheet" href="~/css/CrearQueja.css" />
-<link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="row justify-content-center mt-5">
     <div class="col-12 ">
@@ -22,23 +22,17 @@
             <div class="col-12">
                 <div class="row justify-content-center">
                     <div class="col-6">
-                        @*<a asp-action="Create" class="btn seguimiento-bttn ">Nueva</a>*@
                         <div class="modal fade modal-ok" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Tarea exitosa</h5>
-                                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>*@
                                     </div>
                                     <div class="modal-body">
                                         <strong>@Html.Raw(@ViewBag.SuccessMessage)</strong>
                                     </div>
                                     <div class="modal-footer">
-                                        @*<button asp-action="Create" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
                                         <a asp-action="Quejas" class="btn aceptar-bttn">Aceptar</a>
-                                        @*<a asp-action="Create" class="btn aceptar-bttn">Aceptar</a>*@
                                     </div>
                                 </div>
                             </div>
@@ -56,15 +50,25 @@
         <form asp-action="AgregarQueja">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Estatus" value="Pendiente" />
-            <input type="hidden" asp-for="AtendidoPor" value="na" />
+            <input type="hidden" asp-for="NombreAtendio" value="na" />
+            <input type="hidden" asp-for="ApellidoPAtendio" value="na" />
+            <input type="hidden" asp-for="ApellidoMAtendio" value="na" />
             <input type="hidden" asp-for="Resolucion" value="na" />
             <input type="hidden" asp-for="Folio" value="na" />
             <input type="hidden" asp-for="FechaAtencion" value="@DateTime.Now" />
             <input type="hidden" asp-for="DepartamentoID" value=@DepartamentoUsuario />
             <input type="hidden" asp-for="UnidadAdministrativaID" value="88f8cf91-458b-438c-b882-75a842387c64" />
-            <div class="form-group mt-3">
-                <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre*" required/>
-                @*<span asp-validation-for="NombreQuejante" class="text-danger"></span>*@
+            <div class="row">
+                <div class="col-4 form-group mt-3">
+                    <input asp-for="NombreQuejante" class="form-control" placeholder="Nombre(s)*" required />
+                    @*<span asp-validation-for="NombreQuejante" class="text-danger"></span>*@
+                </div>
+                <div class="col-4 form-group mt-3">
+                    <input asp-for="ApellidoPQuejante" class="form-control" placeholder="Apellido paterno*" required />
+                </div>
+                <div class="col-4 form-group mt-3">
+                    <input asp-for="ApellidoMQuejante" class="form-control" placeholder="Apellido materno*" required />
+                </div>
             </div>
             <div class="form-group">
                 <input asp-for="Direccion" class="form-control" placeholder="Dirección*" required />
@@ -85,7 +89,7 @@
                 @*<span asp-validation-for="MedioID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" required pattern="[0-9]{10}" title="El teléfono debe constar de 10 dígitos numéricos"  />
+                <input asp-for="Telefono" class="form-control" placeholder="Teléfono*" required pattern="[0-9]{10}" title="El teléfono debe constar de 10 dígitos numéricos" />
                 @*<span asp-validation-for="Telefono" class="text-danger"></span>*@
             </div>
             <div class="form-group">
@@ -93,17 +97,28 @@
                 @*<span asp-validation-for="Correo" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <input asp-for="MotivoQueja" class="form-control" placeholder="Motivo de la queja*" required />
-                @*<span asp-validation-for="MotivoQueja" class="text-danger"></span>*@
+                <label asp-for="Motivo" class="control-label"></label>
+                <select asp-for="MotivoID" asp-items="ViewBag.motivos" class="form-control .cargoSelect select2" required>
+                    <option value="">Seleccione un motivo</option>
+                </select>
+                @*<span asp-validation-for="CargoID" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <textarea asp-for="RelatoHechos" class="form-control" placeholder="Relato de hechos*" required>
                 </textarea>
                 @*<span asp-validation-for="RelatoHechos" class="text-danger"></span>*@
             </div>
-            <div class="form-group">
-                <input asp-for="ServidorInvolucrado" class="form-control" placeholder="Servidor público involucrado*" required />
-                @*<span asp-validation-for="ServidorInvolucrado" class="text-danger"></span>*@
+            <div class="row">
+                <label class="control-label col-12">Servidor público involucrado</label>
+                <div class="col-4 form-group">
+                    <input asp-for="NombreServidor" class="form-control" placeholder="Nombre*" required />
+                </div>
+                <div class="col-4 form-group">
+                    <input asp-for="ApellidoPServidor" class="form-control" placeholder="Apellido paterno*" required />
+                </div>
+                <div class="col-4 form-group">
+                    <input asp-for="ApellidoMServidor" class="form-control" placeholder="Apellido materno*" required />
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Cargo" class="control-label"></label>
@@ -111,6 +126,10 @@
                     <option value="">Seleccione un cargo</option>
                 </select>
                 @*<span asp-validation-for="CargoID" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <input asp-for="NumeroPrevio" class="form-control" placeholder="N° de averiguación previa, carpeta de investigación o NUAT" />
+                @*<span asp-validation-for="Correo" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label class="control-label">Fecha de creación*</label>

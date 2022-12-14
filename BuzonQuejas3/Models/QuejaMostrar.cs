@@ -9,13 +9,17 @@ namespace BuzonQuejas3.Models
     public class QuejaMostrar
     {
         public Guid QuejaID { get; set; }
-        public string NombreQuejante { get; set; }
         public string Folio { get; set; }
+        public string NombreQuejante { get; set; }
+        public string ApellidoPQuejante { get; set; }
+        public string ApellidoMQuejante { get; set; }
         //public string Telefono { get; set; }
         //public string Correo { get; set; }
         public string MotivoQueja { get; set; }
         //public string RelatoHechos { get; set; }
-        public string ServidorInvolucrado { get; set; }
+        public string NombreServidor { get; set; }
+        public string ApellidoPServidor { get; set; }
+        public string ApellidoMServidor { get; set; }
         public DateTime FechaCreacion { get; set; }
         public string Estatus { get; set; }
         //public DateTime FechaAtencion { get; set; }
