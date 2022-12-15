@@ -195,7 +195,7 @@ namespace BuzonQuejas3.Controllers
             ViewBag.cargos = listaCargos;
 
             var lMedios = _context.Medios.ToList();
-            var listaMedios = new SelectList(lMedios.OrderBy(o => o.Nombre), "MedioID", "Nombre");
+            var listaMedios = new SelectList(lMedios.OrderBy(o => o.Nombre).Where(m=>m.Nombre != "Buzón web"), "MedioID", "Nombre");
             ViewBag.medios = listaMedios;
 
             var lMotivos = _context.Motivos.ToList();
