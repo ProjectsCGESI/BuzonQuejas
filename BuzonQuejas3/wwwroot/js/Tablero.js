@@ -6,7 +6,7 @@ let ChartDrawUnidades;
 let ChartDrawMunicipios;
 let ChartDrawMedios;
 let ChartDrawEstatusUnidades;
-let ChartDrawDepartamentos;
+let ChartDrawUnidadRemitentes;
 
 
 
@@ -36,6 +36,7 @@ $(document).ready(function () {
         type: 'GET',
         url: "../Queja/GetFirstLastYear",
         success: function (response) {
+            console.log("tamaño rspuesta"+response.length);
             $("select[name=anio]").append(new Option("-", ""));
             for (var i = response[0]; i <= response[1]; i++) {
 
@@ -154,15 +155,15 @@ $(document).ready(function () {
         },
     });
 
-    //Mostrar gráfico para total por departamento 
+    //Mostrar gráfico para total por unidadRemitente 
     $.ajax({
         type: 'GET',
-        url: "../Queja/GetQuejasPorDepartamento",
+        url: "../Queja/GetQuejasPorUnidadRemitente",
         //dataType: "json",
         //data: "",
         //contentType: "application / json; charset=utf-8",
         success: function (data) {
-            drawDepartamentos(data);
+            drawUnidadRemitentes(data);
         },
         error: function (err) {
             //alert("error" + err.data);
@@ -316,16 +317,16 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'GET',
-                url: "../Queja/GetQuejasPorDepartamento",
+                url: "../Queja/GetQuejasPorUnidadRemitente",
                 dataType: "json",
                 data: { filter: valdata },
                 contextType: "application/json",
                 traditional: true,
                 success: function (data) {
-                    if (ChartDrawDepartamentos) {
-                        ChartDrawDepartamentos.destroy();
+                    if (ChartDrawUnidadRemitentes) {
+                        ChartDrawUnidadRemitentes.destroy();
                     }
-                    drawDepartamentos(data);
+                    drawUnidadRemitentes(data);
                 },
                 error: function (err) {
                     //alert("error" + err.data);
@@ -1091,12 +1092,13 @@ function drawEstatusUnidades(data) {
                             backgroundColor: "f2ae72",
                             borderRadius: 10,
                             font: {
-                                size: 13,
+                                size: 10,
                                 weight: "bold"
                             },
                             formatter: function (value, context) { return value || null; },
                             anchor: "center",
-                            align: "right",
+                            align: "left",
+                            clamp: true,
                             //offset:20
                         }
                     },
@@ -1118,13 +1120,13 @@ function drawEstatusUnidades(data) {
                             backgroundColor: "f2ae72",
                             borderRadius: 10,
                             font: {
-                                size: 13,
+                                size: 10,
                                 weight: "bold"
                             },
                             formatter: function (value, context) { return value || null; },
-                            anchor: "center",
-                            align: "left",
-                            //clamp:true,
+                            anchor: "end",
+                            align: "right",
+                            clamp:true,
                             //offset:20
                         }
                     },
@@ -1145,7 +1147,7 @@ function drawEstatusUnidades(data) {
                     x: {
                         //stacked: true,
                         min: 0,
-                        max:9,
+                        max:8,
                         grid: {
                             display: false,
                         },
@@ -1201,7 +1203,7 @@ function drawEstatusUnidades(data) {
 
 }
 
-function scrollDepartamentosHandle(ev) {
+function scrollUnidadRemitentesHandle(ev) {
     let classNm = ev.currentTarget.className;
 
     if (ev.deltaY < 0) //scroll-up
@@ -1213,7 +1215,7 @@ function scrollDepartamentosHandle(ev) {
     }
 }
 
-function drawDepartamentos(data) {
+function drawUnidadRemitentes(data) {
 
     var _data = data;
     var _chartLabels = [];
@@ -1275,8 +1277,8 @@ function drawDepartamentos(data) {
 
     });
 
-    var ctx = document.getElementById("DepartamentosGraph").getContext("2d");
-    ChartDrawDepartamentos = new Chart(ctx,
+    var ctx = document.getElementById("UnidadRemitentesGraph").getContext("2d");
+    ChartDrawUnidadRemitentes = new Chart(ctx,
         {
             type: "bar",
             data: {

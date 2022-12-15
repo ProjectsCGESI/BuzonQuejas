@@ -30,7 +30,12 @@ namespace BuzonQuejas3
         {
 
             services.AddDbContext<Dev_BuzonQuejasContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Conexion")));
+                    options.UseSqlServer(Configuration.GetConnectionString("Conexion"),
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure();
+                    }
+                    ));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddRazorPages()

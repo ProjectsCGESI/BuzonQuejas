@@ -25,12 +25,12 @@ namespace BuzonQuejas3.Models
 
         public bool Activo { get; set; }
 
-        //Llave foranea departamento
+        //Llave foranea unidad remitente
         [Required(ErrorMessage = "Debe llenar este campo")]
-        public Guid DepartamentoID { get; set; }
+        public Guid UnidadRemitenteID { get; set; }
 
-        [ForeignKey("DepartamentoID")]
-        public Departamento Departamento { get; set; }
+        [ForeignKey("UnidadRemitenteID")]
+        public UnidadRemitente UnidadRemitente { get; set; }
 
         //Llave foranea Rol
         [Required(ErrorMessage = "Debe llenar este campo")]

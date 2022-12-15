@@ -68,4 +68,16 @@
             // console.log(response);
         },
     });
+
+    $.ajax({
+        type: 'GET',
+        url: "../GetUnidadRemitenteName",
+        data: {
+            idunidadRemitente: $("#unidadRemitenteSeguimiento").val()
+        },
+        success: function (response) {
+            $("#unidadRemitenteSeguimiento").val(response['nombre'])
+            // console.log(response);
+        },
+    });
 });

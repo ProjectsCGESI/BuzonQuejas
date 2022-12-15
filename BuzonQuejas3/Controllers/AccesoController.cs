@@ -47,7 +47,7 @@ namespace BuzonQuejas3.Controllers
                         var claims = new List<Claim>{
                             new Claim(ClaimTypes.Name, usuario.Nombre),
                             new Claim("Correo", usuario.Correo),
-                            new Claim("DepartamentoID", usuario.DepartamentoID.ToString()),
+                            new Claim("UnidadRemitenteID", usuario.UnidadRemitenteID.ToString()),
                             new Claim("UnidadAdministrativaID", usuario.UnidadAdministrativaID.ToString()),
                             new Claim(ClaimTypes.Role, rol.Nombre),
                         };

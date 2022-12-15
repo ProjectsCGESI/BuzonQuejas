@@ -25,7 +25,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
         public async Task<IActionResult> Quejas(string buscar, String filtro)
         {
             IQueryable<QuejaMostrar> quejasMostrar;
@@ -49,19 +49,19 @@ namespace BuzonQuejas3.Controllers
                                     ApellidoMServidor = queja.ApellidoMServidor,
                                     FechaCreacion = queja.FechaCreacion,
                                     Estatus = queja.Estatus,
-                                    DepartamentoID = queja.DepartamentoID,
+                                    UnidadRemitenteID = queja.UnidadRemitenteID,
                                     MedioID = medio.MedioID,
                                     Medio = medio.Nombre,
                                 };
             }
-            else if (User.IsInRole("Departamental"))
+            else if (User.IsInRole("UnidadRemitente"))
             {
-                //var departamentoUsuario = HttpContext.User.FindFirst("DepartamentoID").Value;
-                var departamentoUsuario = User.Claims.ElementAt(2).Value;
+                //var unidadRemitenteUsuario = HttpContext.User.FindFirst("UnidadRemitenteID").Value;
+                var unidadRemitenteUsuario = User.Claims.ElementAt(2).Value;
                 quejasMostrar = from queja in _context.Quejas
                                 join medio in _context.Medios on queja.MedioID equals medio.MedioID
                                 join motivo in _context.Motivos on queja.MotivoID equals motivo.MotivoID
-                                where queja.DepartamentoID == Guid.Parse(departamentoUsuario)
+                                where queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario)
                                 select new QuejaMostrar
                                 {
                                     QuejaID = queja.QuejaID,
@@ -75,7 +75,7 @@ namespace BuzonQuejas3.Controllers
                                     ApellidoMServidor = queja.ApellidoMServidor,
                                     FechaCreacion = queja.FechaCreacion,
                                     Estatus = queja.Estatus,
-                                    DepartamentoID = queja.DepartamentoID,
+                                    UnidadRemitenteID = queja.UnidadRemitenteID,
                                     MedioID = medio.MedioID,
                                     Medio = medio.Nombre,
                                 };
@@ -100,7 +100,7 @@ namespace BuzonQuejas3.Controllers
                                     ApellidoMServidor = queja.ApellidoMServidor,
                                     FechaCreacion = queja.FechaCreacion,
                                     Estatus = queja.Estatus,
-                                    DepartamentoID = queja.DepartamentoID,
+                                    UnidadRemitenteID = queja.UnidadRemitenteID,
                                     MedioID = medio.MedioID,
                                     Medio = medio.Nombre,
                                 };
@@ -182,7 +182,7 @@ namespace BuzonQuejas3.Controllers
             return View(queja);
         }
 
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         // GET: Queja/Create
         public IActionResult AgregarQueja()
         {
@@ -197,9 +197,9 @@ namespace BuzonQuejas3.Controllers
             var lMedios = _context.Medios.ToList();
             var listaMedios = new SelectList(lMedios.OrderBy(o => o.Nombre), "MedioID", "Nombre");
             ViewBag.medios = listaMedios;
-            
+
             var lMotivos = _context.Motivos.ToList();
-            var listaMotivos = new SelectList(lMotivos.OrderBy(o => o.Descripcion), "MotivoID", "Descripcion","UnidadAdministrativa");
+            var listaMotivos = new SelectList(lMotivos.OrderBy(o => o.Descripcion), "MotivoID", "Descripcion", "UnidadAdministrativa");
             ViewBag.motivos = listaMotivos;
 
             return View();
@@ -208,8 +208,8 @@ namespace BuzonQuejas3.Controllers
         // POST: Queja/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public async Task<IActionResult> AgregarQueja([Bind("QuejaID,Folio,NombreQuejante,ApellidoPQuejante,ApellidoMQuejante,Direccion,Telefono,Correo,RelatoHechos,NombreServidor,ApellidoPServidor,ApellidoMServidor,FechaCreacion,Estatus,FechaAtencion,NombreAtendio,ApellidoPAtendio,ApellidoMAtendio,Resolucion,NumeroPrevio,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,MotivoID")] Queja queja)
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
+        public async Task<IActionResult> AgregarQueja([Bind("QuejaID,Folio,NombreQuejante,ApellidoPQuejante,ApellidoMQuejante,Direccion,Telefono,Correo,RelatoHechos,NombreServidor,ApellidoPServidor,ApellidoMServidor,FechaCreacion,Estatus,FechaAtencion,NombreAtendio,ApellidoPAtendio,ApellidoMAtendio,Resolucion,NumeroPrevio,UnidadRemitenteID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,MotivoID")] Queja queja)
         {
             queja.NombreAtendio = "";
             queja.ApellidoPAtendio = "";
@@ -217,7 +217,7 @@ namespace BuzonQuejas3.Controllers
             queja.Resolucion = "";
             queja.FechaAtencion = queja.FechaCreacion;
             var motivo = await _context.Motivos.FirstOrDefaultAsync(m => m.MotivoID.Equals(queja.MotivoID));
-            queja.UnidadAdministrativaID = (Guid) motivo.UnidadAdministrativaID;
+            queja.UnidadAdministrativaID = (Guid)motivo.UnidadAdministrativaID;
 
 
             string identificador = "BQ";
@@ -302,7 +302,7 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root,Fiscal")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,DepartamentoAsignado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion")] Queja queja)
+        public async Task<IActionResult> Edit(Guid id, [Bind("QuejaID,NombreQuejante,Direccion,Telefono,Correo,MotivoQueja,RelatoHechos,ServidorInvolucrado,UnidadRemitenteAsignado,FechaCreacion,Estatus,FechaAtencion,AtendidoPor,Resolucion")] Queja queja)
         {
             if (id != queja.QuejaID)
             {
@@ -389,7 +389,7 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Fiscal")]
-        public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,Folio,NombreQuejante,ApellidoPQuejante,ApellidoMQuejante,Direccion,Telefono,Correo,RelatoHechos,NombreServidor,ApellidoPServidor,ApellidoMServidor,FechaCreacion,Estatus,FechaAtencion,NombreAtendio,ApellidoPAtendio,ApellidoMAtendio,Resolucion,NumeroPrevio,DepartamentoID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,MotivoID")] Queja queja)
+        public async Task<IActionResult> Seguimiento(Guid id, [Bind("QuejaID,Folio,NombreQuejante,ApellidoPQuejante,ApellidoMQuejante,Direccion,Telefono,Correo,RelatoHechos,NombreServidor,ApellidoPServidor,ApellidoMServidor,FechaCreacion,Estatus,FechaAtencion,NombreAtendio,ApellidoPAtendio,ApellidoMAtendio,Resolucion,NumeroPrevio,UnidadRemitenteID,MunicipioID,UnidadAdministrativaID,MedioID,CargoID,MotivoID")] Queja queja)
         {
             if (id != queja.QuejaID)
             {
@@ -423,7 +423,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Queja/Tablero/5
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public IActionResult Tablero()
         {
             return View();
@@ -435,9 +435,9 @@ namespace BuzonQuejas3.Controllers
         {
             IQueryable<Queja> quejas;
 
-            if (User.IsInRole("Departamental"))
+            if (User.IsInRole("UnidadRemitente"))
             {
-                var departamentoUsuario = User.Claims.ElementAt(2).Value;
+                var unidadRemitenteUsuario = User.Claims.ElementAt(2).Value;
 
                 if (filter != null && filter.Length != 0)
                 {
@@ -448,40 +448,40 @@ namespace BuzonQuejas3.Controllers
 
                     if (YearDate != 0 && MonthDate != 0 && DayDate != 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
                     }
                     else if (YearDate != 0 && MonthDate == 0 && DayDate != 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Day == DayDate select Queja;
                     }
                     else if (YearDate != 0 && MonthDate != 0 && DayDate == 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Year == YearDate && Queja.FechaCreacion.Month == MonthDate select Queja;
                     }
                     else if (YearDate != 0 && MonthDate == 0 && DayDate == 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Year == YearDate select Queja;
                     }
                     else if (YearDate == 0 && MonthDate != 0 && DayDate != 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Month == MonthDate && Queja.FechaCreacion.Day == DayDate select Queja;
                     }
                     else if (YearDate == 0 && MonthDate == 0 && DayDate != 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Day == DayDate select Queja;
                     }
                     else if (YearDate == 0 && MonthDate != 0 && DayDate == 0)
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) && Queja.FechaCreacion.Month == MonthDate select Queja;
                     }
                     else
                     {
-                        quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                        quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) select Queja;
                     }
                 }
                 else
                 {
-                    quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                    quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) select Queja;
                 }
 
 
@@ -540,10 +540,10 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasPorUnidades(string[] filter)
         {
-            IQueryable<Queja> quejas =GetQuejas(filter);
+            IQueryable<Queja> quejas = GetQuejas(filter);
 
             var unidades = _context.UnidadAdministrativas.OrderBy(u => u.Nombre).ToList();
 
@@ -573,31 +573,31 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
-        public List<Object> GetQuejasPorDepartamento(string[] filter)
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
+        public List<Object> GetQuejasPorUnidadRemitente(string[] filter)
         {
             IQueryable<Queja> quejas = GetQuejas(filter);
 
-            var departamentos = _context.Departamentos.ToList();
+            var unidadRemitentes = _context.UnidadRemitentes.ToList();
 
             List<Object> data = new List<Object>();
-            List<string> departamentosNombre = new List<string>();
-            List<int> departamentosTotal = new List<int>();
+            List<string> unidadRemitentesNombre = new List<string>();
+            List<int> unidadRemitentesTotal = new List<int>();
 
-            foreach (var departamento in departamentos)
+            foreach (var unidadRemitente in unidadRemitentes)
             {
-                int total = quejas.Count(q => q.DepartamentoID == departamento.DepartamentoID);
+                int total = quejas.Count(q => q.UnidadRemitenteID == unidadRemitente.UnidadRemitenteID);
                 //var randomNumber = new Random().Next(0, 100000);
 
                 if (total > 0)
                 {
-                    departamentosNombre.Add(departamento.Nombre);
-                    departamentosTotal.Add(total);
+                    unidadRemitentesNombre.Add(unidadRemitente.Nombre);
+                    unidadRemitentesTotal.Add(total);
                 }
             }
 
-            data.Add(departamentosNombre);
-            data.Add(departamentosTotal);
+            data.Add(unidadRemitentesNombre);
+            data.Add(unidadRemitentesTotal);
 
             return data;
 
@@ -606,7 +606,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasEstatusPorUnidades(string[] filter)
         {
             IQueryable<Queja> quejas = GetQuejas(filter);
@@ -622,7 +622,8 @@ namespace BuzonQuejas3.Controllers
             {
                 int totalAtendidos = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID && q.Estatus == "Atendido");
                 int totalPendientes = quejas.Count(q => q.UnidadAdministrativaID == unidad.UnidadAdministrativaID && q.Estatus == "Pendiente");
-                //var randomNumber = new Random().Next(0, 1000);
+                //var randomNumber = new Random().Next(0, 10000);
+                //var randomNumber2 = new Random().Next(0, 10000);
 
                 if (totalAtendidos > 0 || totalPendientes > 0)
                 {
@@ -643,7 +644,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasPorMunicipio(string[] filter)
         {
             IQueryable<Queja> quejas = GetQuejas(filter);
@@ -661,7 +662,7 @@ namespace BuzonQuejas3.Controllers
                 int total = quejas.Count(q => q.MunicipioID == municipio.MunicipioID);
                 //var randomNumber = new Random().Next(0, 100000);
 
-                if (total > 0)
+                if (total >= 0)
                 {
                     municipiosNombre.Add(municipio.Nombre);
                     municipiosTotal.Add(total);
@@ -678,7 +679,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasEstatusTotal(string[] filter)
         {
             IQueryable<Queja> quejas = GetQuejas(filter);
@@ -707,7 +708,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasEstatusDiario(string[] filter)
         {
             IQueryable<Queja> quejas = GetQuejas(filter);
@@ -739,15 +740,15 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasEstatusAnual(string[] filter)
         {
             IQueryable<Queja> quejas;
 
-            if (User.IsInRole("Departamental"))
+            if (User.IsInRole("UnidadRemitente"))
             {
-                var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                quejas = from Queja in _context.Quejas where Queja.DepartamentoID == Guid.Parse(departamentoUsuario) select Queja;
+                var unidadRemitenteUsuario = User.Claims.ElementAt(2).Value;
+                quejas = from Queja in _context.Quejas where Queja.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario) select Queja;
             }
             else
             {
@@ -758,7 +759,7 @@ namespace BuzonQuejas3.Controllers
 
             if (filter != null && filter.Length != 0)
             {
-                yearActual = filter[0] == "-" ? DateTime.Now.Year :  Int32.Parse(filter[0]);
+                yearActual = filter[0] == "-" ? DateTime.Now.Year : Int32.Parse(filter[0]);
             }
             else
             {
@@ -789,7 +790,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<Object> GetQuejasMedio(string[] filter)
         {
             IQueryable<Queja> quejas = GetQuejas(filter);
@@ -819,17 +820,17 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         public List<string> GetFirstLastYear()
         {
             Queja primeraQueja;
             Queja ultimaQueja;
 
-            if (User.IsInRole("Departamental"))
+            if (User.IsInRole("UnidadRemitente"))
             {
-                var departamentoUsuario = User.Claims.ElementAt(2).Value;
-                primeraQueja = _context.Quejas.Where(q => q.DepartamentoID == Guid.Parse(departamentoUsuario)).OrderBy(q => q.FechaCreacion).FirstOrDefault();
-                ultimaQueja = _context.Quejas.Where(q => q.DepartamentoID == Guid.Parse(departamentoUsuario)).OrderBy(q => q.FechaCreacion).LastOrDefault();
+                var unidadRemitenteUsuario = User.Claims.ElementAt(2).Value;
+                primeraQueja = _context.Quejas.Where(q => q.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario)).OrderBy(q => q.FechaCreacion).FirstOrDefault();
+                ultimaQueja = _context.Quejas.Where(q => q.UnidadRemitenteID == Guid.Parse(unidadRemitenteUsuario)).OrderBy(q => q.FechaCreacion).LastOrDefault();
             }
             else
             {
@@ -839,8 +840,13 @@ namespace BuzonQuejas3.Controllers
 
             List<string> firstLastQueja = new();
 
-            firstLastQueja.Add(primeraQueja.FechaCreacion.Year.ToString());
-            firstLastQueja.Add(ultimaQueja.FechaCreacion.Year.ToString());
+            if (primeraQueja != null && ultimaQueja != null)
+            {
+                firstLastQueja.Add(primeraQueja.FechaCreacion.Year.ToString());
+                firstLastQueja.Add(ultimaQueja.FechaCreacion.Year.ToString());
+            }
+            
+
 
             return firstLastQueja;
 
@@ -849,7 +855,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         //get para mostrar unidades administrativas en modal al reasignar
         public async Task<ActionResult<IEnumerable<UnidadAdministrativa>>> GetUnidades()
         {
@@ -871,7 +877,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
         //get para mostrar el nombre de la unidad en vez del id en seguimiento
         public async Task<UnidadAdministrativa> GetUnidadName(string idUnidad)
         {
@@ -882,7 +888,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
         //get para mostrar el nombre del municipio en vez del id en seguimiento
         public async Task<Municipio> GetMunicipioName(string idMunicipio)
         {
@@ -893,7 +899,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
         //get para mostrar el nombre de el medio de reecpción en vez del id en seguimiento
         public async Task<Medio> GetMedioName(string idMedio)
         {
@@ -904,7 +910,7 @@ namespace BuzonQuejas3.Controllers
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
 
         //get para mostrar el nombre del cargo en vez del id en seguimiento
         public async Task<Cargo> GetCargoName(string idCargo)
@@ -912,11 +918,11 @@ namespace BuzonQuejas3.Controllers
             var cargo = await _context.Cargos.FirstOrDefaultAsync(m => m.CargoID.Equals(Guid.Parse(idCargo)));
             return cargo;
         }
-        
+
         // GET:
         [HttpGet]
         [Produces("application/json")]
-        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
 
         //get para mostrar el nombre del motivo en vez del id en seguimiento
         public async Task<Motivo> GetMotivoName(string idMotivo)
@@ -924,11 +930,23 @@ namespace BuzonQuejas3.Controllers
             var motivo = await _context.Motivos.FirstOrDefaultAsync(m => m.MotivoID.Equals(Guid.Parse(idMotivo)));
             return motivo;
         }
+        
+        // GET:
+        [HttpGet]
+        [Produces("application/json")]
+        [Authorize(Roles = "Administrador,Root,UnidadAdministrativa,UnidadRemitente,Fiscal")]
+
+        //get para mostrar el nombre de la unidad remitente en vez del id en seguimiento
+        public async Task<UnidadRemitente> GetunidadRemitenteName(string idUnidadRemitente)
+        {
+            var unidad = await _context.UnidadRemitentes.FirstOrDefaultAsync(m => m.UnidadRemitenteID.Equals(Guid.Parse(idUnidadRemitente)));
+            return unidad;
+        }
 
         // POST:
         [ActionName("Reasignar")]
         [HttpPost]
-        [Authorize(Roles = "Administrador,Root,Departamental,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,Fiscal")]
         //para poder reasignar quejas
         public async Task<IActionResult> Reasignar(string QuejaId, string unidadId)
         {

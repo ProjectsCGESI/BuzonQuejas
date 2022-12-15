@@ -89,12 +89,12 @@ namespace BuzonQuejas3.Models
         [StringLength(300)]
         public string NumeroPrevio { get; set; }
 
-        //Llave foranea Departamento
+        //Llave foranea Unidad Remitente
         [Required(ErrorMessage = "Debe llenar este campo")]
-        public Guid DepartamentoID { get; set; }
+        public Guid UnidadRemitenteID { get; set; }
 
-        [ForeignKey("DepartamentoID")]
-        public Departamento Departamento { get; set; }
+        [ForeignKey("UnidadRemitenteID")]
+        public UnidadRemitente UnidadRemitente { get; set; }
 
         //Llave foranea Municipio
         [Required(ErrorMessage = "Debe llenar este campo")]

@@ -19,7 +19,7 @@ namespace BuzonQuejas3.Models
 
         public virtual DbSet<Queja> Quejas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
-        public virtual DbSet<Departamento> Departamentos { get; set; }
+        public virtual DbSet<UnidadRemitente> UnidadRemitentes { get; set; }
         public virtual DbSet<Rol> Roles { get; set; }
         public virtual DbSet<Municipio> Municipios { get; set; }
         public virtual DbSet<UnidadAdministrativa> UnidadAdministrativas { get; set; }
@@ -27,14 +27,14 @@ namespace BuzonQuejas3.Models
         public virtual DbSet<Cargo> Cargos { get; set; }
         public virtual DbSet<Motivo> Motivos { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=10.24.1.48;database=Dev_BuzonQuejas;User Id=buzon;Password=buzon;");
-            }
-        }
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+////#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("server=10.24.1.48;database=Dev_BuzonQuejas;User Id=buzon;Password=buzon;");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,9 +57,9 @@ namespace BuzonQuejas3.Models
                 entity.HasKey(e => e.UsuarioID);
             });
             
-            modelBuilder.Entity<Departamento>(entity =>
+            modelBuilder.Entity<UnidadRemitente>(entity =>
             {
-                entity.HasKey(e => e.DepartamentoID);
+                entity.HasKey(e => e.UnidadRemitenteID);
             });
             
             modelBuilder.Entity<Rol>(entity =>
@@ -95,25 +95,25 @@ namespace BuzonQuejas3.Models
             //// Roles
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("77a225a3-1266-4b1f-b11c-504969afa856"), Nombre = "Root" });
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("9a39bcce-b092-4f90-9de7-9e0fb2137034"), Nombre = "Administrador" });
-            modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), Nombre = "Departamental" });
+            modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), Nombre = "UnidadRemitente" });
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("942f1900-7987-4820-a40b-7f4b78099d85"), Nombre = "UnidadAdministrativa" });
             modelBuilder.Entity<Rol>().HasData(new Rol { RolID = new Guid("39b991ab-e83e-4441-9638-9bd8fa647cb5"), Nombre = "Fiscal" });
             //modelBuilder.Entity<Roles>().HasData(new Roles { Id = new Guid("592d923a-9d0b-424c-8bc3-0c42ff72495e"), Nombre = "UnidadAdministrativa", Activo=true });
 
             ////Departamentos
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("fc574c1e-8f81-40bd-8624-8f7e443cea4c"), Nombre = "Oficina de FGE" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("db9b55d6-d582-437d-8b9c-c1ba810760f0"), Nombre = "Servicios a la comunidad" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("0168408d-f59c-49b6-9aff-d818095bafd1"), Nombre = "Comunicación social" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("80a14da2-e2d7-43ee-89eb-0419c93cf6df"), Nombre = "Visitaduría" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("ddb159b4-c10b-42c9-ad19-dda253ccf896"), Nombre = "OIC" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("85c3f06b-45bd-4bc3-a712-935b5c6f2436"), Nombre = "FEAI" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("7a7bb933-7142-4222-a159-4ea52dc8b5d9"), Nombre = "FDH" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8a6aeedd-336d-4e65-bede-b95f4bf83cf5"), Nombre = "Correo FGE" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"), Nombre = "Conmutador" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8562af28-e0c7-4ba1-a889-9a3294cd70e0"), Nombre = "CG Análisis de la información" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), Nombre = "Administración" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"), Nombre = "Buzón web FGE" });
-            modelBuilder.Entity<Departamento>().HasData(new Departamento { DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"), Nombre = "No Aplica" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("fc574c1e-8f81-40bd-8624-8f7e443cea4c"), Nombre = "Oficina de FGE" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("db9b55d6-d582-437d-8b9c-c1ba810760f0"), Nombre = "Servicios a la comunidad" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("0168408d-f59c-49b6-9aff-d818095bafd1"), Nombre = "Comunicación social" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("80a14da2-e2d7-43ee-89eb-0419c93cf6df"), Nombre = "Visitaduría" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("ddb159b4-c10b-42c9-ad19-dda253ccf896"), Nombre = "OIC" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("85c3f06b-45bd-4bc3-a712-935b5c6f2436"), Nombre = "FEAI" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("7a7bb933-7142-4222-a159-4ea52dc8b5d9"), Nombre = "FDH" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("8a6aeedd-336d-4e65-bede-b95f4bf83cf5"), Nombre = "Correo FGE" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"), Nombre = "Conmutador" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("8562af28-e0c7-4ba1-a889-9a3294cd70e0"), Nombre = "CG Análisis de la información" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), Nombre = "Administración" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"), Nombre = "Buzón web FGE" });
+            modelBuilder.Entity<UnidadRemitente>().HasData(new UnidadRemitente { UnidadRemitenteID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"), Nombre = "No Aplica" });
 
             //// Unidades Administrativas
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("4b0240b3-98e7-4f86-881b-10f760c32f71"), Nombre = "Agencia Estatal de Investigación" });
@@ -153,11 +153,11 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<UnidadAdministrativa>().HasData(new UnidadAdministrativa { UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"), Nombre = "Sin Asignar" });
            
             //// Usuarios
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("1139861b-5044-4257-b89a-db1b5d4402bf"), Nombre = "root", Correo="root@root.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("77a225a3-1266-4b1f-b11c-504969afa856"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("7467db95-c0a1-41df-a844-bbb00b60b952"), Nombre = "Administrador", Correo="administrador@administrador.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("9a39bcce-b092-4f90-9de7-9e0fb2137034"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("a22533a6-7621-492c-b10b-a9363668a2f4"), Nombre = "Angel Sayago Arcos", Correo="angel@gmail.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), DepartamentoID= Guid.Parse("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("2e3ff721-5a7d-4b82-87bb-3a593824ce25"), Nombre = "Magali Herrera Ramirez", Correo="magali@gmail.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("942f1900-7987-4820-a40b-7f4b78099d85"), DepartamentoID= Guid.Parse("8ecec734-2171-4bec-aaec-eba010af2489"), UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("03147300-43fc-4294-81d4-4bc08366f4a4"), Nombre = "Fiscal Mario", Correo="fiscal@gmail.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("39b991ab-e83e-4441-9638-9bd8fa647cb5"), DepartamentoID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("1139861b-5044-4257-b89a-db1b5d4402bf"), Nombre = "root", Correo="root@root.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("77a225a3-1266-4b1f-b11c-504969afa856"), UnidadRemitenteID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("7467db95-c0a1-41df-a844-bbb00b60b952"), Nombre = "Administrador", Correo="administrador@administrador.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("9a39bcce-b092-4f90-9de7-9e0fb2137034"), UnidadRemitenteID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("a22533a6-7621-492c-b10b-a9363668a2f4"), Nombre = "Angel Sayago Arcos", Correo="angel@gmail.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"), UnidadRemitenteID= Guid.Parse("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("2e3ff721-5a7d-4b82-87bb-3a593824ce25"), Nombre = "Magali Herrera Ramirez", Correo="magali@gmail.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("942f1900-7987-4820-a40b-7f4b78099d85"), UnidadRemitenteID= Guid.Parse("8ecec734-2171-4bec-aaec-eba010af2489"), UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario { UsuarioID = new Guid("03147300-43fc-4294-81d4-4bc08366f4a4"), Nombre = "Fiscal Mario", Correo="fiscal@gmail.com", Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=", Activo = true, RolID = Guid.Parse("39b991ab-e83e-4441-9638-9bd8fa647cb5"), UnidadRemitenteID= Guid.Parse("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"), UnidadAdministrativaID = Guid.Parse("88f8cf91-458b-438c-b882-75a842387c64") });
 
 
             ////Municipios

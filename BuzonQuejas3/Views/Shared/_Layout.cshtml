@@ -23,14 +23,14 @@
                         </div>
                         <div class="col-8">
                             <div class="row justify-content-center">
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("UnidadAdministrativa") || User.IsInRole("Fiscal"))
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadRemitente") || User.IsInRole("UnidadAdministrativa") || User.IsInRole("Fiscal"))
                                 {
                                     <div class="col mr-auto text-center">
                                         <a class="nav-link opcion-color w-75 mx-auto" asp-area="" asp-controller="Queja" asp-action="Quejas">Mis Quejas</a>
                                     </div>
                                 }
 
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("Fiscal") )
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadRemitente") || User.IsInRole("Fiscal") )
                                 {
                                     <div class="col mr-auto text-center">
                                         <a class="nav-link opcion-color w-75 mx-auto" asp-area="" asp-controller="Queja" asp-action="AgregarQueja">Levantar Queja</a>
@@ -44,7 +44,7 @@
                                     </div>
                                 }
 
-                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("Departamental") || User.IsInRole("Fiscal"))
+                                @if (User.IsInRole("Administrador") || User.IsInRole("Root") || User.IsInRole("UnidadRemitente") || User.IsInRole("Fiscal"))
                                 {
                                     <div class="col mr-auto text-center">
                                         <a class="nav-link opcion-color w-50 mx-auto" asp-area="" asp-controller="Queja" asp-action="Tablero">Tablero</a>

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BuzonQuejas3.Models
 {
-    public class Departamento
+    public class UnidadRemitente
     {
-        public Guid DepartamentoID { get; set; }
+        public Guid UnidadRemitenteID { get; set; }
 
         [StringLength(100)]
         [Required(ErrorMessage = "Debe llenar este campo")]

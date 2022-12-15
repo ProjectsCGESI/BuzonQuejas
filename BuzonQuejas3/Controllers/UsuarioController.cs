@@ -29,7 +29,7 @@ namespace BuzonQuejas3.Controllers
 
             var usuarios = from usuario in _context.Usuarios
                            join rol in _context.Roles on usuario.RolID equals rol.RolID
-                           join departamento in _context.Departamentos on usuario.DepartamentoID equals departamento.DepartamentoID
+                           join departamento in _context.UnidadRemitentes on usuario.UnidadRemitenteID equals departamento.UnidadRemitenteID
                            join unidad in _context.UnidadAdministrativas on usuario.UnidadAdministrativaID equals unidad.UnidadAdministrativaID
                            select new UsuarioMostrar
                            {
@@ -37,7 +37,7 @@ namespace BuzonQuejas3.Controllers
                                Nombre = usuario.Nombre,
                                Correo = usuario.Correo,
                                Activo = usuario.Activo,
-                               Departamento = departamento.Nombre,
+                               UnidadRemitente = departamento.Nombre,
                                Rol = rol.Nombre,
                                UnidadAdministrativa = unidad.Nombre
                            };
@@ -80,7 +80,7 @@ namespace BuzonQuejas3.Controllers
             }
 
             var usuario = await _context.Usuarios
-                .Include(u => u.Departamento)
+                .Include(u => u.UnidadRemitente)
                 .Include(u => u.Rol)
                 .Include(u => u.UnidadAdministrativa)
                 .FirstOrDefaultAsync(m => m.UsuarioID == id);
@@ -96,7 +96,7 @@ namespace BuzonQuejas3.Controllers
         [Authorize(Roles = "Administrador,Root")]
         public IActionResult AgregarUsuario()
         {
-            ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre");
+            ViewData["UnidadRemitenteID"] = new SelectList(_context.UnidadRemitentes.OrderBy(d => d.Nombre), "UnidadRemitenteID", "Nombre");
             ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre");
             ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre");
             return View();
@@ -108,14 +108,14 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root")]
-        public async Task<IActionResult> AgregarUsuario([Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
+        public async Task<IActionResult> AgregarUsuario([Bind("UsuarioID,Nombre,Correo,Clave,Activo,UnidadRemitenteID,RolID,UnidadAdministrativaID")] Usuario usuario)
         {
             var result = await _context.Usuarios.Where(u => u.Correo == usuario.Correo).FirstOrDefaultAsync();
 
             if (result != null)
             {
                 ViewBag.SuccessMessage = "El correo ingresado ya ha sido registrado, intente con otro";
-                ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre");
+                ViewData["UnidadRemitenteID"] = new SelectList(_context.UnidadRemitentes.OrderBy(d => d.Nombre), "UnidadRemitenteID", "Nombre");
                 ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre");
                 ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre");
                 return View(usuario);
@@ -135,7 +135,7 @@ namespace BuzonQuejas3.Controllers
                 else
                 {
                     ViewBag.SuccessMessage = "Hubo un error al levantar la queja,intente de nuevo";
-                    ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre");
+                    ViewData["UnidadRemitenteID"] = new SelectList(_context.UnidadRemitentes.OrderBy(d => d.Nombre), "UnidadRemitenteID", "Nombre");
                     ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre");
                     ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre");
                     return View(usuario);
@@ -150,7 +150,7 @@ namespace BuzonQuejas3.Controllers
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Usuarios));
             //}
-            //ViewData["DepartamentoID"] = new SelectList(_context.Departamentos, "DepartamentoID", "Nombre", usuario.DepartamentoID);
+            //ViewData["UnidadRemitenteID"] = new SelectList(_context.UnidadRemitentes, "UnidadRemitenteID", "Nombre", usuario.UnidadRemitenteID);
             //ViewData["RolID"] = new SelectList(_context.Roles, "RolID", "Nombre", usuario.RolID);
             //ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas, "UnidadAdministrativaID", "Nombre", usuario.UnidadAdministrativaID);
             //return View(usuario);
@@ -170,7 +170,7 @@ namespace BuzonQuejas3.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartamentoID"] = new SelectList(_context.Departamentos.OrderBy(d => d.Nombre), "DepartamentoID", "Nombre", usuario.DepartamentoID);
+            ViewData["UnidadRemitenteID"] = new SelectList(_context.UnidadRemitentes.OrderBy(d => d.Nombre), "UnidadRemitenteID", "Nombre", usuario.UnidadRemitenteID);
             ViewData["RolID"] = new SelectList(_context.Roles.OrderBy(r => r.Nombre), "RolID", "Nombre", usuario.RolID);
             ViewData["UnidadAdministrativaID"] = new SelectList(_context.UnidadAdministrativas.OrderBy(u => u.Nombre), "UnidadAdministrativaID", "Nombre", usuario.UnidadAdministrativaID);
             return View(usuario);
@@ -182,7 +182,7 @@ namespace BuzonQuejas3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Root")]
-        public async Task<IActionResult> EditarUsuario(Guid id,string claveUsuario, [Bind("UsuarioID,Nombre,Correo,Clave,Activo,DepartamentoID,RolID,UnidadAdministrativaID")] Usuario usuario)
+        public async Task<IActionResult> EditarUsuario(Guid id,string claveUsuario, [Bind("UsuarioID,Nombre,Correo,Clave,Activo,UnidadRemitenteID,RolID,UnidadAdministrativaID")] Usuario usuario)
         {
             if (id != usuario.UsuarioID)
             {
@@ -231,7 +231,7 @@ namespace BuzonQuejas3.Controllers
             }
 
             var usuario = await _context.Usuarios
-                .Include(u => u.Departamento)
+                .Include(u => u.UnidadRemitente)
                 .Include(u => u.Rol)
                 .Include(u => u.UnidadAdministrativa)
                 .FirstOrDefaultAsync(m => m.UsuarioID == id);
@@ -261,7 +261,7 @@ namespace BuzonQuejas3.Controllers
         }
 
         // GET: Usuarios/Edit/5
-        [Authorize(Roles = "Administrador,Root,Departamental,UnidadAdministrativa,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,UnidadAdministrativa,Fiscal")]
         public async Task<IActionResult> ReestablecerClave(Guid? id)
         {
             if (id == null)
@@ -282,7 +282,7 @@ namespace BuzonQuejas3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador,Root,Departamental,UnidadAdministrativa,Fiscal")]
+        [Authorize(Roles = "Administrador,Root,UnidadRemitente,UnidadAdministrativa,Fiscal")]
         public async Task<IActionResult> ReestablecerClave(string userID, string clave, string confirmarClave)
         {
             var usuario = await _context.Usuarios.FindAsync(Guid.Parse(userID));

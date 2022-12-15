@@ -59,10 +59,10 @@
                         <th class="col-1 text-center" >
                             @Html.DisplayNameFor(model => model.Activo)
                         </th>
-                        <th class="col-1 header-text-usuarios">
-                            @Html.DisplayNameFor(model => model.Departamento)
-                        </th>
                         <th class="col-2 header-text-usuarios">
+                            @Html.DisplayName("Unidad Remitente")
+                        </th>
+                        <th class="col-1 header-text-usuarios">
                             @Html.DisplayNameFor(model => model.Rol)
                         </th>
                         <th class="col-2 header-text-usuarios">
@@ -87,7 +87,7 @@
                                     @Html.DisplayFor(modelItem => item.Activo)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Departamento)
+                                    @Html.DisplayFor(modelItem => item.UnidadRemitente)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Rol)

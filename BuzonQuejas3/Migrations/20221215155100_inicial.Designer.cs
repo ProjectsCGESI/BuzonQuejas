@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuzonQuejas3.Migrations
 {
     [DbContext(typeof(Dev_BuzonQuejasContext))]
-    [Migration("20221213233943_inicial")]
+    [Migration("20221215155100_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1279,89 +1279,6 @@ namespace BuzonQuejas3.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BuzonQuejas3.Models.Departamento", b =>
-                {
-                    b.Property<Guid>("DepartamentoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("DepartamentoID");
-
-                    b.ToTable("Departamentos");
-
-                    b.HasData(
-                        new
-                        {
-                            DepartamentoID = new Guid("fc574c1e-8f81-40bd-8624-8f7e443cea4c"),
-                            Nombre = "Oficina de FGE"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("db9b55d6-d582-437d-8b9c-c1ba810760f0"),
-                            Nombre = "Servicios a la comunidad"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("0168408d-f59c-49b6-9aff-d818095bafd1"),
-                            Nombre = "Comunicación social"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("80a14da2-e2d7-43ee-89eb-0419c93cf6df"),
-                            Nombre = "Visitaduría"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("ddb159b4-c10b-42c9-ad19-dda253ccf896"),
-                            Nombre = "OIC"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("85c3f06b-45bd-4bc3-a712-935b5c6f2436"),
-                            Nombre = "FEAI"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("7a7bb933-7142-4222-a159-4ea52dc8b5d9"),
-                            Nombre = "FDH"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("8a6aeedd-336d-4e65-bede-b95f4bf83cf5"),
-                            Nombre = "Correo FGE"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"),
-                            Nombre = "Conmutador"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("8562af28-e0c7-4ba1-a889-9a3294cd70e0"),
-                            Nombre = "CG Análisis de la información"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
-                            Nombre = "Administración"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"),
-                            Nombre = "Buzón web FGE"
-                        },
-                        new
-                        {
-                            DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"),
-                            Nombre = "No Aplica"
-                        });
-                });
-
             modelBuilder.Entity("BuzonQuejas3.Models.Medio", b =>
                 {
                     b.Property<Guid>("MedioID")
@@ -1401,7 +1318,7 @@ namespace BuzonQuejas3.Migrations
                         new
                         {
                             MedioID = new Guid("a04c1856-54b5-4699-8660-367a5ac5444d"),
-                            Nombre = "Web"
+                            Nombre = "Webs"
                         });
                 });
 
@@ -2549,6 +2466,11 @@ namespace BuzonQuejas3.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ApellidoMAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("ApellidoMQuejante")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -2556,8 +2478,13 @@ namespace BuzonQuejas3.Migrations
 
                     b.Property<string>("ApellidoMServidor")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ApellidoPAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ApellidoPQuejante")
                         .IsRequired()
@@ -2569,11 +2496,6 @@ namespace BuzonQuejas3.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("AtendidoPor")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<Guid>("CargoID")
                         .HasColumnType("uniqueidentifier");
 
@@ -2581,9 +2503,6 @@ namespace BuzonQuejas3.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<Guid>("DepartamentoID")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -2612,13 +2531,13 @@ namespace BuzonQuejas3.Migrations
                     b.Property<Guid>("MotivoID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("MotivoQueja")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<Guid>("MunicipioID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NombreAtendio")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NombreQuejante")
                         .IsRequired()
@@ -2651,11 +2570,12 @@ namespace BuzonQuejas3.Migrations
                     b.Property<Guid>("UnidadAdministrativaID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UnidadRemitenteID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("QuejaID");
 
                     b.HasIndex("CargoID");
-
-                    b.HasIndex("DepartamentoID");
 
                     b.HasIndex("MedioID");
 
@@ -2664,6 +2584,8 @@ namespace BuzonQuejas3.Migrations
                     b.HasIndex("MunicipioID");
 
                     b.HasIndex("UnidadAdministrativaID");
+
+                    b.HasIndex("UnidadRemitenteID");
 
                     b.ToTable("Quejas");
                 });
@@ -2697,7 +2619,7 @@ namespace BuzonQuejas3.Migrations
                         new
                         {
                             RolID = new Guid("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"),
-                            Nombre = "Departamental"
+                            Nombre = "UnidadRemitente"
                         },
                         new
                         {
@@ -2904,6 +2826,89 @@ namespace BuzonQuejas3.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BuzonQuejas3.Models.UnidadRemitente", b =>
+                {
+                    b.Property<Guid>("UnidadRemitenteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("UnidadRemitenteID");
+
+                    b.ToTable("UnidadRemitentes");
+
+                    b.HasData(
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("fc574c1e-8f81-40bd-8624-8f7e443cea4c"),
+                            Nombre = "Oficina de FGE"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("db9b55d6-d582-437d-8b9c-c1ba810760f0"),
+                            Nombre = "Servicios a la comunidad"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("0168408d-f59c-49b6-9aff-d818095bafd1"),
+                            Nombre = "Comunicación social"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("80a14da2-e2d7-43ee-89eb-0419c93cf6df"),
+                            Nombre = "Visitaduría"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("ddb159b4-c10b-42c9-ad19-dda253ccf896"),
+                            Nombre = "OIC"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("85c3f06b-45bd-4bc3-a712-935b5c6f2436"),
+                            Nombre = "FEAI"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("7a7bb933-7142-4222-a159-4ea52dc8b5d9"),
+                            Nombre = "FDH"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("8a6aeedd-336d-4e65-bede-b95f4bf83cf5"),
+                            Nombre = "Correo FGE"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"),
+                            Nombre = "Conmutador"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("8562af28-e0c7-4ba1-a889-9a3294cd70e0"),
+                            Nombre = "CG Análisis de la información"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
+                            Nombre = "Administración"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("b1b2722e-ffef-40fc-8b01-d4a81be9558f"),
+                            Nombre = "Buzón web FGE"
+                        },
+                        new
+                        {
+                            UnidadRemitenteID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"),
+                            Nombre = "No Aplica"
+                        });
+                });
+
             modelBuilder.Entity("BuzonQuejas3.Models.Usuario", b =>
                 {
                     b.Property<Guid>("UsuarioID")
@@ -2923,9 +2928,6 @@ namespace BuzonQuejas3.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("DepartamentoID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -2937,13 +2939,16 @@ namespace BuzonQuejas3.Migrations
                     b.Property<Guid>("UnidadAdministrativaID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UsuarioID");
+                    b.Property<Guid>("UnidadRemitenteID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("DepartamentoID");
+                    b.HasKey("UsuarioID");
 
                     b.HasIndex("RolID");
 
                     b.HasIndex("UnidadAdministrativaID");
+
+                    b.HasIndex("UnidadRemitenteID");
 
                     b.ToTable("Usuarios");
 
@@ -2954,10 +2959,10 @@ namespace BuzonQuejas3.Migrations
                             Activo = true,
                             Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "root@root.com",
-                            DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
                             Nombre = "root",
                             RolID = new Guid("77a225a3-1266-4b1f-b11c-504969afa856"),
-                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64")
+                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"),
+                            UnidadRemitenteID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61")
                         },
                         new
                         {
@@ -2965,10 +2970,10 @@ namespace BuzonQuejas3.Migrations
                             Activo = true,
                             Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "administrador@administrador.com",
-                            DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
                             Nombre = "Administrador",
                             RolID = new Guid("9a39bcce-b092-4f90-9de7-9e0fb2137034"),
-                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64")
+                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"),
+                            UnidadRemitenteID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61")
                         },
                         new
                         {
@@ -2976,10 +2981,10 @@ namespace BuzonQuejas3.Migrations
                             Activo = true,
                             Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "angel@gmail.com",
-                            DepartamentoID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7"),
                             Nombre = "Angel Sayago Arcos",
                             RolID = new Guid("a7c2766f-c09e-41a1-b6e4-35aeed3ad8e7"),
-                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64")
+                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"),
+                            UnidadRemitenteID = new Guid("dec844ee-a2ba-4a09-a4e1-62a5ea6a46b7")
                         },
                         new
                         {
@@ -2987,10 +2992,10 @@ namespace BuzonQuejas3.Migrations
                             Activo = true,
                             Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "magali@gmail.com",
-                            DepartamentoID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489"),
                             Nombre = "Magali Herrera Ramirez",
                             RolID = new Guid("942f1900-7987-4820-a40b-7f4b78099d85"),
-                            UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78")
+                            UnidadAdministrativaID = new Guid("4f0f5406-572d-409c-8cf2-4add53fceb78"),
+                            UnidadRemitenteID = new Guid("8ecec734-2171-4bec-aaec-eba010af2489")
                         },
                         new
                         {
@@ -2998,10 +3003,10 @@ namespace BuzonQuejas3.Migrations
                             Activo = true,
                             Clave = "4OMrm+P3jNpf7pTqrqf8aWCZ/TJgqfaI1LkxFvHu13E=",
                             Correo = "fiscal@gmail.com",
-                            DepartamentoID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61"),
                             Nombre = "Fiscal Mario",
                             RolID = new Guid("39b991ab-e83e-4441-9638-9bd8fa647cb5"),
-                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64")
+                            UnidadAdministrativaID = new Guid("88f8cf91-458b-438c-b882-75a842387c64"),
+                            UnidadRemitenteID = new Guid("8a8e1e09-f9ce-41cb-b0b2-4ef91f7b4d61")
                         });
                 });
 
@@ -3019,12 +3024,6 @@ namespace BuzonQuejas3.Migrations
                     b.HasOne("BuzonQuejas3.Models.Cargo", "Cargo")
                         .WithMany()
                         .HasForeignKey("CargoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BuzonQuejas3.Models.Departamento", "Departamento")
-                        .WithMany()
-                        .HasForeignKey("DepartamentoID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -3052,9 +3051,13 @@ namespace BuzonQuejas3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cargo");
+                    b.HasOne("BuzonQuejas3.Models.UnidadRemitente", "UnidadRemitente")
+                        .WithMany()
+                        .HasForeignKey("UnidadRemitenteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Departamento");
+                    b.Navigation("Cargo");
 
                     b.Navigation("Medio");
 
@@ -3063,16 +3066,12 @@ namespace BuzonQuejas3.Migrations
                     b.Navigation("Municipio");
 
                     b.Navigation("UnidadAdministrativa");
+
+                    b.Navigation("UnidadRemitente");
                 });
 
             modelBuilder.Entity("BuzonQuejas3.Models.Usuario", b =>
                 {
-                    b.HasOne("BuzonQuejas3.Models.Departamento", "Departamento")
-                        .WithMany()
-                        .HasForeignKey("DepartamentoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BuzonQuejas3.Models.Rol", "Rol")
                         .WithMany()
                         .HasForeignKey("RolID")
@@ -3085,11 +3084,17 @@ namespace BuzonQuejas3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Departamento");
+                    b.HasOne("BuzonQuejas3.Models.UnidadRemitente", "UnidadRemitente")
+                        .WithMany()
+                        .HasForeignKey("UnidadRemitenteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Rol");
 
                     b.Navigation("UnidadAdministrativa");
+
+                    b.Navigation("UnidadRemitente");
                 });
 #pragma warning restore 612, 618
         }

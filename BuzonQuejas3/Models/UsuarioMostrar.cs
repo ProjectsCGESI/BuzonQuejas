@@ -19,7 +19,7 @@ namespace BuzonQuejas3.Models
         public string Correo { get; set; }
         public bool Activo { get; set; }
 
-        public string Departamento { get; set; }
+        public string UnidadRemitente { get; set; }
 
         public string Rol { get; set; }
 

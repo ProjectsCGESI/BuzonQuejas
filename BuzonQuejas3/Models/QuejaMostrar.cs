@@ -25,7 +25,7 @@ namespace BuzonQuejas3.Models
         //public DateTime FechaAtencion { get; set; }
         //public string AtendidoPor { get; set; }
         //public string Resolucion { get; set; }
-        public Guid DepartamentoID { get; set; }
+        public Guid UnidadRemitenteID { get; set; }
         public Guid MedioID { get; set; }
         public string Medio { get; set; }
 
