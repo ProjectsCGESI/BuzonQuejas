@@ -67,8 +67,7 @@ namespace BuzonQuejas3.Models
         [StringLength(20)]
         public string Estatus { get; set; }
 
-        [Required(ErrorMessage = "Debe llenar este campo")]
-        public DateTime FechaAtencion { get; set; }
+        public DateTime? FechaAtencion { get; set; }
 
         [Required(ErrorMessage = "Debe llenar este campo")]
         [StringLength(50)]

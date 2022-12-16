@@ -112,7 +112,7 @@ namespace BuzonQuejas3.Controllers
 
             if (!String.IsNullOrEmpty(buscar))
             {
-                quejasMostrar = quejasMostrar.Where(s => s.NombreQuejante!.Contains(buscar) || s.NombreServidor!.Contains(buscar) || s.Folio!.Contains(buscar));
+                quejasMostrar = quejasMostrar.Where(s => s.NombreQuejante!.Contains(buscar) || s.ApellidoPQuejante!.Contains(buscar) || s.ApellidoMQuejante!.Contains(buscar) || s.NombreServidor!.Contains(buscar) || s.ApellidoPServidor!.Contains(buscar) || s.ApellidoMServidor!.Contains(buscar) || s.Folio!.Contains(buscar));
                 ViewData["filtroBuscar"] = buscar;
             }
             else
@@ -215,7 +215,7 @@ namespace BuzonQuejas3.Controllers
             queja.ApellidoPAtendio = "";
             queja.ApellidoMAtendio = "";
             queja.Resolucion = "";
-            queja.FechaAtencion = queja.FechaCreacion;
+            queja.FechaAtencion = null;
             var motivo = await _context.Motivos.FirstOrDefaultAsync(m => m.MotivoID.Equals(queja.MotivoID));
             queja.UnidadAdministrativaID = (Guid)motivo.UnidadAdministrativaID;
 
@@ -662,7 +662,7 @@ namespace BuzonQuejas3.Controllers
                 int total = quejas.Count(q => q.MunicipioID == municipio.MunicipioID);
                 //var randomNumber = new Random().Next(0, 100000);
 
-                if (total >= 0)
+                if (total > 0)
                 {
                     municipiosNombre.Add(municipio.Nombre);
                     municipiosTotal.Add(total);

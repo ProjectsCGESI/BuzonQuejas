@@ -637,8 +637,25 @@ namespace BuzonQuejas3.Models
             modelBuilder.Entity<Cargo>().HasData(new Cargo { CargoID = new Guid("b9ac7679-b2df-4f1c-aa1f-d54d823bcd91"), Nombre = "Visitadora" });
 
             //motivos
-            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("315a7096-1389-4db2-aed4-a423fb96eb5e"), Descripcion = "Problema al hacer cita para Antecendentes no penales", UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
-            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("a4bf6977-c3f2-4552-ad40-a159cacfda51"), Descripcion = "Falta a la moral", UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("315a7096-1389-4db2-aed4-a423fb96eb5e"), Descripcion = "Problemas al realizar su denuncia en línea", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("a4bf6977-c3f2-4552-ad40-a159cacfda51"), Descripcion = "Problemas al realizar su cita para la expedición de Constancias de No Antecedentes Penales", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("55ac0719-3d48-4e85-bdc1-55058aaf5ffa"), Descripcion = "Queja con la atención de algún servidor público", UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("6fa74793-8c90-4428-a3be-b06b77061460"), Descripcion = "Queja con la integración de su expediente", UnidadAdministrativaID = Guid.Parse("4f0f5406-572d-409c-8cf2-4add53fceb78") });
+
+            //motivos de prueba sacados de denuncia en linea
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("d4a31a24-9d57-49c3-9859-912901caed9a"), Descripcion = "El proceso del trámite es muy tardado", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("c05a58b3-e59d-42cf-8f63-8683b4406d91"), Descripcion = "Ténicismo en los datos solicitados", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("c8fbcf31-db11-47f5-86b8-eaf199ac49fc"), Descripcion = "Negación del servicio por falta de cita", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("1fd4973f-ae52-4461-b587-20fd6f57261d"), Descripcion = "No aparece mi colonia", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("2a22677f-12d6-45fc-b84c-3200e1400415"), Descripcion = "Fallas en la página", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("6ce6caa2-03ec-4274-b6c3-075203cfc0a4"), Descripcion = "Correo de confirmación no llegó o tardó demasiado tiempo", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("bd518516-0b31-4aa6-b943-a9ceeeec5d65"), Descripcion = "No hay citas disponibles", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("584de2c5-eb29-49e3-a847-da57e7fa64f5"), Descripcion = "Datos desconocidos obligatorios en formulario", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("22f266a9-a718-4b23-8c95-53c2e6bf585a"), Descripcion = "Opción requerida no aparece", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("c45de56d-98d3-4203-a05e-b6b017dcf9ed"), Descripcion = "Falta opción para adjuntar evidecia", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("b306b384-a08a-453c-b3eb-a6e9a7496de5"), Descripcion = "Mal diseño en la página", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("841865d4-a0c8-4fb6-978b-a2944451f7a1"), Descripcion = "proceso complejo", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
+            modelBuilder.Entity<Motivo>().HasData(new Motivo { MotivoID = new Guid("500c6720-b3a1-4d33-b13b-cda184ece0ab"), Descripcion = "Campos de texto ambiguos", UnidadAdministrativaID = Guid.Parse("e7d58ae0-9a84-4cc6-889e-9a7fd9b078b4") });
 
         }
 
