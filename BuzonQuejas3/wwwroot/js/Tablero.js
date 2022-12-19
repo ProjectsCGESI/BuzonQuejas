@@ -13,6 +13,7 @@ let ChartDrawUnidadRemitentes;
 $(document).ready(function () {
 
     $("#navBarPrincipal").hide();
+    var $select2 = $('.select2').select2();
 
     for (var i = 0; i < 32; i++) {
         if (i == 0) {

@@ -20,6 +20,14 @@
     --table-hover-bg2: #EAECEB;
 }
 
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dcc081;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(173 135 48 / 25%);
+}
+
 .contenedor-tabla {
     border-color: var(--primary-color) !important;
     border: 1px solid #000;
@@ -200,3 +208,8 @@ table {
     color: white;
 }
 
+.select2-container--default .select2-search__field {
+    outline: var(--secondary-color-opacity) solid 2px;
+    -webkit-appearance: textfield;
+    border-radius: 5px;
+}

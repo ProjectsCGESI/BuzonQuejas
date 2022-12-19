@@ -28,6 +28,13 @@
     background: var(--secondary-color) !important;
     color: white !important;
 }
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dcc081;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(173 135 48 / 25%);
+}
 
 .guardar-bttn-clave {
     width: 100%;

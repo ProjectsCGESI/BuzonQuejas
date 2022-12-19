@@ -6,6 +6,8 @@
 
 <link rel="stylesheet" href="~/css/Tablero.css" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+
 <div class="container-fluid contenedor-tablero">
     <div class="row">
         <div class="col-12">
@@ -30,22 +32,22 @@
                         <div class="col-12">
                             <form id="AjaxForm" method="post">
                                 <div class="row justify-content-center align-items-end  no-gutters">
-                                    <div class="col-3 mr-2">
+                                    <div class="col-2 mr-2">
                                         <div class="form-group text-center">
                                             <label class="text-label">Año</label>
-                                            <select type="text" class="form-control" id="fechaAnio" name="anio" required></select>
+                                            <select type="text" class="form-control select2" id="fechaAnio" name="anio" required></select>
                                         </div>
                                     </div>
-                                    <div class="col-auto mr-2">
+                                    <div class="col-2 mr-2">
                                         <div class="form-group text-center">
                                             <label class="text-label">Mes</label>
-                                            <select type="text" class="form-control" id="fechaMes" name="mes"></select>
+                                            <select type="text" class="form-control select2" id="fechaMes" name="mes"></select>
                                         </div>
                                     </div>
-                                    <div class="col-auto" id="group-day">
+                                    <div class="col-2" id="group-day">
                                         <div class="form-group text-center">
                                             <label class="text-label">Día</label>
-                                            <select type="text" class="form-control " id="fechaDia" name="dia"></select>
+                                            <select type="text" class="form-control select2" id="fechaDia" name="dia"></select>
                                         </div>
                                     </div>
                                     <div class="col-2 ml-2">
@@ -297,6 +299,7 @@
 </div>
 @section Scripts {
     <script src="~/js/Tablero.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     @* <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
